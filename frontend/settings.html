@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - EduAchieve</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="brand">EduAchieve</div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="my-profile.html">My Profile</a>
+      <a href="settings.html" class="active-link">Settings</a>
+      <a id="navAuth" href="login.html">Login</a>
+      <button id="navLogout" class="primary">Logout</button>
+      <span id="navUser" class="muted"></span>
+    </nav>
+  </header>
+
+  <main class="container narrow">
+    <section class="card">
+      <h2>Settings</h2>
+      <p class="muted">Manage your local session preferences.</p>
+      <button class="submit" id="clearSessionBtn">Clear Local Session</button>
+      <p id="status" class="status muted"></p>
+    </section>
+  </main>
+
+  <script src="common.js"></script>
+  <script src="settings.js"></script>
+</body>
+</html>

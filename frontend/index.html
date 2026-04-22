@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduAchieve Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="brand">EduAchieve</div>
+    <nav class="nav-links">
+      <a href="index.html" class="active-link">Home</a>
+      <a href="explore.html">Explore</a>
+      <a href="submit.html">Submit</a>
+      <a href="my-profile.html">My Profile</a>
+      <a href="student-records.html">Student Records</a>
+      <a href="settings.html">Settings</a>
+      <a id="navAuth" href="login.html">Login</a>
+      <button id="navLogout" class="primary">Logout</button>
+      <span id="navUser" class="muted"></span>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Student Project Sharing Portal</h1>
+      <p>Clean rebuild with proper integration, same orange-beige EduAchieve style, and stable APIs.</p>
+    </section>
+
+    <section class="quick-grid">
+      <article class="card">
+        <h2>Start Here</h2>
+        <p class="muted">Create an account or login to manage your projects.</p>
+        <div class="inline-actions">
+          <a class="button-link" href="register.html">Register</a>
+          <a class="button-link alt" href="login.html">Login</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Explore Work</h2>
+        <p class="muted">Browse, search, and open detailed project pages.</p>
+        <a class="button-link" href="explore.html">Open Explore</a>
+      </article>
+
+      <article class="card">
+        <h2>Submit Project</h2>
+        <p class="muted">Add project title, description, tech stack, batch and profile links.</p>
+        <a class="button-link" href="submit.html">Open Submit</a>
+      </article>
+    </section>
+  </main>
+
+  <script src="common.js"></script>
+  <script>
+    App.applyNavState();
+  </script>
+</body>
+</html>

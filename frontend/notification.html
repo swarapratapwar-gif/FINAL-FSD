@@ -1,298 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>EduAchieve | Notifications</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-  <style>
-    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
-    :root {
-      --orange:#ff6600; --orange-dark:#e05500; --orange-light:#fff3eb;
-      --navy:#1a1a2e; --bg:#f4f1ed; --white:#ffffff;
-      --border:#e0dbd4; --text:#1a1a2e; --text-sub:#5c5c72; --text-muted:#9a9aaa;
-      --shadow:0 4px 20px rgba(0,0,0,0.07); --radius:12px;
-    }
-    body { font-family:'Poppins',sans-serif; background:var(--bg); color:var(--text); }
-
-    .navbar { display:flex; align-items:center; justify-content:space-between; padding:12px 36px; background:#fff; border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
-    .nav-brand { display:flex; align-items:center; gap:9px; cursor:pointer; }
-    .nav-logo { width:36px; height:36px; background:var(--orange); border-radius:10px; display:flex; align-items:center; justify-content:center; }
-    .brand-name { font-size:17px; font-weight:800; color:var(--orange); }
-    .nav-links { display:flex; gap:28px; }
-    .nav-links a { font-size:14px; font-weight:600; color:#333333; text-decoration:none; cursor:pointer; transition:color .2s; }
-    .nav-links a:hover { color:var(--orange); }
-    .btn-back { padding:8px 16px; border:1.5px solid var(--border); border-radius:8px; background:#fff; font-family:'Poppins',sans-serif; font-size:13px; font-weight:600; cursor:pointer; color:var(--text); transition:all .2s; }
-    .btn-back:hover { border-color:var(--orange); color:var(--orange); }
-
-    .page-hero { background:linear-gradient(135deg,var(--navy),#16213e); padding:44px 60px; color:#fff; }
-    .page-hero h1 { font-size:28px; font-weight:800; margin-bottom:6px; }
-    .page-hero p  { font-size:13.5px; opacity:.65; }
-
-    .page-content { max-width:780px; margin:0 auto; padding:32px 24px; }
-
-    .notif-topbar { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; gap:20px; flex-wrap:wrap; }
-    .notif-count  { font-size:14px; color:var(--text-sub); }
-    .notif-count span { font-weight:700; color:var(--orange); }
-    .btn-group { display:flex; gap:8px; }
-    .btn-sm { padding:7px 14px; border:1.5px solid var(--border); border-radius:8px; background:#fff; font-family:'Poppins',sans-serif; font-size:12.5px; font-weight:600; cursor:pointer; color:var(--text); transition:all .2s; }
-    .btn-sm:hover { border-color:var(--orange); color:var(--orange); }
-
-    .filter-tabs { display:flex; gap:6px; margin-bottom:22px; flex-wrap:wrap; }
-    .ftab { padding:7px 16px; border-radius:20px; border:1.5px solid var(--border); background:#fff; font-family:'Poppins',sans-serif; font-size:12.5px; font-weight:600; cursor:pointer; color:var(--text-sub); transition:all .2s; }
-    .ftab:hover { border-color:var(--orange); color:var(--orange); }
-    .ftab.active { background:var(--orange); border-color:var(--orange); color:#fff; }
-
-    .notif-group-label { font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin:20px 0 10px; }
-
-    .notif-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; margin-bottom:10px; display:flex; align-items:flex-start; gap:14px; cursor:pointer; transition:all .2s; }
-    .notif-card:hover { box-shadow:0 4px 20px rgba(0,0,0,0.09); transform:translateY(-1px); }
-    .notif-card.unread { border-left:3px solid var(--orange); background:#fffaf7; }
-
-    .notif-icon-wrap { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
-    .icon-success  { background:#e8f5e9; }
-    .icon-comment  { background:#e3f2fd; }
-    .icon-new      { background:#f3e5f5; }
-    .icon-trophy   { background:#fff8e1; }
-
-    .notif-body { flex:1; }
-    .notif-title { font-size:14px; font-weight:700; color:var(--text); margin-bottom:3px; }
-    .notif-desc  { font-size:13px; color:var(--text-sub); line-height:1.6; margin-bottom:5px; }
-    .notif-time  { font-size:11.5px; color:var(--text-muted); }
-
-    /* MODAL STYLES */
-    .modal-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:999; align-items:center; justify-content:center; }
-    .modal-overlay.show { display:flex; }
-    .modal-box { background:#fff; border-radius:16px; padding:40px; max-width:600px; width:90%; max-height:80vh; overflow-y:auto; animation:slideUp .3s ease; position:relative; }
-    @keyframes slideUp { from { transform:translateY(50px); opacity:0; } to { transform:translateY(0); opacity:1; } }
-    .modal-close { position:absolute; top:16px; right:16px; background:none; border:none; font-size:28px; color:var(--text-muted); cursor:pointer; transition:color .2s; }
-    .modal-close:hover { color:var(--text); }
-    .modal-icon { font-size:48px; margin-bottom:16px; display:block; }
-    .modal-box h2 { font-size:24px; font-weight:800; color:var(--text); margin-bottom:12px; }
-    .modal-box p { font-size:14px; color:var(--text-sub); line-height:1.8; margin-bottom:12px; }
-    .modal-time { font-size:12px; color:var(--text-muted); margin-top:20px; padding-top:20px; border-top:1px solid var(--border); }
-    .modal-button { display:flex; gap:10px; margin-top:20px; }
-    .btn-ok { flex:1; padding:12px; background:var(--orange); color:#fff; border:none; border-radius:8px; font-weight:700; cursor:pointer; transition:all .2s; }
-    .btn-ok:hover { background:var(--orange-dark); transform:translateY(-1px); }
-
-    footer { background:var(--navy); color:rgba(255,255,255,0.4); text-align:center; padding:22px; font-size:12px; margin-top:40px; }
-
-    @media(max-width:600px){ .page-hero{padding:28px 20px;} .page-content{padding:20px 14px;} .notif-topbar{flex-direction:column;} .modal-box{padding:30px 24px;} }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notifications - EduAchieve</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <header class="navbar">
+    <div class="brand">EduAchieve</div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="explore.html">Explore</a>
+      <a href="notification.html" class="active-link">Notifications</a>
+      <a id="navAuth" href="login.html">Login</a>
+      <button id="navLogout" class="primary">Logout</button>
+      <span id="navUser" class="muted"></span>
+    </nav>
+  </header>
 
-<header class="navbar">
-  <div class="nav-brand" onclick="nav.navigateTo('home')">
-    <div class="nav-logo">
-      <svg width="22" height="22" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <polygon points="50,15 90,35 50,55 10,35" fill="white"/>
-        <path d="M28,43 L28,66 Q50,77 72,66 L72,43 L50,55 Z" fill="white"/>
-        <rect x="84" y="35" width="6" height="20" rx="3" fill="white"/>
-        <circle cx="87" cy="57" r="5" fill="white"/>
-      </svg>
-    </div>
-    <span class="brand-name">EduAchieve</span>
-  </div>
-  <nav class="nav-links">
-    <a onclick="nav.navigateTo('home'); return false;">Home</a>
-    <a onclick="nav.navigateTo('explore'); return false;">Explore</a>
-    <a onclick="nav.navigateTo('about'); return false;">About</a>
-  </nav>
-  <button class="btn-back" onclick="nav.navigateTo('home')">← Back</button>
-</header>
+  <main class="container">
+    <section class="card">
+      <h2>Notifications</h2>
+      <div id="notifications" class="project-list"></div>
+      <p id="status" class="status muted"></p>
+    </section>
+  </main>
 
-<div class="page-hero">
-  <h1>🔔 Notifications</h1>
-  <p>Stay updated on your project status, faculty feedback and community activity.</p>
-</div>
-
-<div class="page-content">
-
-  <div class="notif-topbar">
-    <div class="notif-count"><span id="unreadCount">3</span> unread notifications</div>
-    <div class="btn-group">
-      <button class="btn-sm" onclick="markAllRead()">✓ Mark all read</button>
-      <button class="btn-sm" onclick="clearAll()">🗑️ Clear all</button>
-    </div>
-  </div>
-
-  <div class="filter-tabs">
-    <button class="ftab active" onclick="filterNotifs(this,'all')">All</button>
-    <button class="ftab" onclick="filterNotifs(this,'project')">Projects</button>
-    <button class="ftab" onclick="filterNotifs(this,'faculty')">Faculty</button>
-    <button class="ftab" onclick="filterNotifs(this,'system')">System</button>
-  </div>
-
-  <div class="notif-group-label">Today</div>
-
-  <div class="notif-card unread" data-type="project" onclick="showNotificationModal(this)">
-    <div class="notif-icon-wrap icon-success">✅</div>
-    <div class="notif-body">
-      <div class="notif-title">Project Approved!</div>
-      <div class="notif-desc">Your project "Edge Computing" has been reviewed and approved by Dr. Helena Vance.</div>
-      <div class="notif-time">🕐 2 hours ago</div>
-    </div>
-  </div>
-
-  <div class="notif-card unread" data-type="faculty" onclick="showNotificationModal(this)">
-    <div class="notif-icon-wrap icon-comment">💬</div>
-    <div class="notif-body">
-      <div class="notif-title">Faculty Feedback Received</div>
-      <div class="notif-desc">Dr. James Wilson has left a comment on your project "AI Plant Detection".</div>
-      <div class="notif-time">🕐 5 hours ago</div>
-    </div>
-  </div>
-
-  <div class="notif-card unread" data-type="project" onclick="showNotificationModal(this)">
-    <div class="notif-icon-wrap icon-new">📁</div>
-    <div class="notif-body">
-      <div class="notif-title">New Project in AI Domain</div>
-      <div class="notif-desc">"Real-time Object Detection for Visually Impaired" has been uploaded in your follow domain.</div>
-      <div class="notif-time">🕐 8 hours ago</div>
-    </div>
-  </div>
-
-  <div class="notif-group-label">Yesterday</div>
-
-  <div class="notif-card" data-type="system" onclick="showNotificationModal(this)">
-    <div class="notif-icon-wrap icon-trophy">🏆</div>
-    <div class="notif-body">
-      <div class="notif-title">You're on the Leaderboard!</div>
-      <div class="notif-desc">Your project entered Top 10 most-viewed projects. You're ranked #7!</div>
-      <div class="notif-time">🕐 1 day ago</div>
-    </div>
-  </div>
-
-  <div class="notif-group-label">Last Week</div>
-
-  <div class="notif-card" data-type="project" onclick="showNotificationModal(this)">
-    <div class="notif-icon-wrap icon-success">✅</div>
-    <div class="notif-body">
-      <div class="notif-title">Project Submission Received</div>
-      <div class="notif-desc">Your submission for "Advanced Machine Learning Techniques" has been received and is under review.</div>
-      <div class="notif-time">🕐 3 days ago</div>
-    </div>
-  </div>
-
-  <div class="notif-card" data-type="faculty" onclick="showNotificationModal(this)">
-    <div class="notif-icon-wrap icon-comment">💬</div>
-    <div class="notif-body">
-      <div class="notif-title">New Comment on Your Project</div>
-      <div class="notif-desc">Prof. Rajesh Kumar has commented: "Great work on the implementation! Please add more documentation."</div>
-      <div class="notif-time">🕐 5 days ago</div>
-    </div>
-  </div>
-
-</div>
-
-<!-- Notification Detail Modal -->
-<div class="modal-overlay" id="notificationModal">
-  <div class="modal-box" onclick="event.stopPropagation()">
-    <button class="modal-close" onclick="closeNotificationModal()">✕</button>
-    <div id="modalIcon" class="modal-icon"></div>
-    <h2 id="modalTitle"></h2>
-    <p id="modalDescription"></p>
-    <p id="modalFullDetails" style="font-style:italic; color:var(--text-muted);"></p>
-    <div class="modal-time" id="modalTime"></div>
-    <div class="modal-button">
-      <button class="btn-ok" onclick="closeNotificationModal()">OK</button>
-    </div>
-  </div>
-</div>
-
-<footer>© 2026 EduAchieve · All rights reserved.</footer>
-
-<script>
-let unreadCount = 3;
-
-function markAllRead() {
-  document.querySelectorAll('.notif-card.unread').forEach(card => {
-    card.classList.remove('unread');
-  });
-  document.getElementById('unreadCount').textContent = '0';
-  alert('✅ All notifications marked as read!');
-}
-
-function clearAll() {
-  if(confirm('Delete all notifications?')) {
-    document.querySelectorAll('.notif-card').forEach(card => card.remove());
-    document.getElementById('unreadCount').textContent = '0';
-    alert('✅ All notifications cleared!');
-  }
-}
-
-function filterNotifs(btn, type) {
-  document.querySelectorAll('.ftab').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  
-  document.querySelectorAll('.notif-card').forEach(card => {
-    if(type === 'all' || card.getAttribute('data-type') === type) {
-      card.style.display = 'flex';
-    } else {
-      card.style.display = 'none';
-    }
-  });
-}
-
-function showNotificationModal(card) {
-  // Get notification data
-  const iconElement = card.querySelector('.notif-icon-wrap');
-  const icon = iconElement.textContent;
-  const title = card.querySelector('.notif-title').textContent;
-  const description = card.querySelector('.notif-desc').textContent;
-  const time = card.querySelector('.notif-time').textContent;
-
-  // Get additional details based on notification type
-  let fullDetails = '';
-  const notifType = card.getAttribute('data-type');
-  
-  if (notifType === 'project') {
-    fullDetails = 'This notification is about your project status. Please review the details and take necessary action if required.';
-  } else if (notifType === 'faculty') {
-    fullDetails = 'You have received feedback from faculty members. Review the comments and respond if needed.';
-  } else if (notifType === 'system') {
-    fullDetails = 'This is a system notification regarding your profile achievements and milestones.';
-  }
-
-  // Populate modal
-  document.getElementById('modalIcon').textContent = icon;
-  document.getElementById('modalTitle').textContent = title;
-  document.getElementById('modalDescription').textContent = description;
-  document.getElementById('modalFullDetails').textContent = fullDetails;
-  document.getElementById('modalTime').innerHTML = `<strong>Time:</strong> ${time}`;
-
-  // Show modal
-  document.getElementById('notificationModal').classList.add('show');
-  document.body.style.overflow = 'hidden';
-
-  // Mark as read if unread
-  if(card.classList.contains('unread')) {
-    card.classList.remove('unread');
-    const count = parseInt(document.getElementById('unreadCount').textContent);
-    document.getElementById('unreadCount').textContent = Math.max(0, count - 1);
-  }
-}
-
-function closeNotificationModal() {
-  document.getElementById('notificationModal').classList.remove('show');
-  document.body.style.overflow = 'auto';
-}
-
-// Close modal when clicking outside
-document.getElementById('notificationModal').addEventListener('click', function(e) {
-  if(e.target === this) {
-    closeNotificationModal();
-  }
-});
-
-// Close modal with Escape key
-document.addEventListener('keydown', function(e) {
-  if(e.key === 'Escape') {
-    closeNotificationModal();
-  }
-});
-</script>
-<script src="navigation-helper.js"></script>
+  <script src="common.js"></script>
+  <script src="notifications.js"></script>
 </body>
 </html>

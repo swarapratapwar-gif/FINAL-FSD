@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile - EduAchieve</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="brand">EduAchieve</div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="explore.html">Explore</a>
+      <a href="submit.html">Submit</a>
+      <a href="my-profile.html" class="active-link">My Profile</a>
+      <a href="settings.html">Settings</a>
+      <a id="navAuth" href="login.html">Login</a>
+      <button id="navLogout" class="primary">Logout</button>
+      <span id="navUser" class="muted"></span>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>My Profile</h2>
+      <p class="muted" id="profileText"></p>
+    </section>
+    <section class="card" style="margin-top: 16px;">
+      <h2>My Projects</h2>
+      <div id="myProjects" class="project-list"></div>
+      <p id="status" class="status muted"></p>
+    </section>
+  </main>
+
+  <script src="common.js"></script>
+  <script src="profile.js"></script>
+</body>
+</html>
