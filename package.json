@@ -1,0 +1,31 @@
+{
+  "name": "fsd-project",
+  "version": "1.0.0",
+  "description": "samruddhi dhumal fsd project",
+  "homepage": "https://github.com/samrudhirdivekar22-rgb/FSD-Project#readme",
+  "bugs": {
+    "url": "https://github.com/samrudhirdivekar22-rgb/FSD-Project/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samrudhirdivekar22-rgb/FSD-Project.git"
+  },
+  "license": "ISC",
+  "author": "samruddhi dhumal",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "body-parser": "^2.2.2",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.0",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.4.1"
+  }
+}

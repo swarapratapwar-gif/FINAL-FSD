@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - EduAchieve</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-orange: #E8630A;
+            --dark-text: #333333;
+            --light-bg: #f5f5f5;
+            --white: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+        }
+
+        .navbar {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .nav-left { flex: 0 0 auto; }
+        .logo-link { text-decoration: none; }
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-orange);
+        }
+
+        .nav-center {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-text);
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover { color: var(--primary-orange); }
+
+        .nav-right {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            background-color: var(--light-bg);
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .search-input {
+            padding: 10px 15px;
+            border: none;
+            background: none;
+            font-size: 13px;
+            min-width: 200px;
+        }
+
+        .search-input:focus { outline: none; }
+
+        .search-btn {
+            padding: 10px 15px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            padding: 10px 20px;
+            background-color: var(--primary-orange);
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background-color: #d45a09;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(232, 99, 10, 0.3);
+        }
+
+        .dashboard-container {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .sidebar {
+            width: 280px;
+            background-color: var(--white);
+            padding: 30px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 70px;
+            height: calc(100vh - 70px);
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h3 {
+            font-size: 14px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 15px 0;
+        }
+
+        .sidebar-menu li a {
+            display: block;
+            padding: 14px 20px;
+            text-decoration: none;
+            color: var(--dark-text);
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-menu li a:hover {
+            background-color: var(--light-bg);
+            color: var(--primary-orange);
+        }
+
+        .sidebar-menu li a.active {
+            color: var(--primary-orange);
+            background-color: rgba(232, 99, 10, 0.05);
+            border-left-color: var(--primary-orange);
+        }
+
+        .sidebar-logout {
+            border-top: 1px solid var(--border-color);
+            color: #d32f2f;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 40px;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            color: var(--dark-text);
+            margin-bottom: 5px;
+        }
+
+        .page-header p {
+            color: #999;
+            font-size: 14px;
+        }
+
+        .settings-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .settings-card.danger {
+            border: 1px solid #ffcdd2;
+        }
+
+        .settings-header {
+            padding: 25px;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--light-bg);
+        }
+
+        .settings-header h2 {
+            font-size: 20px;
+            color: var(--dark-text);
+            margin: 0;
+        }
+
+        .settings-form {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark-text);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 12px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 3px rgba(232, 99, 10, 0.1);
+        }
+
+        .toggle-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .toggle-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .toggle-item:last-child { border-bottom: none; }
+
+        .toggle-label {
+            flex: 1;
+        }
+
+        .toggle-label strong {
+            display: block;
+            font-size: 15px;
+            color: var(--dark-text);
+            margin-bottom: 4px;
+        }
+
+        .toggle-label p {
+            font-size: 13px;
+            color: #999;
+            margin: 0;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-flex;
+            width: 50px;
+            height: 28px;
+            cursor: pointer;
+        }
+
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: all 0.4s ease;
+            border-radius: 28px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: all 0.4s ease;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-switch input:checked + .slider {
+            background-color: var(--primary-orange);
+        }
+
+        .toggle-switch input:checked + .slider:before {
+            transform: translateX(22px);
+        }
+
+        .btn-danger {
+            padding: 12px 24px;
+            background-color: #d32f2f;
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            background-color: #b71c1c;
+            transform: translateY(-2px);
+        }
+
+        .danger-actions {
+            padding: 30px;
+        }
+
+        .danger-warning {
+            font-size: 13px;
+            color: #d32f2f;
+            margin: 15px 0 0 0;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container { flex-direction: column; }
+            .sidebar { width: 100%; position: static; height: auto; }
+            .settings-form { padding: 20px; }
+            .toggle-item { flex-direction: column; align-items: flex-start; gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html" class="logo-link">
+                    <span class="logo-text">EduAchieve</span>
+                </a>
+            </div>
+            <div class="nav-center">
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="explore.html">Explore</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <div class="search-container">
+                    <input type="text" class="search-input" id="navSearch" placeholder="Search projects...">
+                    <button class="search-btn">🔍</button>
+                </div>
+                <a href="login.html" class="btn-primary">Portal Access</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Menu</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="my-projects.html">Projects</a></li>
+                <li><a href="student-records.html">Student Records</a></li>
+                <li><a href="faculty-management.html">Faculty Management</a></li>
+                <li><a href="settings.html" class="active">Settings</a></li>
+                <li><a href="#" class="sidebar-support">📞 Support</a></li>
+                <li><a href="login.html" class="sidebar-logout">Sign Out</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Settings</h1>
+                <p>Manage your account and preferences</p>
+            </div>
+
+            <div class="settings-card">
+                <div class="settings-header">
+                    <h2>Profile Settings</h2>
+                </div>
+                <form class="settings-form" id="profileForm">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" value="Aditya Kumar" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" value="aditya.kumar@college.edu" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" value="+91 98765 43210">
+                    </div>
+                    <button type="submit" class="btn-primary">Save Changes</button>
+                </form>
+            </div>
+
+            <div class="settings-card">
+                <div class="settings-header">
+                    <h2>Change Password</h2>
+                </div>
+                <form class="settings-form" id="passwordForm">
+                    <div class="form-group">
+                        <label for="currentPassword">Current Password</label>
+                        <input type="password" id="currentPassword" name="currentPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" id="newPassword" name="newPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Update Password</button>
+                </form>
+            </div>
+
+            <div class="settings-card">
+                <div class="settings-header">
+                    <h2>Notification Preferences</h2>
+                </div>
+                <form class="settings-form" id="notificationForm">
+                    <div class="toggle-group">
+                        <div class="toggle-item">
+                            <div class="toggle-label">
+                                <strong>Email Notifications</strong>
+                                <p>Receive updates about your projects via email</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-item">
+                            <div class="toggle-label">
+                                <strong>Project Updates</strong>
+                                <p>Get notified when your project status changes</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-item">
+                            <div class="toggle-label">
+                                <strong>Comments & Feedback</strong>
+                                <p>Notifications when someone comments on your project</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">Save Preferences</button>
+                </form>
+            </div>
+
+            <div class="settings-card danger">
+                <div class="settings-header">
+                    <h2>Account Actions</h2>
+                </div>
+                <div class="danger-actions">
+                    <button type="button" class="btn-danger" onclick="if(confirm('Are you sure? This cannot be undone!')) { alert('Account deleted!'); window.location.href='login.html'; }">Delete Account</button>
+                    <p class="danger-warning">⚠️ Deleting your account is permanent and cannot be undone.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Profile updated successfully!');
+        });
+
+        document.getElementById('passwordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const newPass = document.getElementById('newPassword').value;
+            const confirmPass = document.getElementById('confirmPassword').value;
+            if(newPass !== confirmPass) {
+                alert('Passwords do not match!');
+                return;
+            }
+            alert('Password updated successfully!');
+            this.reset();
+        });
+
+        document.getElementById('notificationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Notification preferences updated!');
+        });
+    </script>
+</body>
+</html>

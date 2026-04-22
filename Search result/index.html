@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - EduAchieve</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-orange: #E8630A;
+            --dark-text: #333333;
+            --light-bg: #f5f5f5;
+            --white: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: var(--light-bg);
+        }
+
+        .navbar {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-orange);
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .search-container {
+            display: flex;
+            background-color: var(--light-bg);
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .search-input {
+            padding: 10px 15px;
+            border: none;
+            background: none;
+            font-size: 13px;
+            min-width: 200px;
+        }
+
+        .search-btn {
+            padding: 10px 15px;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            padding: 10px 20px;
+            background-color: var(--primary-orange);
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .search-page-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .search-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .search-section h1 {
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+
+        .search-bar-large {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-bar-large input {
+            flex: 1;
+            padding: 14px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .search-bar-large button {
+            padding: 14px 30px;
+            background-color: var(--primary-orange);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .results-container {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .results-info {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .results-info p {
+            font-size: 15px;
+            color: #666;
+        }
+
+        .filter-chips {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .chip {
+            padding: 10px 16px;
+            border: 1px solid var(--border-color);
+            background-color: var(--white);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .chip.active {
+            background-color: var(--primary-orange);
+            color: var(--white);
+            border-color: var(--primary-orange);
+        }
+
+        .results-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .result-card {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .result-icon {
+            font-size: 40px;
+            flex: 0 0 auto;
+        }
+
+        .result-content {
+            flex: 1;
+        }
+
+        .result-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .result-type {
+            display: inline-block;
+            padding: 4px 10px;
+            background-color: rgba(232, 99, 10, 0.1);
+            color: var(--primary-orange);
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .result-description {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .result-meta {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .btn-view-result {
+            padding: 10px 20px;
+            background-color: var(--primary-orange);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" style="text-decoration: none;">
+                <span class="logo-text">EduAchieve</span>
+            </a>
+            <div class="nav-right">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Search projects...">
+                    <button class="search-btn">🔍</button>
+                </div>
+                <a href="login.html" class="btn-primary">Portal Access</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="search-page-container">
+        <div class="search-section">
+            <h1>Search EduAchieve</h1>
+            <div class="search-bar-large">
+                <input type="text" id="mainSearch" placeholder="Search projects, research, or students...">
+                <button onclick="performSearch()">🔍 Search</button>
+            </div>
+        </div>
+
+        <div class="results-container">
+            <div class="results-info">
+                <p id="resultCount">Showing results for '<strong id="queryText">AI projects</strong>'</p>
+            </div>
+
+            <div class="filter-chips">
+                <button class="chip active" onclick="filterResults('all')">All</button>
+                <button class="chip" onclick="filterResults('project')">Projects</button>
+                <button class="chip" onclick="filterResults('research')">Research</button>
+                <button class="chip" onclick="filterResults('student')">Students</button>
+            </div>
+
+            <div class="results-list" id="resultsList">
+                <div class="result-card">
+                    <span class="result-icon">🤖</span>
+                    <div class="result-content">
+                        <h3 class="result-title">Advanced AI-Powered Recommendation System</h3>
+                        <span class="result-type">Project</span>
+                        <p class="result-description">A comprehensive recommendation system using collaborative filtering and deep learning techniques.</p>
+                        <p class="result-meta">By Aditya Kumar • March 28, 2026</p>
+                        <button class="btn-view-result" onclick="window.location.href='project-details.html?id=1'">View Details</button>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <span class="result-icon">💬</span>
+                    <div class="result-content">
+                        <h3 class="result-title">Natural Language Processing Chatbot</h3>
+                        <span class="result-type">Project</span>
+                        <p class="result-description">Intelligent chatbot using NLP and deep learning for customer support automation.</p>
+                        <p class="result-meta">By Bhavna Singh • March 10, 2026</p>
+                        <button class="btn-view-result">View Details</button>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <span class="result-icon">👁️</span>
+                    <div class="result-content">
+                        <h3 class="result-title">Computer Vision for Object Detection</h3>
+                        <span class="result-type">Project</span>
+                        <p class="result-description">Real-time object detection system using YOLO and transfer learning on edge devices.</p>
+                        <p class="result-meta">By Chirag Patel • February 28, 2026</p>
+                        <button class="btn-view-result">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function performSearch() {
+            const query = document.getElementById('mainSearch').value;
+            if(query.trim()) {
+                window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
+            }
+        }
+
+        function filterResults(type) {
+            alert(`Filtering by: ${type}`);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('q') || 'AI projects';
+            document.getElementById('mainSearch').value = query;
+            document.getElementById('queryText').textContent = query;
+        });
+    </script>
+</body>
+</html>

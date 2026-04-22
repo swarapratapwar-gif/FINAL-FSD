@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Submit Research - EduAchieve</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', Arial, Helvetica, sans-serif;
+}
+
+body {
+  background: #f4f1ed;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── NAVBAR ── */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background: white;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  background: #ff6600;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-text {
+  color: #ff6600;
+  font-weight: 800;
+  font-size: 17px;
+}
+
+.nav-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+nav {
+  display: flex;
+  gap: 28px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  font-size: 14px;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+
+nav a:hover { 
+  color: #ff6600; 
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+}
+
+.profile-circle {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #ff6600, #ff8533);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(255, 102, 0, 0.2);
+}
+
+.profile-circle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(255, 102, 0, 0.3);
+}
+
+/* ── PAGE BODY LAYOUT ── */
+.container {
+  display: flex;
+  padding: 40px;
+  gap: 40px;
+  flex: 1;
+}
+
+/* ── SIDEBAR MENU ── */
+.sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  height: fit-content;
+  position: sticky;
+  top: 90px;
+  border: 1px solid #e0dbd4;
+}
+
+.sidebar h3 {
+  font-size: 16px;
+  margin-bottom: 4px;
+  font-weight: 800;
+  color: #333;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  padding: 12px 0;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 6px;
+  transition: all 0.2s;
+  font-weight: 500;
+  color: #333;
+}
+
+.sidebar li:hover { 
+  color: #ff6600;
+  background: #f4f1ed;
+  padding-left: 8px;
+}
+
+.sidebar .active {
+  color: #ff6600;
+  font-weight: 700;
+  background: rgba(255, 102, 0, 0.05);
+  padding-left: 12px;
+}
+
+.sidebar li a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  cursor: pointer;
+}
+
+.help-box {
+  margin-top: 40px;
+  background: #fff2e8;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  border-left: 4px solid #ff6600;
+}
+
+.help-box h4 {
+  margin-bottom: 6px;
+  color: #cc5500;
+  font-weight: 700;
+}
+
+/* ── MAIN ── */
+.main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.submit-research-box {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  height: fit-content;
+  border: 1px solid #e0dbd4;
+}
+
+.submit-research-box h1 {
+  font-size: 32px;
+  margin-bottom: 8px;
+  font-weight: 800;
+  color: #333;
+}
+
+.desc {
+  margin: 0 0 30px;
+  color: #666;
+  font-size: 14px;
+}
+
+.form-section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+  margin: 30px 0 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-section-title:first-of-type {
+  margin-top: 0;
+}
+
+/* ── FORM GRID ── */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-grid input,
+.form-grid select,
+.form-grid textarea {
+  padding: 12px;
+  border: 1.5px solid #e0dbd4;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+
+.form-grid input:focus,
+.form-grid select:focus,
+.form-grid textarea:focus {
+  outline: none;
+  border-color: #ff6600;
+  box-shadow: 0 0 0 3px rgba(255,102,0,0.1);
+}
+
+.form-grid textarea {
+  grid-column: span 2;
+  min-height: 120px;
+  resize: vertical;
+}
+
+.full { 
+  grid-column: span 2; 
+}
+
+.half {
+  grid-column: span 1;
+}
+
+/* ── UPLOAD ── */
+.upload-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 25px 0;
+}
+
+.upload-box {
+  border: 2px dashed #ddd;
+  padding: 40px;
+  text-align: center;
+  border-radius: 10px;
+  background: #fafafa;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.upload-box:hover {
+  border-color: #ff6600;
+  background: #fff5ef;
+}
+
+.upload-box p { 
+  font-weight: 700; 
+  margin-bottom: 6px;
+  font-size: 15px;
+  color: #333;
+}
+
+.upload-box small { 
+  color: #999; 
+  font-size: 12px; 
+}
+
+.upload-box-icon {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+/* ── AGREEMENT ── */
+.agreement {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 25px 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.agreement input[type="checkbox"] {
+  margin-top: 3px;
+  accent-color: #ff6600;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.agreement label {
+  cursor: pointer;
+}
+
+/* ── SUBMIT BUTTON ── */
+.submit-btn {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  background: #ff6a00;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Poppins', sans-serif;
+}
+
+.submit-btn:hover {
+  background: #e05a00;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255,106,0,0.35);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+/* ── FOOTER ── */
+footer {
+  margin-top: 40px;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #ddd;
+  font-size: 14px;
+  background: white;
+}
+
+.footer-links a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #555;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { 
+  color: #ff6600; 
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .container { flex-direction: column; padding: 20px; }
+  .sidebar { width: 100%; position: static; }
+  .form-grid { grid-template-columns: 1fr; }
+  .form-grid textarea { grid-column: span 1; }
+  .full { grid-column: span 1; }
+  .upload-grid { grid-template-columns: 1fr; }
+  .submit-research-box { padding: 24px; }
+}
+
+@media (max-width: 600px) {
+  .navbar { 
+    padding: 12px 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .nav-center {
+    flex: 1;
+    justify-content: center;
+    order: 3;
+    width: 100%;
+  }
+  nav a { 
+    margin: 0 8px; 
+    font-size: 13px; 
+  }
+  footer { flex-direction: column; gap: 12px; text-align: center; }
+  .footer-links a { margin: 0 10px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="nav-left" onclick="nav.navigateTo('home')">
+    <div class="logo">
+      <svg width="22" height="22" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="50,15 90,35 50,55 10,35" fill="white"/>
+        <path d="M28,43 L28,66 Q50,77 72,66 L72,43 L50,55 Z" fill="white"/>
+        <rect x="84" y="35" width="6" height="20" rx="3" fill="white"/>
+        <circle cx="87" cy="57" r="5" fill="white"/>
+      </svg>
+    </div>
+    <span class="logo-text">EduAchieve</span>
+  </div>
+
+  <div class="nav-center">
+    <nav>
+      <a href="javascript:void(0)" onclick="nav.navigateTo('home'); return false;">Home</a>
+      <a href="javascript:void(0)" onclick="nav.navigateTo('explore'); return false;">Explore</a>
+      <a href="javascript:void(0)" onclick="nav.navigateTo('about'); return false;">About</a>
+    </nav>
+  </div>
+
+  <div class="nav-right">
+    <div class="profile-circle" onclick="nav.navigateTo('myProfile')" title="Go to My Profile">👤</div>
+  </div>
+</header>
+
+
+<!-- PAGE BODY -->
+<div class="container">
+
+  <!-- SIDEBAR MENU -->
+  <aside class="sidebar">
+    <h3>📋 Menu</h3>
+    <p class="subtitle">Navigation Hub</p>
+    <ul>
+      <li><a href="javascript:void(0)" onclick="nav.navigateTo('myProfile'); return false;">👤 My Profile</a></li>
+      <li><a href="javascript:void(0)" onclick="nav.navigateTo('myProjects'); return false;">📁 My Projects</a></li>
+      <li class="active"><a href="javascript:void(0)" onclick="nav.navigateTo('submit'); return false;">📤 Submit Project</a></li>
+      <li><a href="javascript:void(0)" onclick="nav.navigateTo('notifications'); return false;">🔔 Notifications</a></li>
+      <li><a href="javascript:void(0)" onclick="nav.navigateTo('settings'); return false;">⚙️ Settings</a></li>
+      <li><a href="javascript:void(0)" onclick="nav.navigateTo('students'); return false;">👨‍🎓 Student Records</a></li>
+    </ul>
+    <div class="help-box">
+      <h4>💡 Submission Tips</h4>
+      <p>Ensure your project includes all required documentation, clear descriptions, and proper citations for references.</p>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+    <div class="submit-research-box">
+
+      <h1>📤 Submit Your Project</h1>
+      <p class="desc">Share your academic project with the EduAchieve community. Fill out all details below to get started.</p>
+
+      <!-- FORM -->
+      <div class="form-grid">
+        
+        <!-- PERSONAL INFORMATION SECTION -->
+        <div class="full">
+          <div class="form-section-title">👤 Personal Information</div>
+        </div>
+        
+        <input type="text" placeholder="Full Name" required>
+        <input type="email" placeholder="Email Address" required>
+        <input type="tel" placeholder="Phone Number" required>
+        <input type="text" placeholder="University / Institution" required>
+
+        <!-- PROJECT DETAILS SECTION -->
+        <div class="full">
+          <div class="form-section-title">📚 Project Details</div>
+        </div>
+
+        <input type="text" placeholder="Project Title" class="full" required>
+        <input type="text" placeholder="Co-Author / Team Member (Optional)">
+        <input type="text" placeholder="Guide / Mentor Name" required>
+
+        <!-- ACADEMIC INFORMATION SECTION -->
+        <div class="full">
+          <div class="form-section-title">🎓 Academic Information</div>
+        </div>
+
+        <select required>
+          <option value="">Select Academic Year</option>
+          <option value="1st">1st Year</option>
+          <option value="2nd">2nd Year</option>
+          <option value="3rd">3rd Year</option>
+          <option value="4th">4th Year</option>
+          <option value="masters">Masters</option>
+          <option value="phd">PhD</option>
+        </select>
+
+        <select required>
+          <option value="">Select Department / Domain</option>
+          <option value="ai">Artificial Intelligence</option>
+          <option value="ml">Machine Learning</option>
+          <option value="ds">Data Science</option>
+          <option value="cs">Cyber Security</option>
+          <option value="blockchain">Blockchain</option>
+          <option value="iot">IoT</option>
+          <option value="web">Web Development</option>
+          <option value="mobile">Mobile Development</option>
+          <option value="cloud">Cloud Computing</option>
+          <option value="other">Other</option>
+        </select>
+
+        <input type="text" placeholder="Batch / Section (e.g., A, B, C)" class="half" required>
+        <input type="text" placeholder="Roll Number / Student ID" class="half" required>
+
+        <!-- PROJECT DESCRIPTION SECTION -->
+        <div class="full">
+          <div class="form-section-title">📝 Project Description</div>
+        </div>
+
+        <textarea placeholder="Brief Description of Your Project (What is it about?)" class="full" required></textarea>
+        <textarea placeholder="Key Technologies & Tools Used" class="full" required></textarea>
+
+      </div>
+
+      <!-- UPLOAD SECTION -->
+      <div class="form-section-title">📎 Upload Files</div>
+      <div class="upload-grid">
+        <div class="upload-box" onclick="document.getElementById('pdfUpload').click()">
+          <div class="upload-box-icon">📄</div>
+          <p>Click to upload PDF/Report</p>
+          <small>Max file size: 25MB</small>
+          <input type="file" id="pdfUpload" accept=".pdf,.doc,.docx" style="display:none;">
+        </div>
+        <div class="upload-box" onclick="document.getElementById('imageUpload').click()">
+          <div class="upload-box-icon">🖼️</div>
+          <p>Upload Project Thumbnail</p>
+          <small>PNG, JPG up to 5MB</small>
+          <input type="file" id="imageUpload" accept="image/*" style="display:none;">
+        </div>
+      </div>
+
+      <!-- AGREEMENT SECTION -->
+      <div class="form-section-title">✅ Confirmation</div>
+      <div class="agreement">
+        <input type="checkbox" id="agreeCheck" required>
+        <label for="agreeCheck">
+          I certify that this project is my original work (or properly credited) and I agree to the
+          <b>EduAchieve Publication Terms and Community Guidelines</b>.
+        </label>
+      </div>
+
+      <button class="submit-btn">📤 Submit Project</button>
+
+    </div>
+  </main>
+
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2024 EduAchieve. Empowering Future Scholars.</p>
+  <div class="footer-links">
+    <a href="javascript:void(0)" onclick="nav.navigateTo('about'); return false;">Privacy Policy</a>
+    <a href="javascript:void(0)" onclick="nav.navigateTo('about'); return false;">Code of Ethics</a>
+    <a href="javascript:void(0)" onclick="nav.navigateTo('about'); return false;">Help Center</a>
+  </div>
+</footer>
+
+
+<script src="navigation-helper.js"></script>
+<script>
+  // ── SUBMIT BUTTON ──
+  document.querySelector(".submit-btn").addEventListener("click", function () {
+    const fullName = document.querySelector('input[placeholder="Full Name"]').value.trim();
+    const email = document.querySelector('input[placeholder="Email Address"]').value.trim();
+    const phone = document.querySelector('input[placeholder="Phone Number"]').value.trim();
+    const institution = document.querySelector('input[placeholder="University / Institution"]').value.trim();
+    const projectTitle = document.querySelector('input[placeholder="Project Title"]').value.trim();
+    const mentor = document.querySelector('input[placeholder="Guide / Mentor Name"]').value.trim();
+    const agreed = document.getElementById("agreeCheck").checked;
+
+    if (!fullName || !email || !phone || !institution || !projectTitle || !mentor) {
+      alert("❌ Please fill in all required fields");
+      return;
+    }
+
+    if (!agreed) {
+      alert("❌ Please agree to the EduAchieve Publication Terms before submitting.");
+      return;
+    }
+
+    alert("✅ Project submitted successfully! We'll review it shortly.");
+    // Reset form
+    document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], select, textarea').forEach(el => el.value = '');
+    document.getElementById("agreeCheck").checked = false;
+  });
+</script>
+
+</body>
+</html>

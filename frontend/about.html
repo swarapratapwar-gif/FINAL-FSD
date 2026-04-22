@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EduAchieve | About & FAQ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Lora:ital@0;1&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    :root {
+      --orange:#ff6600; --orange-dark:#e05500; --orange-light:#fff3eb;
+      --navy:#1a1a2e; --bg:#f4f1ed; --white:#ffffff;
+      --border:#e0dbd4; --text:#1a1a2e; --text-sub:#5c5c72; --text-muted:#9a9aaa;
+      --shadow:0 4px 20px rgba(0,0,0,0.07); --radius:12px;
+    }
+    body { font-family:'Poppins',sans-serif; background:var(--bg); color:var(--text); }
+
+    .navbar { display:flex; align-items:center; justify-content:space-between; padding:12px 36px; background:#fff; border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
+    .nav-brand { display:flex; align-items:center; gap:9px; cursor:pointer; }
+    .nav-logo { width:36px; height:36px; background:var(--orange); border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+    .brand-name { font-size:17px; font-weight:800; color:var(--orange); cursor:pointer; }
+    .nav-links { display:flex; gap:28px; position:absolute; left:50%; transform:translateX(-50%); }
+    .nav-links a { font-size:14px; font-weight:500; color:var(--text-sub); text-decoration:none; transition:color .2s; cursor:pointer; }
+    .nav-links a:hover, .nav-links a.active { color:var(--orange); }
+    .nav-right { display:flex; gap:10px; }
+    .btn-signin { padding:8px 16px; border:1.5px solid var(--border); border-radius:8px; background:#fff; font-family:'Poppins',sans-serif; font-size:13px; font-weight:600; cursor:pointer; color:var(--text-sub); transition:all .2s; }
+    .btn-signin:hover { border-color:var(--orange); color:var(--orange); }
+    .btn-portal { padding:8px 16px; border:none; border-radius:8px; background:var(--orange); font-family:'Poppins',sans-serif; font-size:13px; font-weight:700; cursor:pointer; color:#fff; transition:all .2s; }
+    .btn-portal:hover { background:var(--orange-dark); }
+
+    .page-hero { background:linear-gradient(135deg,var(--navy),#16213e); padding:60px 80px; color:#fff; text-align:center; position:relative; overflow:hidden; }
+    .page-hero::before { content:''; position:absolute; top:-100px; right:-100px; width:400px; height:400px; background:radial-gradient(circle,rgba(255,102,0,0.15),transparent 70%); border-radius:50%; }
+    .page-hero::after { content:''; position:absolute; bottom:-80px; left:-80px; width:300px; height:300px; background:radial-gradient(circle,rgba(255,102,0,0.1),transparent 70%); border-radius:50%; }
+    .page-hero h1 { font-size:36px; font-weight:800; margin-bottom:10px; position:relative; z-index:1; }
+    .page-hero h1 span { color:var(--orange); }
+    .page-hero p { font-size:15px; opacity:.65; max-width:540px; margin:0 auto; line-height:1.7; position:relative; z-index:1; }
+
+    .page-content { max-width:1000px; margin:0 auto; padding:52px 24px; }
+
+    .about-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin-bottom:60px; }
+    .about-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:28px; transition:box-shadow .2s,transform .15s; cursor:pointer; }
+    .about-card:hover { box-shadow:0 6px 28px rgba(0,0,0,0.09); transform:translateY(-2px); }
+    .about-card-icon { font-size:38px; margin-bottom:14px; display:block; }
+    .about-card h3 { font-size:16px; font-weight:700; color:var(--text); margin-bottom:8px; }
+    .about-card p { font-size:13.5px; color:var(--text-sub); line-height:1.75; }
+
+    /* MODAL STYLES */
+    .modal-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:999; align-items:center; justify-content:center; }
+    .modal-overlay.show { display:flex; }
+    .modal-box { background:#fff; border-radius:16px; padding:40px; max-width:600px; width:90%; max-height:80vh; overflow-y:auto; animation:slideUp .3s ease; position:relative; }
+    @keyframes slideUp { from { transform:translateY(50px); opacity:0; } to { transform:translateY(0); opacity:1; } }
+    .modal-close { position:absolute; top:16px; right:16px; background:none; border:none; font-size:28px; color:var(--text-muted); cursor:pointer; transition:color .2s; }
+    .modal-close:hover { color:var(--text); }
+    .modal-icon { font-size:48px; margin-bottom:16px; display:block; }
+    .modal-box h2 { font-size:24px; font-weight:800; color:var(--text); margin-bottom:12px; }
+    .modal-box p { font-size:14px; color:var(--text-sub); line-height:1.8; margin-bottom:12px; }
+
+    .faq-wrap { margin-bottom:60px; }
+    .faq-item { background:#fff; border:1px solid var(--border); border-radius:var(--radius); margin-bottom:10px; overflow:hidden; }
+    .faq-question { padding:18px 22px; font-size:14.5px; font-weight:600; cursor:pointer; display:flex; justify-content:space-between; align-items:center; color:var(--text); }
+    .faq-question:hover { background:var(--orange-light); }
+    .faq-question.open { color:var(--orange); background:var(--orange-light); }
+    .faq-icon { width:26px; height:26px; background:var(--bg); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; transition:transform .3s; }
+    .faq-question.open .faq-icon { transform:rotate(45deg); background:var(--orange); color:#fff; }
+    .faq-answer { max-height:0; overflow:hidden; transition:max-height .4s ease; font-size:13.5px; color:var(--text-sub); line-height:1.8; padding:0 22px; }
+    .faq-answer.open { max-height:300px; padding:0 22px 20px; }
+
+    footer { background:var(--navy); color:rgba(255,255,255,0.4); text-align:center; padding:24px; font-size:12px; }
+
+    @media(max-width:720px){ .about-grid{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<header class="navbar">
+  <div class="nav-brand" onclick="nav.navigateTo('home')">
+    <div class="nav-logo">
+      <svg width="24" height="24" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="50,15 90,35 50,55 10,35" fill="white"/>
+        <path d="M28,43 L28,66 Q50,77 72,66 L72,43 L50,55 Z" fill="white"/>
+        <rect x="84" y="35" width="6" height="20" rx="3" fill="white"/>
+        <circle cx="87" cy="57" r="5" fill="white"/>
+      </svg>
+    </div>
+    <span class="brand-name">EduAchieve</span>
+  </div>
+  <nav class="nav-links">
+    <a onclick="nav.navigateTo('home'); return false;">Home</a>
+    <a onclick="nav.navigateTo('explore'); return false;">Explore</a>
+    <a onclick="nav.navigateTo('about'); return false;" class="active">About</a>
+  </nav>
+  <div class="nav-right">
+    <button class="btn-signin" onclick="nav.navigateTo('login')">Log In</button>
+    <button class="btn-portal" onclick="nav.navigateTo('register')">Get Started</button>
+  </div>
+</header>
+
+<!-- Hero Section -->
+<section class="page-hero">
+  <h1>About <span>EduAchieve</span></h1>
+  <p>Empowering students to share their academic excellence and groundbreaking research with the world.</p>
+</section>
+
+<!-- Main Content -->
+<div class="page-content">
+
+  <!-- About Cards -->
+  <div class="about-grid">
+    <div class="about-card" onclick="openModal('modal-mission')">
+      <span class="about-card-icon">🎓</span>
+      <h3>Our Mission</h3>
+      <p>To create a global platform where students can showcase their academic achievements and research, fostering collaboration and innovation across institutions.</p>
+    </div>
+    <div class="about-card" onclick="openModal('modal-community')">
+      <span class="about-card-icon">🌍</span>
+      <h3>Global Community</h3>
+      <p>Connect with thousands of students, faculty, and researchers worldwide, sharing knowledge and inspiring each other.</p>
+    </div>
+    <div class="about-card" onclick="openModal('modal-innovation')">
+      <span class="about-card-icon">🚀</span>
+      <h3>Innovation Hub</h3>
+      <p>Discover cutting-edge projects and research papers that push the boundaries of what's possible in academia.</p>
+    </div>
+    <div class="about-card" onclick="openModal('modal-knowledge')">
+      <span class="about-card-icon">💡</span>
+      <h3>Knowledge Sharing</h3>
+      <p>Learn from the best minds in your field and contribute your own insights to advance collective knowledge.</p>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <div class="modal-overlay" id="modal-mission" onclick="closeModalOnBackdrop(event, 'modal-mission')">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('modal-mission')">✕</button>
+      <span class="modal-icon">🎓</span>
+      <h2>Our Mission</h2>
+      <p>To create a global platform where students can showcase their academic achievements and research, fostering collaboration and innovation across institutions.</p>
+      <p>EduAchieve's mission is to empower the next generation of academic leaders by providing them with a space to share their groundbreaking work with a global audience. We believe that academic excellence should be celebrated and that knowledge sharing drives innovation.</p>
+      <p>Our platform connects students with faculty mentors, industry experts, and peers from around the world, creating an ecosystem of continuous learning and growth.</p>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-community" onclick="closeModalOnBackdrop(event, 'modal-community')">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('modal-community')">✕</button>
+      <span class="modal-icon">🌍</span>
+      <h2>Global Community</h2>
+      <p>Connect with thousands of students, faculty, and researchers worldwide, sharing knowledge and inspiring each other.</p>
+      <p>Our global community comprises over 5,000+ active students and researchers from 150+ institutions across the world. Members collaborate on projects, share research findings, and support each other's academic journey.</p>
+      <p>Join a vibrant network of innovators, thinkers, and problem-solvers who are committed to advancing human knowledge and creating positive impact through academic excellence.</p>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-innovation" onclick="closeModalOnBackdrop(event, 'modal-innovation')">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('modal-innovation')">✕</button>
+      <span class="modal-icon">🚀</span>
+      <h2>Innovation Hub</h2>
+      <p>Discover cutting-edge projects and research papers that push the boundaries of what's possible in academia.</p>
+      <p>EduAchieve serves as a launchpad for innovative ideas and groundbreaking research. From AI and machine learning to sustainable development and biotechnology, our platform showcases projects that are shaping the future.</p>
+      <p>Explore featured projects, trending research topics, and emerging technologies. Collaborate with like-minded innovators to turn ideas into reality and make a difference in your field.</p>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-knowledge" onclick="closeModalOnBackdrop(event, 'modal-knowledge')">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('modal-knowledge')">✕</button>
+      <span class="modal-icon">💡</span>
+      <h2>Knowledge Sharing</h2>
+      <p>Learn from the best minds in your field and contribute your own insights to advance collective knowledge.</p>
+      <p>Knowledge is most valuable when shared. EduAchieve facilitates open dialogue between students, faculty, and industry professionals. Through our platform, you can access peer-reviewed research, attend virtual seminars, and participate in collaborative learning communities.</p>
+      <p>Whether you're sharing your first research paper or mentoring the next generation of scholars, EduAchieve is your platform for advancing collective human knowledge.</p>
+    </div>
+  </div>
+
+  <!-- FAQ Section -->
+  <div class="faq-wrap">
+    <h2 style="text-align:center; margin-bottom:32px;">Frequently Asked Questions</h2>
+    
+    <div class="faq-item">
+      <div class="faq-question" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')">
+        <span>How do I submit my project?</span>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        Click on "Submit Research" from the home page, fill in your project details, upload your research paper and thumbnail, and submit. Your project will be reviewed and published within 48 hours.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')">
+        <span>Is EduAchieve free to use?</span>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        Yes, EduAchieve is completely free for students and faculty members. We believe in democratizing access to academic excellence.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')">
+        <span>Can I edit my project after submission?</span>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        Yes, you can edit your project details and re-upload files within 30 days of submission. After that, please contact our support team.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')">
+        <span>How are projects featured on the homepage?</span>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        Projects are featured based on quality, relevance, and community engagement. Our editorial team reviews all submissions to ensure they meet our standards.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')">
+        <span>Can I collaborate with other students?</span>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        Absolutely! You can list multiple authors on your project. Simply add their names and emails during the submission process.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer>
+  <p>&copy; 2024 EduAchieve. All rights reserved. | <a href="#" style="color:rgba(255,255,255,0.6);">Privacy Policy</a> | <a href="#" style="color:rgba(255,255,255,0.6);">Terms of Service</a></p>
+</footer>
+
+<script src="navigation-helper.js"></script>
+<script>
+  function openModal(modalId) {
+    document.getElementById(modalId).classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(modalId) {
+    document.getElementById(modalId).classList.remove('show');
+    document.body.style.overflow = 'auto';
+  }
+
+  function closeModalOnBackdrop(event, modalId) {
+    if (event.target.id === modalId) {
+      closeModal(modalId);
+    }
+  }
+
+  // Close modals on Escape key
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay.show').forEach(modal => {
+        modal.classList.remove('show');
+      });
+      document.body.style.overflow = 'auto';
+    }
+  });
+</script>
+</body>
+</html>
