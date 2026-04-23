@@ -1,6 +1,41 @@
 (function () {
   const AUTH_TOKEN_KEY = 'token';
   const AUTH_USER_KEY = 'user';
+  const THEME_KEY = 'theme-mode';
+
+  function getSavedTheme() {
+    return localStorage.getItem(THEME_KEY) || 'light';
+  }
+
+  function applyTheme(theme) {
+    document.body.classList.toggle('dark-mode', theme === 'dark');
+    localStorage.setItem(THEME_KEY, theme);
+    updateThemeButton();
+  }
+
+  function initTheme() {
+    if (getSavedTheme() === 'dark') {
+      document.body.classList.add('dark-mode');
+    }
+    updateThemeButton();
+  }
+
+  function toggleTheme() {
+    const nextTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
+    applyTheme(nextTheme);
+  }
+
+  function updateThemeButton() {
+    const themeBtn = document.getElementById('themeToggle');
+    if (!themeBtn) {
+      return;
+    }
+
+    const isDark = document.body.classList.contains('dark-mode');
+    themeBtn.textContent = isDark ? '☀' : '☾';
+    themeBtn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+    themeBtn.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+  }
 
   function getToken() {
     return localStorage.getItem(AUTH_TOKEN_KEY) || '';
@@ -58,6 +93,16 @@
     const userLabel = document.getElementById('navUser');
     const authLink = document.getElementById('navAuth');
     const logoutBtn = document.getElementById('navLogout');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (navLinks && !document.getElementById('themeToggle')) {
+      const themeBtn = document.createElement('button');
+      themeBtn.id = 'themeToggle';
+      themeBtn.type = 'button';
+      themeBtn.className = 'theme-toggle';
+      navLinks.insertBefore(themeBtn, navLinks.firstChild);
+      themeBtn.addEventListener('click', toggleTheme);
+    }
 
     if (userLabel) {
       userLabel.textContent = user ? ('Hi, ' + user.name) : 'Guest';
@@ -74,7 +119,11 @@
         window.location.href = 'index.html';
       };
     }
+
+    updateThemeButton();
   }
+
+  document.addEventListener('DOMContentLoaded', initTheme);
 
   window.App = {
     api,
@@ -83,6 +132,9 @@
     saveAuth,
     clearAuth,
     requireAuth,
-    applyNavState
+    applyNavState,
+    toggleTheme,
+    applyTheme,
+    initTheme
   };
 })();
