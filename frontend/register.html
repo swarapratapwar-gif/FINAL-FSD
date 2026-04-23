@@ -7,25 +7,65 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="navbar">
-    <div class="brand">EduAchieve</div>
-    <nav class="nav-links">
+  <header class="site-topbar">
+    <div class="brand-wrap">
+      <div class="brand-mark">E</div>
+      <div class="brand-copy">
+        <div class="brand-title">EduAchieve</div>
+        <div class="brand-subtitle">Academic Portal</div>
+      </div>
+    </div>
+
+    <nav class="top-nav">
       <a href="index.html">Home</a>
       <a href="login.html">Login</a>
     </nav>
+
+    <div class="top-actions">
+      <button id="themeToggle" class="theme-toggle" type="button">☾</button>
+    </div>
   </header>
 
-  <main class="container narrow">
-    <section class="card">
-      <h2>Create Account</h2>
-      <form id="registerForm">
-        <input id="name" placeholder="Full name" required>
-        <input id="email" type="email" placeholder="Email" required>
-        <input id="password" type="password" placeholder="Password" required>
-        <button class="submit" type="submit">Register</button>
-      </form>
-      <p id="status" class="status muted"></p>
-    </section>
+  <main class="container">
+    <div class="detail-layout">
+      <section class="detail-card detail-hero" style="min-height: 520px; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <span class="hero-kicker">Join the portal</span>
+          <h1 style="margin-top: 16px; max-width: 10ch;">Create Account</h1>
+          <p>Register to submit research papers, presentations, and project files in one organized workspace.</p>
+        </div>
+
+        <div class="meta-card" style="background: rgba(255,255,255,0.9); color: var(--text);">
+          <h3>What you gain</h3>
+          <div class="meta-row"><span class="meta-label">Project upload</span><span class="meta-value">Enabled</span></div>
+          <div class="meta-row"><span class="meta-label">Profile page</span><span class="meta-value">Enabled</span></div>
+          <div class="meta-row"><span class="meta-label">Batch tracking</span><span class="meta-value">Enabled</span></div>
+        </div>
+      </section>
+
+      <section class="detail-card">
+        <div class="hero-kicker">Sign up</div>
+        <h2 style="margin-top: 12px; font-size: 2rem;">Register for EduAchieve</h2>
+        <p class="section-muted">Create your account to submit and manage academic projects.</p>
+        <form id="registerForm" style="margin-top: 18px;">
+          <div class="field-card">
+            <label for="name">Full Name</label>
+            <input id="name" placeholder="Full name" required>
+          </div>
+          <div class="field-card" style="margin-top: 14px;">
+            <label for="email">Email</label>
+            <input id="email" type="email" placeholder="Email" required>
+          </div>
+          <div class="field-card" style="margin-top: 14px;">
+            <label for="password">Password</label>
+            <input id="password" type="password" placeholder="Password" required>
+          </div>
+          <button class="submit" type="submit" style="width: 100%; margin-top: 18px;">Register</button>
+        </form>
+        <p id="status" class="status muted"></p>
+        <p class="section-muted" style="margin-top: 14px;">Already have an account? <a href="login.html">Log in</a></p>
+      </section>
+    </div>
   </main>
 
   <script src="common.js"></script>

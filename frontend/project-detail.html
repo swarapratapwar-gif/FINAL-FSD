@@ -7,29 +7,72 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="navbar">
-    <div class="brand">EduAchieve</div>
-    <nav class="nav-links">
-      <a href="explore.html">Back to Explore</a>
-      <a href="submit.html">Submit</a>
-      <a href="my-profile.html">My Profile</a>
-      <a id="navAuth" href="login.html">Login</a>
+  <header class="site-topbar">
+    <div class="brand-wrap">
+      <div class="brand-mark">E</div>
+      <div class="brand-copy">
+        <div class="brand-title">EduAchieve</div>
+        <div class="brand-subtitle">Academic Portal</div>
+      </div>
+    </div>
+
+    <nav class="top-nav">
+      <a href="explore.html">Projects</a>
+      <a href="submit.html">Submit Research</a>
+      <a href="my-profile.html">Profile</a>
+    </nav>
+
+    <div class="top-actions">
+      <a id="navAuth" class="button-link alt" href="login.html">Login</a>
       <button id="navLogout" class="primary">Logout</button>
       <span id="navUser" class="muted"></span>
-    </nav>
+    </div>
   </header>
 
-  <main class="container narrow-wide">
-    <section class="card" id="detailBox">
-      <h2 id="title">Loading project...</h2>
-      <p class="muted" id="meta"></p>
-      <p id="description"></p>
-      <p id="tech" class="tags"></p>
-      <p id="links"></p>
-      <div id="filesSection"></div>
-      <div id="ownerActions"></div>
-      <p id="status" class="status muted"></p>
-    </section>
+  <main class="container">
+    <div class="detail-layout">
+      <section class="detail-card detail-hero">
+        <span class="hero-kicker">Project Overview</span>
+        <h1 id="title">Loading project...</h1>
+        <div class="detail-meta" id="meta"></div>
+        <p id="description"></p>
+        <div id="links" class="inline-actions" style="margin-top: 18px;"></div>
+
+        <div class="tabs">
+          <span class="tab-link active-link">Abstract</span>
+          <span class="tab-link">Full Description</span>
+          <span class="tab-link">Methodology</span>
+        </div>
+
+        <div class="meta-card" style="margin-top: 16px; background: rgba(255,255,255,0.88); color: var(--text);">
+          <h3>Abstract</h3>
+          <p id="tech" class="tags"></p>
+          <p class="section-muted">Use the download links on the right to access the research paper and presentation PDF for review.</p>
+        </div>
+
+        <div id="ownerActions" style="margin-top: 18px;"></div>
+        <p id="status" class="status muted"></p>
+      </section>
+
+      <aside class="side-stack">
+        <section class="meta-card">
+          <h3>Project Metadata</h3>
+          <div class="meta-row"><span class="meta-label">Access Type</span><span class="meta-value">Open Access</span></div>
+          <div class="meta-row"><span class="meta-label">Batch</span><span class="meta-value" id="batchMeta">---</span></div>
+          <div class="meta-row"><span class="meta-label">Owner</span><span class="meta-value" id="ownerMeta">---</span></div>
+        </section>
+
+        <section class="meta-card">
+          <h3>Project Files</h3>
+          <div id="filesSection"></div>
+        </section>
+
+        <section class="meta-card" style="background: linear-gradient(135deg, rgba(255,102,0,0.08), rgba(255,255,255,0.94));">
+          <h3>Related Research</h3>
+          <p class="section-muted">Students can use this area to compare research papers and presentation materials once the repository grows.</p>
+        </section>
+      </aside>
+    </div>
   </main>
 
   <script src="common.js"></script>

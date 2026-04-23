@@ -94,13 +94,15 @@
     const authLink = document.getElementById('navAuth');
     const logoutBtn = document.getElementById('navLogout');
     const navLinks = document.querySelector('.nav-links');
+    const topActions = document.querySelector('.top-actions');
+    const toolbar = navLinks || topActions;
 
-    if (navLinks && !document.getElementById('themeToggle')) {
+    if (toolbar && !document.getElementById('themeToggle')) {
       const themeBtn = document.createElement('button');
       themeBtn.id = 'themeToggle';
       themeBtn.type = 'button';
       themeBtn.className = 'theme-toggle';
-      navLinks.insertBefore(themeBtn, navLinks.firstChild);
+      toolbar.insertBefore(themeBtn, toolbar.firstChild);
       themeBtn.addEventListener('click', toggleTheme);
     }
 

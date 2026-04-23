@@ -7,53 +7,142 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="navbar">
-    <div class="brand">EduAchieve</div>
-    <nav class="nav-links">
+  <header class="site-topbar">
+    <div class="brand-wrap">
+      <div class="brand-mark">E</div>
+      <div class="brand-copy">
+        <div class="brand-title">EduAchieve</div>
+        <div class="brand-subtitle">Academic Portal</div>
+      </div>
+    </div>
+
+    <nav class="top-nav">
       <a href="index.html">Home</a>
-      <a href="explore.html">Explore</a>
-      <a href="submit.html" class="active-link">Submit</a>
-      <a href="my-profile.html">My Profile</a>
-      <a id="navAuth" href="login.html">Login</a>
+      <a href="explore.html">Projects</a>
+      <a href="submit.html" class="active-link">Submit Research</a>
+      <a href="my-profile.html">Profile</a>
+    </nav>
+
+    <div class="top-actions">
+      <a id="navAuth" class="button-link alt" href="login.html">Login</a>
       <button id="navLogout" class="primary">Logout</button>
       <span id="navUser" class="muted"></span>
-    </nav>
+    </div>
   </header>
 
-  <main class="container narrow-wide">
-    <section class="card">
-      <h2>Submit Project</h2>
-      <form id="submitForm" enctype="multipart/form-data">
-        <input id="title" placeholder="Project title" required>
-        <textarea id="description" placeholder="Project description" required></textarea>
-        <div class="form-row">
-          <input id="techStack" placeholder="Tech stack" required>
-          <input id="batch" placeholder="Batch year" required>
-        </div>
-        <input id="github" placeholder="GitHub URL (optional)">
-        <input id="linkedin" placeholder="LinkedIn URL (optional)">
-        
-        <div class="file-section">
-          <label for="researchPaper" class="file-label">
-            Research Paper (PDF) <span class="required">*</span>
-          </label>
-          <input id="researchPaper" type="file" accept=".pdf,application/pdf" required>
-          <small class="muted">Required: PDF file for research paper</small>
-        </div>
+  <div class="shell-layout">
+    <aside class="shell-sidebar">
+      <div>
+        <div class="workspace-label">Workspace</div>
+        <h1 class="workspace-title">Submit Research</h1>
+        <p class="section-muted">Share your academic work with the portal community.</p>
+      </div>
 
-        <div class="file-section">
-          <label for="presentation" class="file-label">
-            Presentation (PDF) <span class="optional">(Optional)</span>
-          </label>
-          <input id="presentation" type="file" accept=".pdf,application/pdf">
-          <small class="muted">Optional: PDF file for presentation</small>
-        </div>
+      <nav class="sidebar-menu">
+        <a href="index.html" class="sidebar-link">Home</a>
+        <a href="explore.html" class="sidebar-link">Projects</a>
+        <a href="submit.html" class="sidebar-link active-link">Submit Research</a>
+        <a href="my-profile.html" class="sidebar-link">My Profile</a>
+        <a href="settings.html" class="sidebar-link">Settings</a>
+      </nav>
 
-        <button class="submit" type="submit">Submit Project</button>
-      </form>
-      <p id="status" class="status muted"></p>
-    </section>
-  </main>
+      <div class="sidebar-footer">
+        <div class="meta-card" style="background: #fff7ef;">
+          <strong>Need help?</strong>
+          <p class="section-muted" style="margin-top: 8px;">Check the submission guidelines before uploading your PDF files.</p>
+        </div>
+      </div>
+    </aside>
+
+    <main class="workspace-main">
+      <section class="hero-banner">
+        <div class="hero-rows">
+          <div>
+            <span class="hero-kicker">Academic submission</span>
+            <h1>Submit Research</h1>
+            <p>Upload your project details, required research paper PDF, and presentation PDF in a clear, polished workspace.</p>
+          </div>
+          <div class="hero-image-card">
+            <div class="hero-image-badge">PDF upload required</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="detail-layout" style="margin-top: 24px;">
+        <section class="detail-card">
+          <h2>Research Submission Form</h2>
+          <p class="section-muted">Fill in the fields below to publish your project.</p>
+          <form id="submitForm" enctype="multipart/form-data">
+            <div class="profile-field-grid">
+              <div class="field-card">
+                <label for="title">Project Title</label>
+                <input id="title" placeholder="Project title" required>
+              </div>
+              <div class="field-card">
+                <label for="batch">Batch Year</label>
+                <input id="batch" placeholder="Batch year" required>
+              </div>
+            </div>
+
+            <div class="field-card" style="margin-top: 18px;">
+              <label for="description">Project Description</label>
+              <textarea id="description" placeholder="Project description" required></textarea>
+            </div>
+
+            <div class="profile-field-grid" style="margin-top: 18px;">
+              <div class="field-card">
+                <label for="techStack">Tech Stack</label>
+                <input id="techStack" placeholder="Tech stack" required>
+              </div>
+              <div class="field-card">
+                <label for="github">GitHub URL</label>
+                <input id="github" placeholder="GitHub URL (optional)">
+              </div>
+            </div>
+
+            <div class="field-card" style="margin-top: 18px;">
+              <label for="linkedin">LinkedIn URL</label>
+              <input id="linkedin" placeholder="LinkedIn URL (optional)">
+            </div>
+
+            <div class="profile-field-grid" style="margin-top: 18px;">
+              <div class="field-card">
+                <label for="researchPaper">Research Paper (PDF) <span class="required">*</span></label>
+                <input id="researchPaper" type="file" accept=".pdf,application/pdf" required>
+                <p class="section-muted">Required PDF for the research paper.</p>
+              </div>
+
+              <div class="field-card">
+                <label for="presentation">Presentation (PDF)</label>
+                <input id="presentation" type="file" accept=".pdf,application/pdf">
+                <p class="section-muted">Optional presentation PDF.</p>
+              </div>
+            </div>
+
+            <div class="inline-actions" style="margin-top: 22px;">
+              <button class="submit" type="submit">Submit Research Paper</button>
+            </div>
+          </form>
+          <p id="status" class="status muted"></p>
+        </section>
+
+        <aside class="side-stack">
+          <section class="meta-card">
+            <h3>Submission Checklist</h3>
+            <div class="meta-row"><span class="meta-label">Title and description</span><span class="meta-value">Required</span></div>
+            <div class="meta-row"><span class="meta-label">Research paper PDF</span><span class="meta-value">Required</span></div>
+            <div class="meta-row"><span class="meta-label">Presentation PDF</span><span class="meta-value">Optional</span></div>
+            <div class="meta-row"><span class="meta-label">Batch year</span><span class="meta-value">Required</span></div>
+          </section>
+
+          <section class="meta-card" style="background: linear-gradient(135deg, rgba(255,102,0,0.08), rgba(255,255,255,0.96));">
+            <h3>Quick Tip</h3>
+            <p class="section-muted">Use clear PDF filenames so your project detail page looks polished and easy to review.</p>
+          </section>
+        </aside>
+      </section>
+    </main>
+  </div>
 
   <script src="common.js"></script>
   <script src="submit-page.js"></script>

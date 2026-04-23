@@ -14,9 +14,13 @@ async function loadDetail() {
   try {
     const project = await App.api('/projects/' + encodeURIComponent(id));
     document.getElementById('title').textContent = project.title;
-    document.getElementById('meta').textContent = 'By ' + project.ownerName + ' | Batch ' + project.batch;
+    document.getElementById('meta').innerHTML =
+      '<span>By <strong>' + project.ownerName + '</strong></span>' +
+      '<span>Batch ' + project.batch + '</span>';
     document.getElementById('description').textContent = project.description;
     document.getElementById('tech').textContent = 'Tech: ' + project.techStack;
+    document.getElementById('batchMeta').textContent = project.batch;
+    document.getElementById('ownerMeta').textContent = project.ownerName;
 
     const links = [];
     if (project.github) links.push('<a target="_blank" href="' + project.github + '">GitHub</a>');
@@ -26,13 +30,13 @@ async function loadDetail() {
     // Display file downloads
     const filesHtml = [];
     if (project.researchPaper) {
-      filesHtml.push('<a target="_blank" href="/uploads/' + encodeURIComponent(project.researchPaper) + '" class="button-link">📄 Download Research Paper</a>');
+      filesHtml.push('<a target="_blank" href="/uploads/' + encodeURIComponent(project.researchPaper) + '" class="button-link">Download Research PDF</a>');
     }
     if (project.presentation) {
-      filesHtml.push('<a target="_blank" href="/uploads/' + encodeURIComponent(project.presentation) + '" class="button-link">🎬 Download Presentation</a>');
+      filesHtml.push('<a target="_blank" href="/uploads/' + encodeURIComponent(project.presentation) + '" class="button-link alt">Download Presentation</a>');
     }
     if (filesHtml.length > 0) {
-      document.getElementById('filesSection').innerHTML = '<div style="margin: 12px 0;">' + filesHtml.join('&nbsp; | &nbsp;') + '</div>';
+      document.getElementById('filesSection').innerHTML = '<div class="inline-actions" style="margin-top: 12px;">' + filesHtml.join('') + '</div>';
     }
 
     const user = App.getUser();

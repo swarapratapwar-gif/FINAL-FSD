@@ -10,100 +10,129 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="navbar">
-    <div class="brand">EduAchieve</div>
-    <nav class="nav-links">
+  <header class="site-topbar">
+    <div class="brand-wrap">
+      <div class="brand-mark">E</div>
+      <div class="brand-copy">
+        <div class="brand-title">EduAchieve</div>
+        <div class="brand-subtitle">Academic Portal</div>
+      </div>
+    </div>
+
+    <nav class="top-nav">
       <a href="index.html" class="active-link">Home</a>
-      <a href="explore.html">Explore</a>
-      <a href="submit.html">Submit</a>
-      <a href="my-profile.html">My Profile</a>
-      <a href="student-records.html">Student Records</a>
-      <a href="settings.html">Settings</a>
-      <a id="navAuth" href="login.html">Login</a>
+      <a href="explore.html">Projects</a>
+      <a href="submit.html">Submit Research</a>
+      <a href="my-profile.html">Profile</a>
+    </nav>
+
+    <div class="top-actions">
+      <div class="search-pill">
+        <span>⌕</span>
+        <input type="text" aria-label="Search projects" placeholder="Search projects...">
+      </div>
+      <a id="navAuth" class="button-link alt" href="login.html">Login</a>
       <button id="navLogout" class="primary">Logout</button>
       <span id="navUser" class="muted"></span>
-    </nav>
+    </div>
   </header>
 
   <main class="container">
-    <section class="hero">
-      <span class="hero-badge">EduAchieve Integrated Platform</span>
-      <h1>Showcase, discover, and manage student projects in one place.</h1>
-      <p>EduAchieve helps students share projects, upload research papers and presentations, explore peers' work, and keep everything organized in a clean, reliable portal.</p>
-      <div class="inline-actions hero-actions">
-        <a class="button-link" href="register.html">Get Started</a>
-        <a class="button-link alt" href="explore.html">Browse Projects</a>
+    <section class="hero-banner">
+      <div class="hero-rows">
+        <div>
+          <span class="hero-kicker">Academic Excellence 2024</span>
+          <h1>Educational Achievement &amp; Project Repository</h1>
+          <p>A professional platform to manage student records, project submissions, research papers, and presentation PDFs in one polished workspace.</p>
+          <div class="inline-actions hero-actions">
+            <a class="button-link" href="explore.html">Explore Projects</a>
+            <a class="button-link alt" href="submit.html">Submit Work</a>
+          </div>
+        </div>
+        <div class="hero-image-card">
+          <div class="hero-image-badge">+24% project growth this term</div>
+        </div>
       </div>
+    </section>
+
+    <section class="section-heading">
+      <div>
+        <h2>Project Overview</h2>
+        <p>Built to help students and reviewers track academic research and final-year projects.</p>
+      </div>
+      <a class="button-link alt" href="student-records.html">View Records</a>
     </section>
 
     <section class="info-grid">
       <article class="card highlight-card">
-        <div class="card-icon">✨</div>
-        <h2>What this project does</h2>
-        <p class="muted">A student-focused portal where users can register, log in, submit final-year work, and browse project submissions with owned profile links.</p>
+        <div class="card-icon">📄</div>
+        <h2>Research Uploads</h2>
+        <p class="muted">Each submission includes a required research paper PDF and an optional presentation PDF for review.</p>
       </article>
-
       <article class="card highlight-card">
-        <div class="card-icon">📚</div>
-        <h2>Core features</h2>
-        <p class="muted">Project submission, searchable project browsing, student records, profile pages, notifications, and file uploads for research papers and presentations.</p>
+        <div class="card-icon">📊</div>
+        <h2>Student Tracking</h2>
+        <p class="muted">Monitor batches, authors, and project count from the student records page.</p>
       </article>
-
       <article class="card highlight-card">
-        <div class="card-icon">🔒</div>
-        <h2>Why it is reliable</h2>
-        <p class="muted">JWT authentication, protected actions, a file-backed store for stability, and a shared frontend layout that keeps the experience consistent.</p>
+        <div class="card-icon">🔐</div>
+        <h2>Secure Access</h2>
+        <p class="muted">JWT login keeps private actions protected while the app remains simple and responsive.</p>
       </article>
     </section>
 
-    <section class="grid">
-      <article class="card">
-        <h2>Start Here</h2>
-        <p class="muted">Create an account or log in to manage your projects and save your submissions.</p>
-        <div class="inline-actions">
-          <a class="button-link" href="register.html">Register</a>
-          <a class="button-link alt" href="login.html">Login</a>
-        </div>
-      </article>
-
-      <article class="card">
-        <h2>Explore Work</h2>
-        <p class="muted">Browse, search, and open detailed project pages.</p>
-        <a class="button-link" href="explore.html">Open Explore</a>
-      </article>
-
-      <article class="card">
-        <h2>Submit Project</h2>
-        <p class="muted">Add project title, description, tech stack, batch, profile links, and the required research paper PDF.</p>
-        <a class="button-link" href="submit.html">Open Submit</a>
-      </article>
-    </section>
-
-    <section class="timeline-section card">
-      <h2>How the portal works</h2>
-      <div class="timeline">
-        <div class="timeline-item">
-          <span class="timeline-step">1</span>
-          <div>
-            <h3>Create your account</h3>
-            <p class="muted">Register and log in to unlock project submission and your personal profile dashboard.</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-step">2</span>
-          <div>
-            <h3>Submit project files</h3>
-            <p class="muted">Upload your project details along with the research paper and presentation files.</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-step">3</span>
-          <div>
-            <h3>Explore and share</h3>
-            <p class="muted">Browse submissions, view details, and use the student records page to understand project activity.</p>
-          </div>
-        </div>
+    <section class="section-heading">
+      <div>
+        <h2>Featured Projects</h2>
+        <p>Recent submissions and highlighted academic work.</p>
       </div>
+      <div class="chips">
+        <span class="chip active">All Years</span>
+        <span class="chip">2024</span>
+        <span class="chip">2023</span>
+        <span class="chip">Archives</span>
+      </div>
+    </section>
+
+    <section class="project-grid">
+      <article class="project-tile">
+        <div class="project-cover"></div>
+        <div class="project-tile-body">
+          <span class="project-badge">Computer Science</span>
+          <h3>AI-Driven Predictive Analysis in Modern Agriculture</h3>
+          <p class="summary">A research-heavy student project focused on analytics, automation, and practical deployment.</p>
+          <div class="project-tile-footer">
+            <span class="muted">June 2024</span>
+            <a href="explore.html" class="button-link alt">View Details</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-tile">
+        <div class="project-cover" style="background: linear-gradient(135deg, #4f6d7a, #c7dbe7);"></div>
+        <div class="project-tile-body">
+          <span class="project-badge">Engineering</span>
+          <h3>Sustainable Urban Infrastructure</h3>
+          <p class="summary">A systems project demonstrating cleaner infrastructure and smart city planning.</p>
+          <div class="project-tile-footer">
+            <span class="muted">April 2024</span>
+            <a href="explore.html" class="button-link alt">View Details</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-tile">
+        <div class="project-cover" style="background: linear-gradient(135deg, #102a43, #7bd4de);"></div>
+        <div class="project-tile-body">
+          <span class="project-badge">Biomedical</span>
+          <h3>Genomic Mapping of Stress-Resistant Species</h3>
+          <p class="summary">A collaboration-style submission showing a blend of science, design, and documentation.</p>
+          <div class="project-tile-footer">
+            <span class="muted">March 2024</span>
+            <a href="explore.html" class="button-link alt">View Details</a>
+          </div>
+        </div>
+      </article>
     </section>
   </main>
 

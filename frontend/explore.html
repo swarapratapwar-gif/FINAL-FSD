@@ -7,32 +7,91 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="navbar">
-    <div class="brand">EduAchieve</div>
-    <nav class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="explore.html" class="active-link">Explore</a>
-      <a href="submit.html">Submit</a>
-      <a href="my-profile.html">My Profile</a>
-      <a id="navAuth" href="login.html">Login</a>
+  <header class="site-topbar">
+    <div class="brand-wrap">
+      <div class="brand-mark">E</div>
+      <div class="brand-copy">
+        <div class="brand-title">EduAchieve</div>
+        <div class="brand-subtitle">Academic Portal</div>
+      </div>
+    </div>
+
+    <div class="search-pill">
+      <span>⌕</span>
+      <input id="searchInput" placeholder="Search projects..." aria-label="Search projects">
+    </div>
+
+    <div class="top-actions">
+      <a id="navAuth" class="button-link alt" href="login.html">Login</a>
       <button id="navLogout" class="primary">Logout</button>
       <span id="navUser" class="muted"></span>
-    </nav>
+    </div>
   </header>
 
-  <main class="container">
-    <section class="card">
-      <h2>Explore Projects</h2>
-      <div class="form-row">
-        <input id="searchInput" placeholder="Search title, description, tech stack">
-        <select id="batchSelect">
-          <option value="all">All Batches</option>
-        </select>
+  <div class="shell-layout">
+    <aside class="shell-sidebar">
+      <div>
+        <div class="workspace-label">Workspace</div>
+        <h1 class="workspace-title">Project Repository</h1>
+        <p class="section-muted">Discover, filter, and open student research submissions.</p>
       </div>
-      <div id="projectList" class="project-list"></div>
+
+      <nav class="sidebar-menu">
+        <a href="index.html" class="sidebar-link">Home</a>
+        <a href="explore.html" class="sidebar-link active-link">Projects</a>
+        <a href="submit.html" class="sidebar-link">Submit Research</a>
+        <a href="my-profile.html" class="sidebar-link">My Profile</a>
+        <a href="student-records.html" class="sidebar-link">Student Records</a>
+        <a href="settings.html" class="sidebar-link">Settings</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a class="button-link sidebar-cta" href="submit.html">Add Project</a>
+        <div class="user-card">
+          <div class="avatar-circle">EA</div>
+          <div>
+            <div><strong>EduAchieve</strong></div>
+            <div class="muted">Academic Portal</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="workspace-main">
+      <section class="hero-banner">
+        <div class="hero-rows">
+          <div>
+            <span class="hero-kicker">Featured Repository</span>
+            <h1>Educational Achievement &amp; Project Repository</h1>
+            <p>High-impact student research with powerful search, batch filters, and polished project cards.</p>
+            <div class="inline-actions hero-actions">
+              <a class="button-link" href="submit.html">Submit Research</a>
+              <a class="button-link alt" href="student-records.html">Student Records</a>
+            </div>
+          </div>
+          <div class="hero-image-card">
+            <div class="hero-image-badge">Smart filtering enabled</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-heading">
+        <div>
+          <h2>Featured Projects</h2>
+          <p>Browse recent submissions and jump into the full details.</p>
+        </div>
+        <div class="chips">
+          <span class="chip active">All Years</span>
+          <select id="batchSelect" class="chip" aria-label="Filter by batch">
+            <option value="all">All Batches</option>
+          </select>
+        </div>
+      </section>
+
+      <div id="projectList" class="project-grid"></div>
       <p id="status" class="status muted"></p>
-    </section>
-  </main>
+    </main>
+  </div>
 
   <script src="common.js"></script>
   <script src="explore.js"></script>

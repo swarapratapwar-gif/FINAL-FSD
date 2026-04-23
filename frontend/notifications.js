@@ -14,10 +14,17 @@ async function loadNotifications() {
     }
 
     list.innerHTML = latest.map(function (item) {
-      return '<article class="project-item">'
+      return '<article class="project-tile">'
+        + '<div class="project-cover" style="background: linear-gradient(135deg, #0f172a, #334155 55%, #f97316);"></div>'
+        + '<div class="project-tile-body">'
+        + '<span class="project-badge">New</span>'
         + '<h3>New Project: ' + item.title + '</h3>'
-        + '<p>' + item.ownerName + ' submitted a project in batch ' + item.batch + '.</p>'
-        + '<a href="project-detail.html?id=' + item.id + '">View</a>'
+        + '<p class="summary">' + item.ownerName + ' submitted a project in batch ' + item.batch + '.</p>'
+        + '<div class="project-tile-footer">'
+        + '<span class="muted">Latest update</span>'
+        + '<a class="button-link alt" href="project-detail.html?id=' + item.id + '">View</a>'
+        + '</div>'
+        + '</div>'
         + '</article>';
     }).join('');
 

@@ -12,11 +12,17 @@ function renderProjects(items) {
   }
 
   projectList.innerHTML = items.map(function (item) {
-    return '<article class="project-item">'
+    return '<article class="project-tile">'
+      + '<div class="project-cover"></div>'
+      + '<div class="project-tile-body">'
+      + '<span class="project-badge">' + item.techStack.split(',')[0] + '</span>'
       + '<h3>' + item.title + '</h3>'
-      + '<p>' + item.description + '</p>'
-      + '<p class="tags">' + item.techStack + ' | Batch ' + item.batch + ' | ' + item.ownerName + '</p>'
-      + '<a href="project-detail.html?id=' + item.id + '">View details</a>'
+      + '<p class="summary">' + item.description + '</p>'
+      + '<div class="project-tile-footer">'
+      + '<span class="muted">Batch ' + item.batch + '</span>'
+      + '<a class="button-link alt" href="project-detail.html?id=' + item.id + '">View Details</a>'
+      + '</div>'
+      + '</div>'
       + '</article>';
   }).join('');
 }

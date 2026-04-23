@@ -15,14 +15,26 @@ async function loadProfile() {
       return user && item.ownerId === user.id;
     });
 
+    const countBox = document.getElementById('projectCount');
+    if (countBox) {
+      countBox.textContent = mine.length + ' project' + (mine.length === 1 ? '' : 's');
+    }
+
     if (!mine.length) {
       list.innerHTML = '<p class="muted">You have not submitted projects yet.</p>';
     } else {
       list.innerHTML = mine.map(function (item) {
-        return '<article class="project-item">'
+        return '<article class="project-tile">'
+          + '<div class="project-cover" style="background: linear-gradient(135deg, #1e293b, #7c3aed 55%, #f59e0b);"></div>'
+          + '<div class="project-tile-body">'
+          + '<span class="project-badge">' + item.batch + '</span>'
           + '<h3>' + item.title + '</h3>'
-          + '<p>' + item.description + '</p>'
-          + '<a href="project-detail.html?id=' + item.id + '">Open</a>'
+          + '<p class="summary">' + item.description + '</p>'
+          + '<div class="project-tile-footer">'
+          + '<span class="muted">' + item.techStack + '</span>'
+          + '<a class="button-link alt" href="project-detail.html?id=' + item.id + '">Open</a>'
+          + '</div>'
+          + '</div>'
           + '</article>';
       }).join('');
     }

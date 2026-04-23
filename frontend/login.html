@@ -7,24 +7,61 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="navbar">
-    <div class="brand">EduAchieve</div>
-    <nav class="nav-links">
+  <header class="site-topbar">
+    <div class="brand-wrap">
+      <div class="brand-mark">E</div>
+      <div class="brand-copy">
+        <div class="brand-title">EduAchieve</div>
+        <div class="brand-subtitle">Academic Portal</div>
+      </div>
+    </div>
+
+    <nav class="top-nav">
       <a href="index.html">Home</a>
       <a href="register.html">Register</a>
     </nav>
+
+    <div class="top-actions">
+      <button id="themeToggle" class="theme-toggle" type="button">☾</button>
+    </div>
   </header>
 
-  <main class="container narrow">
-    <section class="card">
-      <h2>Login</h2>
-      <form id="loginForm">
-        <input id="email" type="email" placeholder="Email" required>
-        <input id="password" type="password" placeholder="Password" required>
-        <button class="submit" type="submit">Login</button>
-      </form>
-      <p id="status" class="status muted"></p>
-    </section>
+  <main class="container">
+    <div class="detail-layout">
+      <section class="detail-card detail-hero" style="min-height: 520px; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <span class="hero-kicker">Welcome back</span>
+          <h1 style="margin-top: 16px; max-width: 10ch;">Login</h1>
+          <p>Access your project dashboard, saved submissions, and academic workspace in one place.</p>
+        </div>
+
+        <div class="meta-card" style="background: rgba(255,255,255,0.9); color: var(--text);">
+          <h3>What you can do</h3>
+          <div class="meta-row"><span class="meta-label">Browse projects</span><span class="meta-value">Explore</span></div>
+          <div class="meta-row"><span class="meta-label">Submit PDFs</span><span class="meta-value">Upload</span></div>
+          <div class="meta-row"><span class="meta-label">Track your work</span><span class="meta-value">Profile</span></div>
+        </div>
+      </section>
+
+      <section class="detail-card">
+        <div class="hero-kicker">Sign in</div>
+        <h2 style="margin-top: 12px; font-size: 2rem;">Login to EduAchieve</h2>
+        <p class="section-muted">Use your registered email and password to continue.</p>
+        <form id="loginForm" style="margin-top: 18px;">
+          <div class="field-card">
+            <label for="email">Email</label>
+            <input id="email" type="email" placeholder="Email" required>
+          </div>
+          <div class="field-card" style="margin-top: 14px;">
+            <label for="password">Password</label>
+            <input id="password" type="password" placeholder="Password" required>
+          </div>
+          <button class="submit" type="submit" style="width: 100%; margin-top: 18px;">Login</button>
+        </form>
+        <p id="status" class="status muted"></p>
+        <p class="section-muted" style="margin-top: 14px;">New here? <a href="register.html">Create an account</a></p>
+      </section>
+    </div>
   </main>
 
   <script src="common.js"></script>

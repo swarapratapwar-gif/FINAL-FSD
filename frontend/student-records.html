@@ -7,26 +7,67 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="navbar">
-    <div class="brand">EduAchieve</div>
-    <nav class="nav-links">
+  <header class="site-topbar">
+    <div class="brand-wrap">
+      <div class="brand-mark">E</div>
+      <div class="brand-copy">
+        <div class="brand-title">EduAchieve</div>
+        <div class="brand-subtitle">Academic Portal</div>
+      </div>
+    </div>
+
+    <nav class="top-nav">
       <a href="index.html">Home</a>
-      <a href="explore.html">Explore</a>
+      <a href="explore.html">Projects</a>
       <a href="student-records.html" class="active-link">Student Records</a>
-      <a id="navAuth" href="login.html">Login</a>
+      <a href="settings.html">Settings</a>
+    </nav>
+
+    <div class="top-actions">
+      <a id="navAuth" class="button-link alt" href="login.html">Login</a>
       <button id="navLogout" class="primary">Logout</button>
       <span id="navUser" class="muted"></span>
-    </nav>
+    </div>
   </header>
 
-  <main class="container">
-    <section class="card">
-      <h2>Student Records</h2>
-      <p class="muted">Derived from submitted projects.</p>
-      <div id="records"></div>
-      <p id="status" class="status muted"></p>
-    </section>
-  </main>
+  <div class="shell-layout">
+    <aside class="shell-sidebar">
+      <div>
+        <div class="workspace-label">Workspace</div>
+        <h1 class="workspace-title">Student Records</h1>
+        <p class="section-muted">Derived from submitted projects and grouped by student.</p>
+      </div>
+
+      <nav class="sidebar-menu">
+        <a href="index.html" class="sidebar-link">Home</a>
+        <a href="explore.html" class="sidebar-link">Projects</a>
+        <a href="student-records.html" class="sidebar-link active-link">Student Records</a>
+        <a href="settings.html" class="sidebar-link">Settings</a>
+      </nav>
+    </aside>
+
+    <main class="workspace-main">
+      <section class="hero-banner">
+        <div class="hero-rows">
+          <div>
+            <span class="hero-kicker">Academic records</span>
+            <h1>Student Records</h1>
+            <p>Monitor submission counts and batch history in a clean, easy-to-scan dashboard.</p>
+          </div>
+          <div class="hero-image-card">
+            <div class="hero-image-badge">Live record summary</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="detail-card" style="margin-top: 24px;">
+        <h2>Records Overview</h2>
+        <p class="section-muted">Derived from submitted projects.</p>
+        <div id="records"></div>
+        <p id="status" class="status muted"></p>
+      </section>
+    </main>
+  </div>
 
   <script src="common.js"></script>
   <script src="students.js"></script>
