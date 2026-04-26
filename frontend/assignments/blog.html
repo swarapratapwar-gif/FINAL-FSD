@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Understanding Modern CSS | TechBlog</title>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #E8590C;
+      --text: #333333;
+      --text-light: #666666;
+      --bg: #FAFAFA;
+      --border: #EAEAEA;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; }
+    
+    .topbar { background: white; border-bottom: 1px solid var(--border); padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; }
+    .logo { font-weight: 700; font-size: 1.25rem; color: var(--text); text-decoration: none; }
+    .nav-links a { margin-left: 1.5rem; text-decoration: none; color: var(--text-light); font-weight: 500; }
+    .nav-links a:hover { color: var(--primary); }
+
+    .article-header { text-align: center; max-width: 800px; margin: 4rem auto 2rem; padding: 0 1rem; }
+    .category { color: var(--primary); text-transform: uppercase; font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; }
+    .title { font-family: 'Merriweather', serif; font-size: 3rem; line-height: 1.2; margin: 1rem 0; color: #111; }
+    
+    .meta { display: flex; align-items: center; justify-content: center; gap: 1rem; color: var(--text-light); font-size: 0.9rem; margin-bottom: 2rem; }
+    .avatar { width: 40px; height: 40px; border-radius: 50%; background: #ccc; }
+    
+    .hero-image { width: 100%; max-width: 1000px; height: 400px; margin: 0 auto 3rem; background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: bold; }
+
+    .container { max-width: 1000px; margin: 0 auto; display: flex; gap: 4rem; padding: 0 1rem; }
+    
+    .sidebar { width: 250px; flex-shrink: 0; }
+    .toc { position: sticky; top: 100px; }
+    .toc h4 { font-size: 0.9rem; text-transform: uppercase; color: var(--text-light); margin-bottom: 1rem; letter-spacing: 1px; }
+    .toc ul { list-style: none; }
+    .toc li { margin-bottom: 0.5rem; }
+    .toc a { text-decoration: none; color: var(--text-light); font-size: 0.95rem; transition: color 0.2s; }
+    .toc a:hover { color: var(--primary); }
+
+    .article-body { flex-grow: 1; max-width: 720px; font-family: 'Merriweather', serif; font-size: 1.1rem; color: #444; }
+    .article-body h2 { font-family: 'Inter', sans-serif; font-size: 2rem; color: #111; margin: 2.5rem 0 1rem; }
+    .article-body p { margin-bottom: 1.5rem; }
+    
+    blockquote { border-left: 4px solid var(--primary); padding-left: 1.5rem; margin: 2rem 0; font-style: italic; color: #555; font-size: 1.25rem; }
+    
+    pre { background: #1E1E1E; color: #D4D4D4; padding: 1.5rem; border-radius: 8px; overflow-x: auto; margin: 2rem 0; font-family: 'Courier New', Courier, monospace; font-size: 0.95rem; }
+    code { font-family: 'Courier New', Courier, monospace; }
+    
+    .article-body ul { margin: 1.5rem 0 1.5rem 2rem; }
+    .article-body li { margin-bottom: 0.5rem; }
+
+    .inline-image { width: 100%; height: 300px; background: #EAEAEA; border-radius: 8px; margin: 2rem 0; display: flex; align-items: center; justify-content: center; color: #999; }
+
+    .author-card { background: white; padding: 2rem; border-radius: 12px; border: 1px solid var(--border); margin-top: 4rem; display: flex; gap: 1.5rem; align-items: center; }
+    .author-card .avatar { width: 80px; height: 80px; }
+    .author-card h3 { font-family: 'Inter', sans-serif; margin-bottom: 0.5rem; }
+    .author-card p { font-size: 0.95rem; color: var(--text-light); font-family: 'Inter', sans-serif; margin-bottom: 0; }
+
+    .related { max-width: 1000px; margin: 4rem auto; padding: 0 1rem; }
+    .related h3 { font-size: 1.5rem; margin-bottom: 2rem; }
+    .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .related-card { background: white; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .related-img { height: 150px; background: #ddd; }
+    .related-content { padding: 1.5rem; }
+    .related-content h4 { margin-bottom: 0.5rem; font-size: 1.1rem; }
+    .related-content p { color: var(--text-light); font-size: 0.9rem; }
+
+    @media (max-width: 800px) {
+      .container { flex-direction: column; }
+      .sidebar { display: none; }
+      .related-grid { grid-template-columns: 1fr; }
+      .title { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <a href="index.html" class="logo">TechBlog</a>
+    <nav class="nav-links">
+      <a href="#">Design</a>
+      <a href="#">Development</a>
+      <a href="#">Tutorials</a>
+    </nav>
+  </header>
+
+  <div class="article-header">
+    <span class="category">Frontend Development</span>
+    <h1 class="title">Understanding Modern CSS Custom Properties</h1>
+    <div class="meta">
+      <div class="avatar"></div>
+      <span>By Jane Doe</span>
+      <span>•</span>
+      <span>Oct 24, 2024</span>
+      <span>•</span>
+      <span>5 min read</span>
+    </div>
+  </div>
+
+  <div class="hero-image">
+    Hero Image Placeholder
+  </div>
+
+  <div class="container">
+    <aside class="sidebar">
+      <div class="toc">
+        <h4>Table of Contents</h4>
+        <ul>
+          <li><a href="#intro">Introduction</a></li>
+          <li><a href="#basics">The Basics</a></li>
+          <li><a href="#benefits">Why Use Them?</a></li>
+          <li><a href="#theming">Dynamic Theming</a></li>
+          <li><a href="#conclusion">Conclusion</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <article class="article-body">
+      <h2 id="intro">Introduction</h2>
+      <p>CSS variables, officially known as CSS custom properties, have revolutionized how we write and maintain stylesheets. Unlike preprocessor variables (like Sass or Less), native CSS variables exist in the DOM, meaning they can be updated in real-time using JavaScript and they cascade naturally.</p>
+      
+      <p>In this article, we'll explore why you should be using them in your modern web projects and how they can drastically simplify your workflow.</p>
+
+      <h2 id="basics">The Basics</h2>
+      <p>Declaring a custom property is simple. You define it within a ruleset, typically the <code>:root</code> pseudo-class if you want it globally available, using the double-hyphen prefix:</p>
+
+<pre><code>:root {
+  --primary-color: #E8590C;
+  --base-spacing: 1rem;
+}
+
+.button {
+  background-color: var(--primary-color);
+  padding: var(--base-spacing);
+}</code></pre>
+
+      <h2 id="benefits">Why Use Them?</h2>
+      <p>There are several compelling reasons to switch to CSS custom properties:</p>
+      <ul>
+        <li><strong>No Compilation Required:</strong> They work natively in the browser.</li>
+        <li><strong>DOM Awareness:</strong> They inherit values just like standard CSS properties.</li>
+        <li><strong>JavaScript Interaction:</strong> You can read and write them dynamically.</li>
+        <li><strong>Scoped Values:</strong> You can override them for specific components.</li>
+      </ul>
+
+      <div class="inline-image">Diagram showing CSS scoping</div>
+
+      <h2 id="theming">Dynamic Theming</h2>
+      <p>Perhaps the most popular use case for custom properties is implementing dark mode or dynamic themes.</p>
+
+      <blockquote>
+        "CSS custom properties are the secret ingredient to building scalable, themeable design systems without the bloat."
+      </blockquote>
+
+      <p>By simply toggling a class on the body tag, you can completely restyle an application by redefining the core variable palette.</p>
+
+      <h2 id="conclusion">Conclusion</h2>
+      <p>Embracing modern CSS features like custom properties allows us to write cleaner, more maintainable code. They bridge the gap between static stylesheets and dynamic, interactive web applications.</p>
+
+      <div class="author-card">
+        <div class="avatar"></div>
+        <div>
+          <h3>Jane Doe</h3>
+          <p>Senior Frontend Engineer passionate about CSS architecture, accessibility, and creating beautiful user interfaces.</p>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <section class="related">
+    <h3>Related Articles</h3>
+    <div class="related-grid">
+      <div class="related-card">
+        <div class="related-img"></div>
+        <div class="related-content">
+          <h4>Mastering CSS Grid</h4>
+          <p>Learn how to build complex layouts with ease.</p>
+        </div>
+      </div>
+      <div class="related-card">
+        <div class="related-img"></div>
+        <div class="related-content">
+          <h4>Accessible HTML5</h4>
+          <p>Best practices for semantic markup.</p>
+        </div>
+      </div>
+      <div class="related-card">
+        <div class="related-img"></div>
+        <div class="related-content">
+          <h4>JavaScript Performance</h4>
+          <p>Tips for optimizing your web applications.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

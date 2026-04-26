@@ -3,148 +3,156 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Submit - EduAchieve</title>
+  <title>Submit Research | EduAchieve</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="site-topbar">
-    <div class="brand-wrap">
-      <div class="brand-mark">E</div>
-      <div class="brand-copy">
-        <div class="brand-title">EduAchieve</div>
-        <div class="brand-subtitle">Academic Portal</div>
-      </div>
-    </div>
 
+  <header class="site-topbar">
+    <div class="brand-mark">🎓</div>
+    <div>
+      <div class="brand-title">EduAchieve</div>
+      <div class="brand-sub">CSE AI&ML | PCCOE</div>
+    </div>
     <nav class="top-nav">
       <a href="index.html">Home</a>
       <a href="explore.html">Projects</a>
-      <a href="submit.html" class="active-link">Submit Research</a>
-      <a href="my-profile.html">Profile</a>
+      <a href="submit.html" class="active">Submit</a>
+      <a href="about.html">About</a>
     </nav>
-
-    <div class="top-actions">
-      <a id="navAuth" class="button-link alt" href="login.html">Login</a>
-      <button id="navLogout" class="primary">Logout</button>
-      <span id="navUser" class="muted"></span>
+    <div class="nav-actions">
+      <a href="login.html" class="btn-primary" id="navLogin">Login</a>
+      <span class="nav-username" id="navUser"></span>
+      <button id="navLogout" style="display: none; background: none; border: none; color: #DC2626; cursor: pointer; font-size: 0.82rem; font-weight: 600;" onclick="logout()">Logout</button>
     </div>
   </header>
 
-  <div class="shell-layout">
-    <aside class="shell-sidebar">
-      <div>
-        <div class="workspace-label">Workspace</div>
-        <h1 class="workspace-title">Submit Research</h1>
-        <p class="section-muted">Share your academic work with the portal community.</p>
-      </div>
+  <section class="hero-banner" style="min-height: 250px;">
+    <h1>Publish Your Research</h1>
+    <p>Upload your academic projects and join the institutional repository of PCCOE excellence.</p>
+  </section>
 
-      <nav class="sidebar-menu">
-        <a href="index.html" class="sidebar-link">Home</a>
-        <a href="explore.html" class="sidebar-link">Projects</a>
-        <a href="submit.html" class="sidebar-link active-link">Submit Research</a>
-        <a href="my-profile.html" class="sidebar-link">My Profile</a>
-        <a href="settings.html" class="sidebar-link">Settings</a>
-      </nav>
-
-      <div class="sidebar-footer">
-        <div class="meta-card" style="background: #fff7ef;">
-          <strong>Need help?</strong>
-          <p class="section-muted" style="margin-top: 8px;">Check the submission guidelines before uploading your PDF files.</p>
-        </div>
-      </div>
-    </aside>
-
-    <main class="workspace-main">
-      <section class="hero-banner">
-        <div class="hero-rows">
-          <div>
-            <span class="hero-kicker">Academic submission</span>
-            <h1>Submit Research</h1>
-            <p>Upload your project details, required research paper PDF, and presentation PDF in a clear, polished workspace.</p>
+  <div class="container section">
+    <div class="card" style="max-width: 800px; margin: 0 auto; padding: 40px;">
+      <form id="submitProjectForm">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+          <div class="form-group">
+            <label>Project Title</label>
+            <input type="text" id="title" placeholder="e.g. Smart Traffic Management" required>
           </div>
-          <div class="hero-image-card">
-            <div class="hero-image-badge">PDF upload required</div>
+          <div class="form-group">
+            <label>Domain</label>
+            <select id="domain" required>
+              <option value="">Select Domain</option>
+              <option value="AI/ML">AI/ML</option>
+              <option value="Web Development">Web Development</option>
+              <option value="IoT">IoT</option>
+              <option value="Cybersecurity">Cybersecurity</option>
+              <option value="Data Science">Data Science</option>
+              <option value="Other">Other</option>
+            </select>
           </div>
         </div>
-      </section>
 
-      <section class="detail-layout" style="margin-top: 24px;">
-        <section class="detail-card">
-          <h2>Research Submission Form</h2>
-          <p class="section-muted">Fill in the fields below to publish your project.</p>
-          <form id="submitForm" enctype="multipart/form-data">
-            <div class="profile-field-grid">
-              <div class="field-card">
-                <label for="title">Project Title</label>
-                <input id="title" placeholder="Project title" required>
-              </div>
-              <div class="field-card">
-                <label for="batch">Batch Year</label>
-                <input id="batch" placeholder="Batch year" required>
-              </div>
-            </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+          <div class="form-group">
+            <label>Batch</label>
+            <select id="batch" required>
+              <option value="">Select Batch</option>
+              <option value="2020-21">2020-21</option>
+              <option value="2021-22">2021-22</option>
+              <option value="2022-23">2022-23</option>
+              <option value="2023-24">2023-24</option>
+              <option value="2024-25">2024-25</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Current Year</label>
+            <select id="year" required>
+              <option value="">Select Year</option>
+              <option value="1st Year">1st Year</option>
+              <option value="2nd Year">2nd Year</option>
+              <option value="3rd Year">3rd Year</option>
+              <option value="4th Year">4th Year</option>
+            </select>
+          </div>
+        </div>
 
-            <div class="field-card" style="margin-top: 18px;">
-              <label for="description">Project Description</label>
-              <textarea id="description" placeholder="Project description" required></textarea>
-            </div>
+        <div class="form-group">
+          <label>Research Abstract / Description</label>
+          <textarea id="description" rows="6" placeholder="Provide a brief summary of your work..." required></textarea>
+          <div id="charCounter" style="text-align: right; font-size: 0.8rem; color: #6B7280; margin-top: 4px;">0 characters</div>
+        </div>
 
-            <div class="profile-field-grid" style="margin-top: 18px;">
-              <div class="field-card">
-                <label for="techStack">Tech Stack</label>
-                <input id="techStack" placeholder="Tech stack" required>
-              </div>
-              <div class="field-card">
-                <label for="github">GitHub URL</label>
-                <input id="github" placeholder="GitHub URL (optional)">
-              </div>
-            </div>
+        <div class="form-group">
+          <label>Project Files (PDF/PPT)</label>
+          <input type="file" id="fileUpload" accept=".pdf,.ppt,.pptx">
+          <p style="font-size: 0.8rem; color: #6B7280; margin-top: 4px;">Upload your research paper or presentation (Max 50MB).</p>
+        </div>
 
-            <div class="field-card" style="margin-top: 18px;">
-              <label for="linkedin">LinkedIn URL</label>
-              <input id="linkedin" placeholder="LinkedIn URL (optional)">
-            </div>
-
-            <div class="profile-field-grid" style="margin-top: 18px;">
-              <div class="field-card">
-                <label for="researchPaper">Research Paper (PDF) <span class="required">*</span></label>
-                <input id="researchPaper" type="file" accept=".pdf,application/pdf" required>
-                <p class="section-muted">Required PDF for the research paper.</p>
-              </div>
-
-              <div class="field-card">
-                <label for="presentation">Presentation (PDF)</label>
-                <input id="presentation" type="file" accept=".pdf,application/pdf">
-                <p class="section-muted">Optional presentation PDF.</p>
-              </div>
-            </div>
-
-            <div class="inline-actions" style="margin-top: 22px;">
-              <button class="submit" type="submit">Submit Research Paper</button>
-            </div>
-          </form>
-          <p id="status" class="status muted"></p>
-        </section>
-
-        <aside class="side-stack">
-          <section class="meta-card">
-            <h3>Submission Checklist</h3>
-            <div class="meta-row"><span class="meta-label">Title and description</span><span class="meta-value">Required</span></div>
-            <div class="meta-row"><span class="meta-label">Research paper PDF</span><span class="meta-value">Required</span></div>
-            <div class="meta-row"><span class="meta-label">Presentation PDF</span><span class="meta-value">Optional</span></div>
-            <div class="meta-row"><span class="meta-label">Batch year</span><span class="meta-value">Required</span></div>
-          </section>
-
-          <section class="meta-card" style="background: linear-gradient(135deg, rgba(255,102,0,0.08), rgba(255,255,255,0.96));">
-            <h3>Quick Tip</h3>
-            <p class="section-muted">Use clear PDF filenames so your project detail page looks polished and easy to review.</p>
-          </section>
-        </aside>
-      </section>
-    </main>
+        <button type="submit" class="btn-primary" style="width: 100%; padding: 14px; margin-top: 20px;">Publish Project</button>
+      </form>
+    </div>
   </div>
 
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div style="text-align: left;">
+        <p style="font-weight: 700; color: #fff; margin-bottom: 10px;">EduAchieve</p>
+        <p>Institutional Knowledge Portal</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="explore.html">Projects</a>
+        <a href="about.html">About</a>
+      </div>
+      <div style="text-align: right;">
+        <p>© 2024-26 PCCOE Pune</p>
+      </div>
+    </div>
+  </footer>
+
   <script src="common.js"></script>
-  <script src="submit-page.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = checkAuth();
+      if (!user) {
+        alert('Please login to submit a project.');
+        window.location.href = 'login.html';
+        return;
+      }
+
+      const form = document.getElementById('submitProjectForm');
+      const desc = document.getElementById('description');
+      const counter = document.getElementById('charCounter');
+
+      desc.addEventListener('input', () => {
+        counter.textContent = desc.value.length + ' characters';
+      });
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const formData = {
+          title: document.getElementById('title').value,
+          domain: document.getElementById('domain').value,
+          batch: document.getElementById('batch').value,
+          year: document.getElementById('year').value,
+          description: desc.value
+        };
+
+        try {
+          const res = await apiCall('/api/projects', {
+            method: 'POST',
+            body: formData
+          });
+          alert('Project submitted successfully!');
+          window.location.href = 'my-profile.html';
+        } catch (err) {
+          alert('Error: ' + err.message);
+        }
+      });
+    });
+  </script>
 </body>
 </html>

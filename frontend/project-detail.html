@@ -3,79 +3,222 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Project Detail - EduAchieve</title>
+  <title>Project Details | EduAchieve</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="site-topbar">
-    <div class="brand-wrap">
-      <div class="brand-mark">E</div>
-      <div class="brand-copy">
-        <div class="brand-title">EduAchieve</div>
-        <div class="brand-subtitle">Academic Portal</div>
-      </div>
-    </div>
 
+  <!-- Navbar -->
+  <header class="site-topbar">
+    <div class="brand-mark">🎓</div>
+    <div>
+      <div class="brand-title">EduAchieve</div>
+      <div class="brand-sub">CSE AI&ML | PCCOE</div>
+    </div>
+    
     <nav class="top-nav">
+      <a href="index.html">Home</a>
       <a href="explore.html">Projects</a>
       <a href="submit.html">Submit Research</a>
-      <a href="my-profile.html">Profile</a>
+      <a href="about.html">About</a>
+      <a href="dashboard.html" id="navAdmin" style="display: none;">Admin Dashboard</a>
     </nav>
-
-    <div class="top-actions">
-      <a id="navAuth" class="button-link alt" href="login.html">Login</a>
-      <button id="navLogout" class="primary">Logout</button>
-      <span id="navUser" class="muted"></span>
+    
+    <div class="search-wrap">
+      <input type="text" class="search-input-global" placeholder="Search projects...">
+    </div>
+    
+    <div class="nav-actions">
+      <a href="login.html" class="btn-primary" id="navLogin">Login</a>
+      <span class="nav-username" id="navUser"></span>
+      <button id="navLogout" style="display: none; background: none; border: none; color: #DC2626; cursor: pointer; font-size: 0.82rem; font-weight: 600;" onclick="logout()">Logout</button>
     </div>
   </header>
 
-  <main class="container">
+  <div class="container">
     <div class="detail-layout">
-      <section class="detail-card detail-hero">
-        <span class="hero-kicker">Project Overview</span>
-        <h1 id="title">Loading project...</h1>
-        <div class="detail-meta" id="meta"></div>
-        <p id="description"></p>
-        <div id="links" class="inline-actions" style="margin-top: 18px;"></div>
+      
+      <!-- Main Content -->
+      <main id="mainContent">
+        <div style="padding: 60px; text-align: center;">Loading...</div>
+      </main>
 
-        <div class="tabs">
-          <span class="tab-link active-link">Abstract</span>
-          <span class="tab-link">Full Description</span>
-          <span class="tab-link">Methodology</span>
-        </div>
-
-        <div class="meta-card" style="margin-top: 16px; background: rgba(255,255,255,0.88); color: var(--text);">
-          <h3>Abstract</h3>
-          <p id="tech" class="tags"></p>
-          <p class="section-muted">Use the download links on the right to access the research paper and presentation PDF for review.</p>
-        </div>
-
-        <div id="ownerActions" style="margin-top: 18px;"></div>
-        <p id="status" class="status muted"></p>
-      </section>
-
-      <aside class="side-stack">
-        <section class="meta-card">
-          <h3>Project Metadata</h3>
-          <div class="meta-row"><span class="meta-label">Access Type</span><span class="meta-value">Open Access</span></div>
-          <div class="meta-row"><span class="meta-label">Batch</span><span class="meta-value" id="batchMeta">---</span></div>
-          <div class="meta-row"><span class="meta-label">Owner</span><span class="meta-value" id="ownerMeta">---</span></div>
-        </section>
-
-        <section class="meta-card">
-          <h3>Project Files</h3>
-          <div id="filesSection"></div>
-        </section>
-
-        <section class="meta-card" style="background: linear-gradient(135deg, rgba(255,102,0,0.08), rgba(255,255,255,0.94));">
-          <h3>Related Research</h3>
-          <p class="section-muted">Students can use this area to compare research papers and presentation materials once the repository grows.</p>
-        </section>
+      <!-- Sidebar -->
+      <aside id="sidebarContent">
+        <!-- Loaded via JS -->
       </aside>
+
     </div>
-  </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div style="text-align: left;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+          <div class="brand-mark">🎓</div>
+          <span style="color: #fff; font-weight: 700;">EduAchieve</span>
+        </div>
+        <p>Academic Repository Portal</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="explore.html">Projects</a>
+        <a href="submit.html">Submit</a>
+        <a href="about.html">About</a>
+        <a href="login.html">Login</a>
+      </div>
+      <div style="text-align: right;">
+        <p>© 2024-26 EduAchieve – CSE AI&ML Dept., PCCOE Pune</p>
+      </div>
+    </div>
+  </footer>
 
   <script src="common.js"></script>
-  <script src="project-detail.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const projectId = urlParams.get('id');
+      
+      if (!projectId) {
+        document.getElementById('mainContent').innerHTML = '<div style="padding: 60px; text-align: center; color: #DC2626;">Project ID is missing.</div>';
+        return;
+      }
+
+      try {
+        const project = await apiCall(\`/api/projects/\${projectId}\`);
+        renderProject(project);
+      } catch (err) {
+        document.getElementById('mainContent').innerHTML = \`<div style="padding: 60px; text-align: center; color: #DC2626;">Error: \${escapeHtml(err.message)}</div>\`;
+      }
+    });
+
+    function renderProject(p) {
+      const main = document.getElementById('mainContent');
+      const side = document.getElementById('sidebarContent');
+
+      // Main Content
+      let techStackHtml = '';
+      if (p.techStack) {
+        techStackHtml = p.techStack.split(',').map(t => \`<span class="domain-tag" style="background:#FFF3EE;">\${escapeHtml(t.trim())}</span>\`).join('');
+      }
+
+      main.innerHTML = \`
+        <div class="breadcrumb">
+          <a href="index.html">Home</a> <span class="breadcrumb-sep">›</span>
+          <a href="explore.html">Projects</a> <span class="breadcrumb-sep">›</span>
+          <span style="color:#1A1A2E; font-weight:600;">\${escapeHtml(p.title)}</span>
+        </div>
+
+        <div style="margin-bottom: 16px;">
+          <span class="badge badge-orange">RESEARCH PROJECT</span>
+          <span class="badge badge-green">ACTIVE</span>
+        </div>
+
+        <h1 style="font-size: 2rem; margin-bottom: 8px;">\${escapeHtml(p.title)}</h1>
+        <p style="color: #6B7280; margin-bottom: 24px;">CSE AI&ML Department, PCCOE • Guide: \${escapeHtml(p.guideName)}</p>
+
+        <div class="card" style="margin-bottom: 32px;">
+          <h3 style="font-size: 1.1rem; margin-bottom: 12px; border-bottom: 1px solid #F3F4F6; padding-bottom: 12px;">Team Information</h3>
+          <p><strong>Lead Researcher:</strong> \${escapeHtml(p.submittedByName)}</p>
+          <p><strong>Team Members:</strong> \${escapeHtml(p.teamMembers)}</p>
+          <p><strong>Batch / Year:</strong> \${escapeHtml(p.batch)} / \${escapeHtml(p.year)}</p>
+        </div>
+
+        <div style="margin-bottom: 32px;">
+          <h3 style="font-size: 1.25rem; margin-bottom: 12px;">Abstract / Overview</h3>
+          <div style="line-height: 1.8; color: #374151;">\${escapeHtml(p.description).replace(/\\n/g, '<br>')}</div>
+        </div>
+
+        \${techStackHtml ? \`<div style="margin-bottom: 32px;">
+          <h3 style="font-size: 1.1rem; margin-bottom: 12px;">Tech Stack</h3>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">\${techStackHtml}</div>
+        </div>\` : ''}
+
+        <div style="margin-bottom: 32px;">
+          <h3 style="font-size: 1.25rem; margin-bottom: 16px;">Project Files & Links</h3>
+          
+          <div class="file-row">
+            <div class="file-info">
+              <div class="file-icon-box">📄</div>
+              <div>
+                <div class="file-name">Research Paper</div>
+                <div class="file-meta">PDF Document</div>
+              </div>
+            </div>
+            <a href="/uploads/\${escapeHtml(p.researchPaperFile)}" target="_blank" class="btn-primary" style="padding: 6px 14px; font-size: 0.8rem;">Download PDF</a>
+          </div>
+
+          \${p.presentationFile ? \`
+          <div class="file-row">
+            <div class="file-info">
+              <div class="file-icon-box">📊</div>
+              <div>
+                <div class="file-name">Presentation Slides</div>
+                <div class="file-meta">PPT/PPTX</div>
+              </div>
+            </div>
+            <a href="/uploads/\${escapeHtml(p.presentationFile)}" target="_blank" class="btn-primary" style="padding: 6px 14px; font-size: 0.8rem;">Download PPT</a>
+          </div>\` : ''}
+
+          <div style="display: flex; gap: 12px; margin-top: 16px;">
+            \${p.githubLink ? \`<a href="\${escapeHtml(p.githubLink)}" target="_blank" class="btn-outline">View on GitHub</a>\` : ''}
+            \${p.linkedinLink ? \`<a href="\${escapeHtml(p.linkedinLink)}" target="_blank" class="btn-outline" style="border-color: #0077B5; color: #0077B5;">View on LinkedIn</a>\` : ''}
+          </div>
+        </div>
+      \`;
+
+      // Sidebar
+      let membersHtml = '';
+      const allMembers = [p.submittedByName, ...p.teamMembers.split(',')].map(s => s.trim()).filter(Boolean);
+      
+      membersHtml = allMembers.map(m => {
+        const initials = m.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+        return \`
+          <div class="member-pill">
+            <div class="member-avatar">\${initials}</div>
+            <div style="font-size: 0.85rem; font-weight: 600; color: #374151;">\${escapeHtml(m)}</div>
+          </div>
+        \`;
+      }).join('');
+
+      side.innerHTML = \`
+        <div class="info-card-orange" style="margin-bottom: 24px;">
+          <h3 style="font-size: 1.1rem; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 12px;">Project Info</h3>
+          
+          <div class="info-row">
+            <div class="info-label">Domain</div>
+            <div class="info-value">\${escapeHtml(p.domain)}</div>
+          </div>
+          
+          <div class="info-row">
+            <div class="info-label">Batch</div>
+            <div class="info-value">\${escapeHtml(p.batch)}</div>
+          </div>
+          
+          <div class="info-row">
+            <div class="info-label">Year</div>
+            <div class="info-value">\${escapeHtml(p.year)}</div>
+          </div>
+          
+          <div class="info-row">
+            <div class="info-label">Guide Name</div>
+            <div class="info-value">\${escapeHtml(p.guideName)}</div>
+          </div>
+          
+          <div class="info-row" style="margin-bottom: 0;">
+            <div class="info-label">Submitted On</div>
+            <div class="info-value">\${formatDate(p.createdAt)}</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 style="font-size: 1rem; margin-bottom: 12px; color: #111827;">Team Members</h3>
+          <div style="display: flex; flex-direction: column;">
+            \${membersHtml}
+          </div>
+        </div>
+      \`;
+    }
+  </script>
 </body>
 </html>

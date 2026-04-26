@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | EduAchieve</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="shell-layout">
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <a href="index.html" class="logo">EduAchieve</a>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="explore.html">Explore</a>
+      <a href="about.html">About</a>
+      <a href="assignments/index.html">Assignments</a>
+      <a href="admin.html" id="navAdmin" style="display: none;">Admin</a>
+    </nav>
+    <div class="top-actions">
+      <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode"></button>
+      <a href="login.html" class="btn btn-outline" id="navLoginBtn">Portal Access</a>
+      <div class="user-dropdown" id="navUserDropdown" style="display: none;">
+        <span id="navUserName" class="user-name"></span>
+        <button id="navLogout" class="btn btn-danger btn-sm">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="sidebar">
+    <a href="admin.html" class="active">Dashboard</a>
+    <a href="#projects-section">All Projects</a>
+    <a href="#users-section">All Users</a>
+    <a href="settings.html">Settings</a>
+  </div>
+
+  <main class="main-content">
+    <div class="container">
+      <h1 class="page-title">Admin Dashboard</h1>
+      <p class="page-subtitle">Platform statistics and management</p>
+
+      <div class="stats-row" id="adminStats">
+        <!-- Stats populated via JS -->
+      </div>
+
+      <div class="charts-row">
+        <div class="card">
+          <h3>Projects by Department</h3>
+          <div class="bar-chart" id="deptChart">
+            <!-- Bars populated via JS -->
+          </div>
+        </div>
+        <div class="card">
+          <h3>Projects by Batch</h3>
+          <div class="bar-chart" id="batchChart">
+            <!-- Bars populated via JS -->
+          </div>
+        </div>
+      </div>
+
+      <h2 class="section-title" id="projects-section">Recent Submissions</h2>
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Department</th>
+              <th>Batch</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="projectsTable">
+            <!-- Populated via JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="section-title" id="users-section">All Users</h2>
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Department</th>
+              <th>Year</th>
+              <th>Batch</th>
+              <th>Registered</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="usersTable">
+            <!-- Populated via JS -->
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="common.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

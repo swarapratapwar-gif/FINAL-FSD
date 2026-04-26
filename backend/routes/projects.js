@@ -1,200 +1,169 @@
 const express = require('express');
 const store = require('../store');
-const protect = require('../middleware/auth');
+const { requireAuth } = require('../middleware/auth');
 const upload = require('../middleware/upload');
 
 const router = express.Router();
 
-function normalizeQuery(q) {
-  return q ? String(q).trim().toLowerCase() : '';
-}
-
+// GET /api/projects — list all with filters
 router.get('/', async (req, res) => {
   try {
-    const projects = await store.listProjects(req.query.batch);
-    return res.status(200).json(projects);
+    const filters = {
+      search: req.query.q || req.query.search,
+      batch: req.query.batch,
+      year: req.query.year,
+      domain: req.query.domain,
+      sort: req.query.sort,
+      page: req.query.page,
+      limit: req.query.limit
+    };
+    const result = await store.listProjects(filters);
+    res.json(result);
   } catch (error) {
-    console.error('List projects error:', error);
-    return res.status(500).json({ message: 'Error fetching projects' });
+    res.status(500).json({ message: 'Server error', error: String(error) });
   }
 });
 
+// GET /api/projects/search — full-text search
 router.get('/search', async (req, res) => {
   try {
-    const q = normalizeQuery(req.query.q);
-    if (!q) {
-      return res.status(200).json([]);
-    }
-
-    const all = await store.listProjects(req.query.batch);
-    const ranked = all
-      .filter((item) => {
-        const title = item.title.toLowerCase();
-        const description = item.description.toLowerCase();
-        const techStack = item.techStack.toLowerCase();
-        return title.includes(q) || description.includes(q) || techStack.includes(q);
-      })
-      .map((item) => {
-        const title = item.title.toLowerCase();
-        let score = 0;
-        if (title === q) score += 100;
-        if (title.startsWith(q)) score += 80;
-        if (title.includes(q)) score += 50;
-        return { item, score };
-      })
-      .sort((a, b) => b.score - a.score)
-      .map((entry) => entry.item);
-
-    return res.status(200).json(ranked);
+    const filters = {
+      search: req.query.q,
+      batch: req.query.batch,
+      year: req.query.year,
+      domain: req.query.domain,
+      sort: req.query.sort,
+      page: req.query.page,
+      limit: req.query.limit
+    };
+    const result = await store.listProjects(filters);
+    res.json(result);
   } catch (error) {
-    console.error('Search projects error:', error);
-    return res.status(500).json({ message: 'Error searching projects' });
+    res.status(500).json({ message: 'Server error', error: String(error) });
   }
 });
 
+// GET /api/projects/suggestions — autocomplete
 router.get('/suggestions', async (req, res) => {
   try {
-    const q = normalizeQuery(req.query.q);
-    if (!q) {
-      return res.status(200).json([]);
-    }
+    const q = (req.query.q || '').toLowerCase().trim();
+    if (q.length < 2) return res.json([]);
 
-    const all = await store.listProjects();
-    const suggestions = all
-      .filter((item) => item.title.toLowerCase().includes(q))
+    const result = await store.listProjects({ limit: 1000 });
+    const matches = result.projects
+      .filter(p =>
+        (p.title || '').toLowerCase().includes(q) ||
+        (p.teamName || '').toLowerCase().includes(q) ||
+        (p.submittedByName || '').toLowerCase().includes(q)
+      )
       .slice(0, 6)
-      .map((item) => ({ id: item.id, title: item.title, batch: item.batch }));
+      .map(p => ({ id: p.id, title: p.title, batch: p.batch }));
 
-    return res.status(200).json(suggestions);
+    res.json(matches);
   } catch (error) {
-    console.error('Suggestions error:', error);
-    return res.status(500).json({ message: 'Error fetching suggestions' });
+    res.status(500).json({ message: 'Server error', error: String(error) });
   }
 });
 
+// GET /api/projects/batches — unique batch values
 router.get('/batches', async (req, res) => {
   try {
-    const batches = await store.listBatches();
-    return res.status(200).json(batches);
+    const result = await store.listProjects({ limit: 10000 });
+    const batches = [...new Set(result.projects.map(p => p.batch).filter(Boolean))];
+    res.json(batches);
   } catch (error) {
-    console.error('Batches error:', error);
-    return res.status(500).json({ message: 'Error fetching batches' });
+    res.status(500).json({ message: 'Server error', error: String(error) });
   }
 });
 
+// GET /api/projects/mine — user's own projects (protected)
+router.get('/mine', requireAuth, async (req, res) => {
+  try {
+    const result = await store.listProjects({ ownerId: req.user.id, limit: 1000 });
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: String(error) });
+  }
+});
+
+// GET /api/projects/:id — single project
 router.get('/:id', async (req, res) => {
   try {
     const project = await store.findProjectById(req.params.id);
     if (!project) {
       return res.status(404).json({ message: 'Project not found' });
     }
-    return res.status(200).json(project);
+    res.json(project);
   } catch (error) {
-    console.error('Get project error:', error);
-    return res.status(500).json({ message: 'Error fetching project' });
+    res.status(500).json({ message: 'Server error', error: String(error) });
   }
 });
 
-router.post('/', protect, upload.fields([
+// POST /api/projects — submit project (protected)
+const cpUpload = upload.fields([
   { name: 'researchPaper', maxCount: 1 },
   { name: 'presentation', maxCount: 1 }
-]), async (req, res) => {
+]);
+
+router.post('/', requireAuth, cpUpload, async (req, res) => {
   try {
-    // req.body should contain form fields, req.files contains uploaded files
-    const title = req.body ? req.body.title : undefined;
-    const description = req.body ? req.body.description : undefined;
-    const techStack = req.body ? req.body.techStack : undefined;
-    const batch = req.body ? req.body.batch : undefined;
-    const github = req.body ? req.body.github : undefined;
-    const linkedin = req.body ? req.body.linkedin : undefined;
-    
-    if (!title || !description || !techStack || !batch) {
-      return res.status(400).json({ message: 'Please fill all required fields including batch year' });
+    const {
+      title, description, techStack, domain, teamName, teamMembers,
+      guideName, year, batch, githubLink, linkedinLink
+    } = req.body;
+
+    if (!title || !description || !year || !batch || !domain || !teamName || !guideName) {
+      return res.status(400).json({ message: 'Please fill all mandatory fields' });
     }
 
-    // Check for mandatory research paper file
-    if (!req.files || !req.files.researchPaper || req.files.researchPaper.length === 0) {
-      return res.status(400).json({ message: 'Research paper PDF is required' });
+    if (!req.files || !req.files['researchPaper']) {
+      return res.status(400).json({ message: 'Research Paper PDF is required' });
     }
 
     const projectData = {
-      title: String(title).trim(),
-      description: String(description).trim(),
-      techStack: String(techStack).trim(),
-      batch: String(batch).trim(),
-      github: github ? String(github).trim() : '',
-      linkedin: linkedin ? String(linkedin).trim() : '',
-      ownerId: req.user.id,
-      ownerName: req.user.name,
-      researchPaper: req.files.researchPaper[0].filename
+      title,
+      description,
+      techStack: techStack || '',
+      domain,
+      teamName,
+      teamMembers: teamMembers || '',
+      guideName,
+      year,
+      batch,
+      githubLink: githubLink || null,
+      linkedinLink: linkedinLink || null,
+      researchPaperFile: req.files['researchPaper'][0].filename,
+      presentationFile: req.files['presentation'] ? req.files['presentation'][0].filename : null,
+      submittedBy: req.user.id,
+      submittedByName: req.user.name,
+      submittedByEmail: req.user.email
     };
 
-    // Add presentation if provided
-    if (req.files.presentation && req.files.presentation.length > 0) {
-      projectData.presentation = req.files.presentation[0].filename;
-    }
-
     const project = await store.createProject(projectData);
-
-    return res.status(201).json({ message: 'Project created successfully!', project });
+    res.status(201).json({ message: 'Project submitted successfully!', project });
   } catch (error) {
     console.error('Create project error:', error);
-    return res.status(500).json({ message: 'Error creating project' });
+    res.status(500).json({ message: 'Server error', error: String(error) });
   }
 });
 
-router.put('/:id', protect, async (req, res) => {
+// DELETE /api/projects/:id — admin only
+router.delete('/:id', requireAuth, async (req, res) => {
   try {
-    const existing = await store.findProjectById(req.params.id);
-    if (!existing) {
-      return res.status(404).json({ message: 'Project not found' });
-    }
-    if (existing.ownerId !== req.user.id) {
-      return res.status(403).json({ message: 'Not allowed. You can only edit your own projects.' });
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Admin access required' });
     }
 
-    const updated = await store.updateProject(req.params.id, req.body);
-    return res.status(200).json({ message: 'Project updated successfully!', project: updated });
-  } catch (error) {
-    console.error('Update project error:', error);
-    return res.status(500).json({ message: 'Error updating project' });
-  }
-});
-
-router.delete('/:id', protect, async (req, res) => {
-  try {
-    const existing = await store.findProjectById(req.params.id);
-    if (!existing) {
+    const project = await store.findProjectById(req.params.id);
+    if (!project) {
       return res.status(404).json({ message: 'Project not found' });
-    }
-    if (existing.ownerId !== req.user.id) {
-      return res.status(403).json({ message: 'Not allowed. You can only delete your own projects.' });
     }
 
     await store.deleteProject(req.params.id);
-    return res.status(200).json({ message: 'Project deleted successfully!' });
+    res.json({ message: 'Project deleted' });
   } catch (error) {
-    console.error('Delete project error:', error);
-    return res.status(500).json({ message: 'Error deleting project' });
+    res.status(500).json({ message: 'Server error', error: String(error) });
   }
-});
-
-// Multer error handler
-router.use((err, req, res, next) => {
-  if (err.code === 'LIMIT_FILE_SIZE') {
-    return res.status(400).json({ message: 'File size exceeds 50MB limit' });
-  }
-  if (err.code === 'LIMIT_FILE_COUNT') {
-    return res.status(400).json({ message: 'Too many files' });
-  }
-  if (err.message && err.message.includes('Only PDF files are allowed')) {
-    return res.status(400).json({ message: 'Only PDF files are allowed' });
-  }
-  if (err) {
-    console.error('File upload error:', err);
-    return res.status(400).json({ message: 'File upload error: ' + err.message });
-  }
-  next();
 });
 
 module.exports = router;

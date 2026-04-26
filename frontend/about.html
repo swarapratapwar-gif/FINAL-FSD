@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About | EduAchieve</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    :root {
+      --primary: #E8500A;
+      --navy: #1A1A2E;
+      --cream: #FDF6EC;
+    }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: #1A1A2E; margin: 0; }
+    
+    .about-container { max-width: 900px; margin: 80px auto; padding: 0 20px; }
+
+    .info-card {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      border: 1px solid #E5E7EB;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+
+    .info-card h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      color: var(--navy);
+    }
+
+    .info-card p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #6B7280;
+    }
+
+    .site-topbar { background: var(--navy); height: 64px; display: flex; align-items: center; padding: 0 40px; }
+  </style>
+</head>
+<body>
+
+  <header class="site-topbar">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div class="brand-mark">🎓</div>
+      <div class="brand-title" style="color: white; font-weight: 800; font-size: 1.2rem;">EduAchieve</div>
+    </div>
+    <nav class="top-nav" style="margin-left: auto;">
+      <a href="index.html" style="color: white; text-decoration: none; margin-left: 20px;">Home</a>
+      <a href="explore.html" style="color: white; text-decoration: none; margin-left: 20px;">Projects</a>
+      <a href="submit.html" style="color: white; text-decoration: none; margin-left: 20px;">Submit</a>
+      <a href="about.html" class="active" style="color: white; text-decoration: none; margin-left: 20px;">About</a>
+    </nav>
+  </header>
+
+  <main class="about-container">
+    <h1 style="font-family: 'Syne', sans-serif; font-size: 3rem; text-align: center; margin-bottom: 60px;">About the <span>Portal</span></h1>
+
+    <div class="info-card">
+      <h2>Institutional Vision</h2>
+      <p>EduAchieve was founded with a single mission: to provide the PCCOE CSE AI&ML department with a world-class institutional repository. We believe that student research is the backbone of academic progress, and it deserves a professional stage.</p>
+    </div>
+
+    <div class="info-card">
+      <h2>Platform Capabilities</h2>
+      <p>Our platform is engineered to handle the complexities of modern academic research, ensuring data integrity and accessibility.</p>
+    </div>
+
+    <div class="info-card">
+      <h2>Core Methodology</h2>
+      <p>We utilize a multi-layered verification system to ensure that every project published on EduAchieve meets institutional standards. Our goal is to create a living library of technical achievements.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer" style="background: var(--navy); padding: 40px 0; color: rgba(255,255,255,0.6);">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; max-width: 1140px; margin: 0 auto; padding: 0 20px;">
+      <p style="color: white; font-weight: 700;">EduAchieve</p>
+      <p>© 2024-26 PCCOE Pune</p>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+</body>
+</html>

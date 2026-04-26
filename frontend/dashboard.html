@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | EduAchieve</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="site-topbar">
+    <div class="brand-mark">&#127891;</div>
+    <div>
+      <div class="brand-title">EduAchieve</div>
+      <div class="brand-sub">Admin Panel</div>
+    </div>
+    <nav class="top-nav" style="margin-left:32px;">
+      <a href="index.html">View Site</a>
+    </nav>
+    <div class="nav-actions" style="margin-left:auto;">
+      <span class="nav-username" id="navUser">Admin</span>
+      <button style="background:none;border:none;color:#DC2626;cursor:pointer;font-size:0.82rem;font-weight:600;margin-left:12px;" onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <a href="#" class="admin-nav-link active" id="navLinkDash" onclick="switchView('overview',this)">&#128196; Overview</a>
+      <a href="#" class="admin-nav-link" id="navLinkProjects" onclick="switchView('projects',this)">&#128193; Manage Projects</a>
+      <a href="#" class="admin-nav-link" id="navLinkStudents" onclick="switchView('students',this)">&#128101; Registered Students</a>
+    </aside>
+
+    <main class="admin-main">
+
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;">
+        <h1 style="font-size:1.8rem;margin:0;" id="pageTitle">Dashboard Overview</h1>
+        <button class="btn-outline" onclick="exportCSV()" id="exportBtn" style="display:none;">&#8595; Export CSV</button>
+      </div>
+
+      <!-- OVERVIEW VIEW -->
+      <div id="viewOverview">
+        <div class="admin-stats" id="statsGrid">
+          <div class="admin-stat">
+            <div class="icon">&#128196;</div>
+            <div class="num" id="statTotal">—</div>
+            <div class="lbl">Total Projects</div>
+          </div>
+          <div class="admin-stat">
+            <div class="icon" style="background:#E0F2FE;color:#0284C7;">&#128101;</div>
+            <div class="num" style="color:#0284C7;" id="statStudents">—</div>
+            <div class="lbl">Registered Students</div>
+          </div>
+          <div class="admin-stat">
+            <div class="icon" style="background:#FEF3C7;color:#D97706;">&#128218;</div>
+            <div class="num" style="color:#D97706;" id="statBatches">—</div>
+            <div class="lbl">Active Batches</div>
+          </div>
+          <div class="admin-stat">
+            <div class="icon" style="background:#DCFCE7;color:#16A34A;">&#128200;</div>
+            <div class="num" style="color:#16A34A;" id="statRecent">—</div>
+            <div class="lbl">This Month</div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:24px;">
+          <h3 style="font-size:1.1rem;margin-bottom:16px;">Recent Activity</h3>
+          <div id="recentActivity"><p style="color:#6B7280;">Loading...</p></div>
+        </div>
+      </div>
+
+      <!-- PROJECTS VIEW -->
+      <div id="viewProjects" style="display:none;">
+        <div class="card">
+          <input type="text" id="adminSearch" placeholder="Search by title, team, or submitter..."
+            style="width:100%;padding:10px 16px;border:1px solid #E5E7EB;border-radius:8px;font-size:0.95rem;margin-bottom:20px;font-family:inherit;">
+          <div style="overflow-x:auto;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Team</th>
+                  <th>Domain</th>
+                  <th>Batch / Year</th>
+                  <th>Submitted By</th>
+                  <th>Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="projectsBody">
+                <tr><td colspan="7" style="text-align:center;padding:32px;color:#6B7280;">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- STUDENTS VIEW -->
+      <div id="viewStudents" style="display:none;">
+        <div class="card">
+          <div style="overflow-x:auto;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Department</th>
+                  <th>Year</th>
+                  <th>Batch</th>
+                  <th>Roll No</th>
+                  <th>Joined</th>
+                </tr>
+              </thead>
+              <tbody id="studentsBody">
+                <tr><td colspan="7" style="text-align:center;padding:32px;color:#6B7280;">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="common.js"></script>
+  <script>
+    var allProjects = [];
+    var allStudents = [];
+    var currentView = 'overview';
+
+    // Auth guard — runs synchronously
+    var adminUser = checkAuth();
+    if (!adminUser || adminUser.role !== 'admin') {
+      window.location.href = 'index.html';
+    } else {
+      document.getElementById('navUser').textContent = adminUser.name || 'Admin';
+      loadDashboardData();
+    }
+
+    function switchView(view, el) {
+      currentView = view;
+      document.getElementById('viewOverview').style.display = view === 'overview' ? 'block' : 'none';
+      document.getElementById('viewProjects').style.display = view === 'projects' ? 'block' : 'none';
+      document.getElementById('viewStudents').style.display = view === 'students' ? 'block' : 'none';
+
+      document.querySelectorAll('.admin-nav-link').forEach(function(a) { a.classList.remove('active'); });
+      el.classList.add('active');
+
+      var titles = { overview: 'Dashboard Overview', projects: 'Manage Projects', students: 'Registered Students' };
+      document.getElementById('pageTitle').textContent = titles[view];
+      document.getElementById('exportBtn').style.display = view === 'projects' ? 'inline-block' : 'none';
+    }
+
+    function loadDashboardData() {
+      apiCall('/api/stats').then(function(stats) {
+        document.getElementById('statTotal').textContent = stats.totalProjects || 0;
+        document.getElementById('statStudents').textContent = stats.totalStudents || 0;
+        document.getElementById('statBatches').textContent = stats.totalBatches || 0;
+      }).catch(function(e) { console.error('Stats error', e); });
+
+      apiCall('/api/projects?limit=1000').then(function(data) {
+        allProjects = data.projects || [];
+
+        var now = new Date();
+        var thisMonth = allProjects.filter(function(p) {
+          var d = new Date(p.createdAt);
+          return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+        });
+        document.getElementById('statRecent').textContent = thisMonth.length;
+
+        renderRecentActivity();
+        renderProjectsTable(allProjects);
+      }).catch(function(e) { console.error('Projects error', e); });
+
+      // Load students from users list — uses admin endpoint
+      apiCall('/api/stats').then(function() {
+        // Fallback: we show what we have from projects (unique submitters)
+      });
+    }
+
+    function renderRecentActivity() {
+      var el = document.getElementById('recentActivity');
+      if (allProjects.length === 0) {
+        el.innerHTML = '<p style="color:#6B7280;padding:12px 0;">No projects submitted yet.</p>';
+        return;
+      }
+      var recent = allProjects.slice(0, 10);
+      el.innerHTML = recent.map(function(p) {
+        return '<div style="display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #F3F4F6;">' +
+          '<div style="width:10px;height:10px;border-radius:50%;background:#E8500A;margin-top:6px;flex-shrink:0;"></div>' +
+          '<div>' +
+          '<p style="margin:0 0 4px;font-size:0.9rem;"><strong>' + escapeHtml(p.submittedByName || 'Unknown') + '</strong> submitted ' +
+          '<a href="project-detail.html?id=' + p.id + '" style="color:#E8500A;font-weight:600;">' + escapeHtml(p.title) + '</a></p>' +
+          '<span style="font-size:0.78rem;color:#6B7280;">' + formatDate(p.createdAt) + '</span>' +
+          '</div></div>';
+      }).join('');
+    }
+
+    function renderProjectsTable(projects) {
+      var tbody = document.getElementById('projectsBody');
+      if (!projects.length) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:32px;color:#6B7280;">No projects found.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = projects.map(function(p) {
+        return '<tr>' +
+          '<td style="font-weight:600;">' + escapeHtml(p.title) + '</td>' +
+          '<td>' + escapeHtml(p.teamName || '') + '</td>' +
+          '<td><span class="domain-tag">' + escapeHtml(p.domain || '') + '</span></td>' +
+          '<td>' + escapeHtml(p.batch || '') + ' / ' + escapeHtml(p.year || '') + '</td>' +
+          '<td>' + escapeHtml(p.submittedByName || '') + '</td>' +
+          '<td>' + formatDate(p.createdAt) + '</td>' +
+          '<td style="white-space:nowrap;">' +
+          '<a href="project-detail.html?id=' + p.id + '" style="color:#E8500A;font-weight:600;font-size:0.82rem;margin-right:10px;">View</a>' +
+          '<button onclick="deleteProject(\'' + p.id + '\')" style="background:none;border:none;color:#DC2626;cursor:pointer;font-weight:600;font-size:0.82rem;">Delete</button>' +
+          '</td></tr>';
+      }).join('');
+    }
+
+    // Search
+    document.addEventListener('DOMContentLoaded', function() {
+      var searchEl = document.getElementById('adminSearch');
+      if (searchEl) {
+        searchEl.addEventListener('input', function(e) {
+          var q = e.target.value.toLowerCase();
+          var filtered = allProjects.filter(function(p) {
+            return (p.title || '').toLowerCase().includes(q) ||
+              (p.teamName || '').toLowerCase().includes(q) ||
+              (p.submittedByName || '').toLowerCase().includes(q);
+          });
+          renderProjectsTable(filtered);
+        });
+      }
+    });
+
+    function deleteProject(id) {
+      if (!confirm('Delete this project permanently? This cannot be undone.')) return;
+      apiCall('/api/projects/' + id, { method: 'DELETE' })
+        .then(function() {
+          allProjects = allProjects.filter(function(p) { return p.id !== id; });
+          renderProjectsTable(allProjects);
+          renderRecentActivity();
+          document.getElementById('statTotal').textContent = allProjects.length;
+        })
+        .catch(function(err) { alert('Delete failed: ' + err.message); });
+    }
+
+    window.exportCSV = function() {
+      if (!allProjects.length) { alert('No projects to export.'); return; }
+      var headers = ['ID', 'Title', 'Team', 'Domain', 'Batch', 'Year', 'Submitted By', 'Date'];
+      var rows = [headers.join(',')];
+      allProjects.forEach(function(p) {
+        rows.push([
+          p.id,
+          '"' + (p.title || '').replace(/"/g, '""') + '"',
+          '"' + (p.teamName || '').replace(/"/g, '""') + '"',
+          '"' + (p.domain || '').replace(/"/g, '""') + '"',
+          '"' + (p.batch || '') + '"',
+          '"' + (p.year || '') + '"',
+          '"' + (p.submittedByName || '').replace(/"/g, '""') + '"',
+          p.createdAt || ''
+        ].join(','));
+      });
+      var blob = new Blob([rows.join('\n')], { type: 'text/csv' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'eduachieve_projects.csv';
+      a.click();
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theme Toggle Demo | EduAchieve</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* CSS Custom Properties definition */
+    :root {
+      /* Light Theme (Default) */
+      --bg-color: #F8FAFC;
+      --text-color: #1E293B;
+      --card-bg: #FFFFFF;
+      --border-color: #E2E8F0;
+      --primary-color: #E8590C;
+      --secondary-text: #64748B;
+      --code-bg: #F1F5F9;
+    }
+
+    /* Dark Theme Overrides */
+    body.dark-theme {
+      --bg-color: #0F172A;
+      --text-color: #F8FAFC;
+      --card-bg: #1E293B;
+      --border-color: #334155;
+      --primary-color: #F97316;
+      --secondary-text: #94A3B8;
+      --code-bg: #0B1120;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    
+    /* Smooth transitions for theme switching */
+    body { 
+      background-color: var(--bg-color); 
+      color: var(--text-color); 
+      transition: background-color 0.3s ease, color 0.3s ease; 
+    }
+    
+    .topbar { 
+      padding: 15px 5%; 
+      background: var(--card-bg); 
+      border-bottom: 1px solid var(--border-color);
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .theme-toggle-btn {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    .theme-toggle-btn:hover { border-color: var(--primary-color); }
+
+    .container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+    
+    h1 { margin-bottom: 10px; }
+    p { color: var(--secondary-text); margin-bottom: 30px; transition: color 0.3s; }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 30px;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .form-group { margin-bottom: 15px; }
+    .form-control {
+      width: 100%; padding: 10px;
+      background: var(--bg-color);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      outline: none;
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+    .form-control:focus { border-color: var(--primary-color); }
+
+    table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+    th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); transition: border-color 0.3s; }
+    th { color: var(--secondary-text); font-weight: 600; }
+
+    .btn { padding: 10px 20px; border-radius: 6px; border: none; cursor: pointer; font-weight: 500; }
+    .btn-primary { background: var(--primary-color); color: white; }
+    .btn-outline { background: transparent; border: 1px solid var(--primary-color); color: var(--primary-color); }
+
+    blockquote {
+      border-left: 4px solid var(--primary-color);
+      padding: 15px 20px;
+      background: var(--code-bg);
+      margin: 20px 0;
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+      transition: background-color 0.3s;
+    }
+
+    pre {
+      background: var(--code-bg);
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+      border: 1px solid var(--border-color);
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+    code { font-family: 'Courier New', Courier, monospace; color: var(--text-color); }
+
+    .back-link { display: inline-block; color: var(--primary-color); text-decoration: none; margin-bottom: 20px; font-weight: 500; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div style="font-weight: 700; font-size: 1.2rem;">ThemeDemo</div>
+    <button class="theme-toggle-btn" id="themeToggle">
+      <span id="themeIcon">🌙</span> <span id="themeText">Dark Mode</span>
+    </button>
+  </header>
+
+  <div class="container">
+    <a href="index.html" class="back-link">← Back to Assignments</a>
+
+    <h1>CSS Variables Theme Toggle</h1>
+    <p>This page demonstrates how to implement a robust dark/light theme toggle using CSS Custom Properties (variables) and localStorage.</p>
+
+    <div class="card">
+      <h3>Sample Components</h3>
+      <p style="margin-top: 5px;">These components will smoothly adapt to the active theme.</p>
+      
+      <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+        <button class="btn btn-primary">Primary Button</button>
+        <button class="btn btn-outline">Outline Button</button>
+      </div>
+
+      <div class="form-group">
+        <label style="display: block; margin-bottom: 5px;">Sample Input</label>
+        <input type="text" class="form-control" placeholder="Type something...">
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Jane Doe</td>
+            <td>Admin</td>
+            <td style="color: #10B981;">Active</td>
+          </tr>
+          <tr>
+            <td>John Smith</td>
+            <td>User</td>
+            <td style="color: #64748B;">Offline</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <blockquote>
+        "The best way to implement dark mode is by relying entirely on CSS Custom Properties and avoiding inline styles or multiple stylesheets."
+      </blockquote>
+    </div>
+
+    <div class="card">
+      <h3>How it works</h3>
+      <p>We define all our colors as variables inside the <code>:root</code> pseudo-class. Then, we create a <code>.dark-theme</code> class that overwrites those specific variables.</p>
+      
+      <pre><code>/* Define default variables */
+:root {
+  --bg-color: #FFFFFF;
+  --text-color: #333333;
+}
+
+/* Overwrite variables for dark mode */
+body.dark-theme {
+  --bg-color: #121212;
+  --text-color: #EEEEEE;
+}
+
+/* Use variables throughout the CSS */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}</code></pre>
+    </div>
+
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const themeToggle = document.getElementById('themeToggle');
+      const themeIcon = document.getElementById('themeIcon');
+      const themeText = document.getElementById('themeText');
+      const body = document.body;
+
+      // Check for saved theme in localStorage
+      const savedTheme = localStorage.getItem('demo-theme');
+      if (savedTheme === 'dark') {
+        body.classList.add('dark-theme');
+        updateBtnState(true);
+      }
+
+      themeToggle.addEventListener('click', () => {
+        // Toggle class
+        body.classList.toggle('dark-theme');
+        const isDark = body.classList.contains('dark-theme');
+        
+        // Save preference
+        localStorage.setItem('demo-theme', isDark ? 'dark' : 'light');
+        
+        // Update UI
+        updateBtnState(isDark);
+      });
+
+      function updateBtnState(isDark) {
+        if (isDark) {
+          themeIcon.textContent = '☀️';
+          themeText.textContent = 'Light Mode';
+        } else {
+          themeIcon.textContent = '🌙';
+          themeText.textContent = 'Dark Mode';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

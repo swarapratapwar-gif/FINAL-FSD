@@ -24,9 +24,12 @@
     </nav>
 
     <div class="top-actions">
-      <a id="navAuth" class="button-link alt" href="login.html">Login</a>
-      <button id="navLogout" class="primary">Logout</button>
-      <span id="navUser" class="muted"></span>
+      <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode"></button>
+      <a href="login.html" class="btn btn-outline" id="navLoginBtn">Portal Access</a>
+      <div class="user-dropdown" id="navUserDropdown" style="display: none;">
+        <span id="navUserName" class="user-name"></span>
+        <button id="navLogout" class="btn btn-danger btn-sm">Logout</button>
+      </div>
     </div>
   </header>
 
