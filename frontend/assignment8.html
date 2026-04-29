@@ -3,212 +3,529 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Project Gallery | EduAchieve</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <title>Resource Explorer | EduAchieve</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
   <style>
     :root {
-      --primary: #E8500A;
-      --navy: #1A1A2E;
-      --bg: #F9F9F9;
-      --surface: #FFFFFF;
-      --text: #1A1A2E;
-      --text-muted: #6B7280;
-      --border: #E5E7EB;
+      --primary: #FF6A00;
+      --primary-hover: #E65C00;
+      --landing-bg: #FAF9F6;
+      --landing-bg-nav: rgba(11, 15, 25, 0.95);
+      --landing-bg-card: #FFFFFF;
+      --landing-bg-footer: #0B0F19;
+      --landing-text-main: #111827;
+      --landing-text-muted: #6B7280;
+      --landing-border: rgba(0, 0, 0, 0.06);
+      --card-shadow: 0 12px 32px rgba(0,0,0,0.04);
+      --card-shadow-hover: 0 20px 48px rgba(0,0,0,0.08);
+      --filter-bg: #F3F4F6;
+      --filter-text: #4B5563;
+      --cta-bg: rgba(255,255,255,0.8);
+      
+      /* Pastel Gradients */
+      --pastel-lavender: linear-gradient(135deg, #E6D9FF, #F3EBFF);
+      --icon-lavender: #A78BFA;
+      
+      --pastel-blue: linear-gradient(135deg, #DCEEFF, #EDF5FF);
+      --icon-blue: #60A5FA;
+      
+      --pastel-mint: linear-gradient(135deg, #DFF7F2, #EEFBF8);
+      --icon-mint: #34D399;
+      
+      --pastel-peach: linear-gradient(135deg, #FFE5D9, #FFF2EC);
+      --icon-peach: #FB923C;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); }
 
-    .topbar { background: var(--navy); height: 50px; display: flex; align-items: center; padding: 0 24px; }
-    .topbar a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.85rem; }
-    .topbar a:hover { color: white; }
-    .topbar span { color: rgba(255,255,255,0.3); margin: 0 10px; }
-    .topbar b { color: white; font-size: 0.85rem; }
+    [data-theme="dark"] {
+      --primary: #FF6A00;
+      --primary-hover: #E65C00;
+      --landing-bg: #0B0F19;
+      --landing-bg-nav: rgba(11, 15, 25, 0.95);
+      --landing-bg-card: rgba(21, 28, 44, 0.8);
+      --landing-bg-footer: #080B13;
+      --landing-text-main: #FFFFFF;
+      --landing-text-muted: #9CA3AF;
+      --landing-border: rgba(255, 255, 255, 0.08);
+      --card-shadow: 0 12px 32px rgba(0,0,0,0.3);
+      --card-shadow-hover: 0 24px 60px rgba(0,0,0,0.5);
+      --filter-bg: rgba(255, 255, 255, 0.05);
+      --filter-text: #9CA3AF;
+      --cta-bg: rgba(21, 28, 44, 0.6);
 
-    .page-header { text-align: center; padding: 56px 20px 36px; }
-    .page-header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 10px; }
-    .page-header p { color: var(--text-muted); }
+      /* Dark mode adapts pastel backgrounds to be dark-muted */
+      --pastel-lavender: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(139, 92, 246, 0.05));
+      --icon-lavender: #A78BFA;
+      
+      --pastel-blue: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05));
+      --icon-blue: #60A5FA;
+      
+      --pastel-mint: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+      --icon-mint: #34D399;
+      
+      --pastel-peach: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(249, 115, 22, 0.05));
+      --icon-peach: #FB923C;
+    }
+    
+    body { 
+      font-family: 'Inter', sans-serif; 
+      background: var(--landing-bg); 
+      color: var(--landing-text-main); 
+      margin: 0; 
+      overflow-x: hidden;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
 
-    .filter-bar { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; padding: 0 20px 36px; }
-    .filter-btn { padding: 8px 20px; border-radius: 20px; border: 1.5px solid var(--border); background: white; cursor: pointer; font-family: inherit; font-size: 0.88rem; font-weight: 600; color: var(--text-muted); transition: all 0.18s; }
-    .filter-btn:hover { border-color: var(--primary); color: var(--primary); }
-    .filter-btn.active { background: var(--primary); border-color: var(--primary); color: white; }
+    /* Navbar styling */
+    .site-topbar {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--landing-bg-nav);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      height: 72px; display: flex; align-items: center; padding: 0 40px;
+      justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .brand-mark {
+      background: linear-gradient(135deg, var(--primary), #FF8C33);
+      width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; 
+      border-radius: 8px; color: white; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(255, 106, 0, 0.3);
+    }
+    .brand-title { color: white; font-weight: 800; font-size: 1.25rem; font-family: 'Outfit', sans-serif; letter-spacing: -0.01em; }
+    .top-nav a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: color 0.2s, text-shadow 0.2s; }
+    .top-nav a:hover { color: white; text-shadow: 0 0 8px rgba(255,255,255,0.3); }
+    .top-nav a.active-link { color: var(--primary); font-weight: 600; text-shadow: 0 0 8px rgba(255,106,0,0.3); }
+    
+    .btn-login { background: var(--primary); color: white; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: all 0.3s ease; border: none; box-shadow: 0 4px 15px rgba(255, 106, 0, 0.25); }
+    .btn-login:hover { background: var(--primary-hover); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(255, 106, 0, 0.4); }
 
-    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 1100px; margin: 0 auto; padding: 0 20px 80px; }
+    /* Breadcrumbs */
+    .breadcrumbs {
+      padding: 16px 40px; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.02em;
+    }
+    .breadcrumbs a { color: var(--landing-text-muted); text-decoration: none; transition: color 0.2s; }
+    .breadcrumbs a:hover { color: var(--landing-text-main); }
+    .breadcrumbs span { color: var(--primary); margin: 0 8px; }
 
-    .grid-card { border-radius: 12px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.06); transition: transform 0.2s, opacity 0.3s; opacity: 1; transform: scale(1); }
-    .grid-card.hidden { opacity: 0; transform: scale(0.95); pointer-events: none; height: 0; overflow: hidden; margin: 0; padding: 0; }
-    .card-visual { height: 160px; display: flex; align-items: center; justify-content: center; }
-    .card-visual .domain-icon { font-size: 3rem; }
-    .card-info { background: white; padding: 16px; }
-    .card-info h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
-    .card-info p { font-size: 0.78rem; color: var(--text-muted); }
-    .card-badge { display: inline-block; background: rgba(232,80,10,0.1); color: var(--primary); padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 600; margin-top: 8px; }
+    /* Hero Header */
+    .hero-header { text-align: center; padding: 60px 20px 40px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 16px; background: rgba(255, 106, 0, 0.1); color: var(--primary);
+      border: 1px solid rgba(255, 106, 0, 0.2); border-radius: 100px;
+      font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+      margin-bottom: 24px; box-shadow: 0 4px 12px rgba(255, 106, 0, 0.05);
+    }
+    .hero-header h1 {
+      font-family: 'Outfit', sans-serif; font-size: 3.5rem; font-weight: 800;
+      color: var(--landing-text-main); margin-bottom: 20px; letter-spacing: -0.02em;
+      position: relative; display: inline-block;
+    }
+    .hero-header h1 span { color: var(--primary); }
+    .hero-header h1::after {
+      content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+      width: 100px; height: 5px; background: var(--primary); border-radius: 3px;
+    }
+    .hero-header p {
+      color: var(--landing-text-muted); font-size: 1.15rem; max-width: 600px; margin: 32px auto 0; line-height: 1.7;
+    }
 
-    @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 500px) { .grid { grid-template-columns: 1fr; } }
+    /* Filters */
+    .filters {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 50px; padding: 0 20px;
+    }
+    .filter-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 24px; background: var(--filter-bg); border: 1px solid transparent;
+      border-radius: 100px; font-size: 0.9rem; font-weight: 600; color: var(--filter-text);
+      cursor: pointer; transition: all 0.2s ease;
+    }
+    .filter-btn:hover { background: rgba(255, 106, 0, 0.1); color: var(--primary); }
+    .filter-btn.active {
+      background: rgba(255, 106, 0, 0.15); color: var(--primary); border-color: rgba(255, 106, 0, 0.3);
+    }
+
+    /* Grid */
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px;
+      max-width: 1300px; margin: 0 auto 80px; padding: 0 20px;
+    }
+
+    .project-card {
+      background: var(--landing-bg-card); border: 1px solid var(--landing-border);
+      border-radius: 20px; overflow: hidden; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: var(--card-shadow); display: flex; flex-direction: column; cursor: pointer;
+    }
+    .project-card:hover { transform: translateY(-8px) scale(1.01); box-shadow: var(--card-shadow-hover); border-color: rgba(255, 106, 0, 0.2); }
+    
+    .card-thumb {
+      height: 180px; display: flex; align-items: center; justify-content: center;
+    }
+    /* SVG stroke width applied globally to all Lucide icons in thumb */
+    .card-thumb svg { stroke-width: 1.5; transition: transform 0.3s ease; }
+    .project-card:hover .card-thumb svg { transform: scale(1.1); }
+    
+    .card-body { padding: 24px; flex: 1; display: flex; flex-direction: column; position: relative; }
+    .card-title { font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--landing-text-main); margin-bottom: 10px; line-height: 1.3; }
+    .card-desc { font-size: 0.9rem; color: var(--landing-text-muted); line-height: 1.6; margin-bottom: 20px; flex: 1; }
+    
+    .card-meta { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+    .cat-badge {
+      display: inline-block; padding: 4px 12px; background: var(--filter-bg); border: 1px solid var(--landing-border);
+      color: var(--landing-text-muted); border-radius: 100px; font-size: 0.75rem; font-weight: 600;
+    }
+    .btn-arrow {
+      width: 32px; height: 32px; border-radius: 50%; background: var(--landing-bg);
+      border: 1px solid var(--landing-border); display: flex; align-items: center; justify-content: center;
+      color: var(--landing-text-muted); transition: all 0.3s;
+    }
+    .project-card:hover .btn-arrow { background: var(--primary); color: white; border-color: var(--primary); transform: translateX(4px); }
+
+    /* Bottom CTA */
+    .cta-section { max-width: 1300px; margin: 0 auto 80px; padding: 0 20px; }
+    .cta-card {
+      background: var(--cta-bg); backdrop-filter: blur(12px); border: 1px solid var(--landing-border);
+      border-radius: 24px; padding: 40px; display: flex; justify-content: space-between; align-items: center;
+      box-shadow: var(--card-shadow); flex-wrap: wrap; gap: 24px;
+    }
+    .cta-text h2 { font-family: 'Outfit', sans-serif; font-size: 2rem; font-weight: 800; color: var(--landing-text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 12px; }
+    .cta-text p { color: var(--landing-text-muted); font-size: 1.05rem; margin: 0; }
+    .btn-cta {
+      background: linear-gradient(135deg, var(--primary), #FF8C33); color: white; padding: 16px 32px; border-radius: 12px;
+      font-size: 1.1rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+      transition: all 0.3s; box-shadow: 0 10px 25px rgba(255, 106, 0, 0.25); border: none; cursor: pointer;
+    }
+    .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 15px 35px rgba(255, 106, 0, 0.35); }
+
+    /* Footer */
+    .main-footer {
+      background: var(--landing-bg-footer); color: #9CA3AF; padding: 80px 40px 40px; border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .footer-grid {
+      max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 60px;
+    }
+    .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; color: white; font-family: 'Outfit', sans-serif; font-size: 1.4rem; font-weight: 800; }
+    .footer-desc { font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px; max-width: 300px; }
+    .social-links { display: flex; gap: 12px; }
+    .social-links a {
+      width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; color: white; transition: all 0.2s;
+    }
+    .social-links a:hover { background: var(--primary); transform: translateY(-2px); }
+    
+    .footer-col h4 { color: white; font-size: 1.05rem; font-weight: 600; margin-bottom: 20px; }
+    .footer-col ul { list-style: none; padding: 0; margin: 0; }
+    .footer-col li { margin-bottom: 12px; }
+    .footer-col a { color: #9CA3AF; text-decoration: none; font-size: 0.95rem; transition: color 0.2s; }
+    .footer-col a:hover { color: white; }
+    
+    .footer-bottom { max-width: 1300px; margin: 0 auto; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; }
+
+    @media (max-width: 1100px) { .projects-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 850px) { .projects-grid { grid-template-columns: repeat(2, 1fr); } .footer-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { 
+      .projects-grid { grid-template-columns: 1fr; } 
+      .footer-grid { grid-template-columns: 1fr; } 
+      .hero-header h1 { font-size: 2.5rem; }
+      .top-nav { display: none !important; }
+    }
   </style>
 </head>
 <body>
 
-  <div class="topbar">
-    <a href="index.html">EduAchieve</a>
-    <span>›</span>
-    <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--primary); margin-bottom: 8px;">Resource Explorer</div>
+  <!-- Navbar -->
+  <header class="site-topbar">
+    <div style="display: flex; align-items: center; gap: 12px; width: 250px;">
+      <div class="brand-mark">🎓</div>
+      <div class="brand-title">EduAchieve</div>
+    </div>
+    <nav class="top-nav" style="display: flex; gap: 40px; justify-content: center; flex: 1;">
+      <a href="index.html" class="active-link">Home</a>
+      <a href="explore.html">Projects</a>
+      <a href="submit.html">Submit</a>
+      <a href="about.html">About</a>
+    </nav>
+    <div class="nav-actions" style="display: flex; align-items: center; gap: 20px; width: 250px; justify-content: flex-end;">
+      <a href="login.html" class="btn-login" id="navLogin">Login</a>
+      <span class="nav-username" id="navUser" style="color: white; font-size: 0.9rem; display: none;"></span>
+      <button id="navLogout" style="display: none; background: none; border: none; color: #F87171; cursor: pointer; font-size: 0.9rem; font-weight: 600;">Logout</button>
+      <!-- common.js will dynamically inject the theme toggle here -->
+    </div>
+  </header>
+
+  <div class="breadcrumbs">
+    <a href="index.html">EduAchieve</a> <span>&gt;</span> <span style="color: var(--primary);">Resource Explorer</span>
   </div>
 
-  <div class="page-header">
-    <h1>Project Gallery — CSE AI&ML</h1>
-    <p>Browse student projects by domain. Click a filter to narrow results.</p>
-  </div>
+  <main>
+    <section class="hero-header">
+      <div class="hero-badge"><i data-lucide="sparkles" style="width: 14px; height: 14px;"></i> Explore Innovations</div>
+      <h1>Project Gallery — <span>CSE AI&ML</span></h1>
+      <p>Browse student projects by domain. Click a filter to narrow results.</p>
+    </section>
 
-  <div class="filter-bar">
-    <button class="filter-btn active" data-filter="all">All</button>
-    <button class="filter-btn" data-filter="aiml">AI/ML</button>
-    <button class="filter-btn" data-filter="webdev">Web Dev</button>
-    <button class="filter-btn" data-filter="iot">IoT</button>
-    <button class="filter-btn" data-filter="data">Data Science</button>
-    <button class="filter-btn" data-filter="cyber">Cybersecurity</button>
-  </div>
-
-  <div class="grid" id="projectGrid">
-
-    <div class="grid-card" data-category="aiml">
-      <div class="card-visual" style="background: linear-gradient(135deg, #667eea, #764ba2);">
-        <span class="domain-icon">🧠</span>
-      </div>
-      <div class="card-info">
-        <h3>Crop Disease Detector</h3>
-        <p>CNN model identifying plant diseases from leaf images with 97% accuracy.</p>
-        <span class="card-badge">AI/ML</span>
-      </div>
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all"><i data-lucide="grid" style="width: 16px; height: 16px;"></i> All</button>
+      <button class="filter-btn" data-filter="aiml"><i data-lucide="cpu" style="width: 16px; height: 16px;"></i> AI/ML</button>
+      <button class="filter-btn" data-filter="webdev"><i data-lucide="globe" style="width: 16px; height: 16px;"></i> Web Dev</button>
+      <button class="filter-btn" data-filter="iot"><i data-lucide="wifi" style="width: 16px; height: 16px;"></i> IoT</button>
+      <button class="filter-btn" data-filter="data"><i data-lucide="bar-chart-2" style="width: 16px; height: 16px;"></i> Data Science</button>
+      <button class="filter-btn" data-filter="cyber"><i data-lucide="shield" style="width: 16px; height: 16px;"></i> Cybersecurity</button>
     </div>
 
-    <div class="grid-card" data-category="webdev">
-      <div class="card-visual" style="background: linear-gradient(135deg, #11998e, #38ef7d);">
-        <span class="domain-icon">🌐</span>
+    <section class="projects-grid" id="projectGrid">
+      <!-- Card 1 -->
+      <div class="project-card" data-category="aiml">
+        <div class="card-thumb" style="background: var(--pastel-lavender);">
+          <i data-lucide="brain" style="width: 64px; height: 64px; color: var(--icon-lavender);"></i>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Crop Disease Detector</h3>
+          <p class="card-desc">CNN model identifying plant diseases from leaf images with 97% accuracy.</p>
+          <div class="card-meta">
+            <span class="cat-badge">AI/ML</span>
+            <div class="btn-arrow"><i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i></div>
+          </div>
+        </div>
       </div>
-      <div class="card-info">
-        <h3>EduAchieve Portal</h3>
-        <p>Full-stack academic project repository for PCCOE students.</p>
-        <span class="card-badge">Web Dev</span>
+
+      <!-- Card 2 -->
+      <div class="project-card" data-category="webdev">
+        <div class="card-thumb" style="background: var(--pastel-blue);">
+          <i data-lucide="globe" style="width: 64px; height: 64px; color: var(--icon-blue);"></i>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">EduAchieve Portal</h3>
+          <p class="card-desc">Full-stack academic project repository for PCCOE students.</p>
+          <div class="card-meta">
+            <span class="cat-badge">Web Dev</span>
+            <div class="btn-arrow"><i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="project-card" data-category="iot">
+        <div class="card-thumb" style="background: var(--pastel-mint);">
+          <i data-lucide="satellite" style="width: 64px; height: 64px; color: var(--icon-mint);"></i>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Smart Irrigation System</h3>
+          <p class="card-desc">IoT-based automated watering using soil moisture sensors.</p>
+          <div class="card-meta">
+            <span class="cat-badge">IoT</span>
+            <div class="btn-arrow"><i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="project-card" data-category="aiml">
+        <div class="card-thumb" style="background: var(--pastel-peach);">
+          <i data-lucide="focus" style="width: 64px; height: 64px; color: var(--icon-peach);"></i>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Face Mask Detection</h3>
+          <p class="card-desc">Real-time face mask detection using MobileNet and OpenCV.</p>
+          <div class="card-meta">
+            <span class="cat-badge">AI/ML</span>
+            <div class="btn-arrow"><i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="project-card" data-category="data">
+        <div class="card-thumb" style="background: var(--pastel-blue);">
+          <i data-lucide="bar-chart-2" style="width: 64px; height: 64px; color: var(--icon-blue);"></i>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Student Performance Predictor</h3>
+          <p class="card-desc">ML model predicting exam performance based on study habits.</p>
+          <div class="card-meta">
+            <span class="cat-badge">Data Science</span>
+            <div class="btn-arrow"><i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="project-card" data-category="cyber">
+        <div class="card-thumb" style="background: var(--pastel-mint);">
+          <i data-lucide="lock" style="width: 64px; height: 64px; color: var(--icon-mint);"></i>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Phishing URL Detector</h3>
+          <p class="card-desc">Classifying malicious URLs using NLP and Random Forest.</p>
+          <div class="card-meta">
+            <span class="cat-badge">Cybersecurity</span>
+            <div class="btn-arrow"><i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 7 -->
+      <div class="project-card" data-category="webdev">
+        <div class="card-thumb" style="background: var(--pastel-lavender);">
+          <i data-lucide="shopping-cart" style="width: 64px; height: 64px; color: var(--icon-lavender);"></i>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Campus Marketplace</h3>
+          <p class="card-desc">Buy & sell platform for college students using MERN stack.</p>
+          <div class="card-meta">
+            <span class="cat-badge">Web Dev</span>
+            <div class="btn-arrow"><i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 8 -->
+      <div class="project-card" data-category="iot">
+        <div class="card-thumb" style="background: var(--pastel-peach);">
+          <i data-lucide="car" style="width: 64px; height: 64px; color: var(--icon-peach);"></i>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Smart Parking System</h3>
+          <p class="card-desc">Ultrasonic sensor-based parking slot availability detection.</p>
+          <div class="card-meta">
+            <span class="cat-badge">IoT</span>
+            <div class="btn-arrow"><i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 9 -->
+      <div class="project-card" data-category="aiml">
+        <div class="card-thumb" style="background: var(--pastel-mint);">
+          <i data-lucide="mic" style="width: 64px; height: 64px; color: var(--icon-mint);"></i>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Speech Emotion Recognition</h3>
+          <p class="card-desc">Detecting emotions from speech audio using LSTM networks.</p>
+          <div class="card-meta">
+            <span class="cat-badge">AI/ML</span>
+            <div class="btn-arrow"><i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 10 -->
+      <div class="project-card" data-category="data">
+        <div class="card-thumb" style="background: var(--pastel-lavender);">
+          <i data-lucide="trending-up" style="width: 64px; height: 64px; color: var(--icon-lavender);"></i>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Stock Trend Analyzer</h3>
+          <p class="card-desc">Time-series forecasting for NSE stocks using LSTM.</p>
+          <div class="card-meta">
+            <span class="cat-badge">Data Science</span>
+            <div class="btn-arrow"><i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 11 -->
+      <div class="project-card" data-category="cyber">
+        <div class="card-thumb" style="background: var(--pastel-blue);">
+          <i data-lucide="shield-alert" style="width: 64px; height: 64px; color: var(--icon-blue);"></i>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Network Intrusion Detector</h3>
+          <p class="card-desc">Anomaly-based IDS using XGBoost on the NSL-KDD dataset.</p>
+          <div class="card-meta">
+            <span class="cat-badge">Cybersecurity</span>
+            <div class="btn-arrow"><i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 12 -->
+      <div class="project-card" data-category="webdev">
+        <div class="card-thumb" style="background: var(--pastel-peach);">
+          <i data-lucide="calendar" style="width: 64px; height: 64px; color: var(--icon-peach);"></i>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">College Event Manager</h3>
+          <p class="card-desc">Progressive web app for managing and RSVPing college events.</p>
+          <div class="card-meta">
+            <span class="cat-badge">Web Dev</span>
+            <div class="btn-arrow"><i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="cta-card">
+        <div class="cta-text">
+          <h2><i data-lucide="rocket" style="color: var(--primary);"></i> Innovative ideas. Real impact.</h2>
+          <p>Explore projects that are solving real-world problems and shaping the future.</p>
+        </div>
+        <a href="submit.html" class="btn-cta">
+          Submit Your Project <i data-lucide="plus-circle" style="width: 20px; height: 20px;"></i>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="footer-grid">
+      <!-- Col 1 -->
+      <div>
+        <div class="footer-logo">🎓 EduAchieve</div>
+        <p class="footer-desc">Empowering students to showcase innovation and driving research excellence at PCCOE.</p>
+        <div class="social-links">
+          <a href="#"><i data-lucide="linkedin" style="width: 18px; height: 18px;"></i></a>
+          <a href="#"><i data-lucide="github" style="width: 18px; height: 18px;"></i></a>
+          <a href="#"><i data-lucide="twitter" style="width: 18px; height: 18px;"></i></a>
+        </div>
+      </div>
+      
+      <!-- Col 2 -->
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="explore.html">Projects</a></li>
+          <li><a href="submit.html">Submit</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3 -->
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Guidelines</a></li>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Support</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 4 -->
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul style="color: #9CA3AF; font-size: 0.95rem; line-height: 2;">
+          <li>PCCOE, Pune</li>
+          <li>support@eduachieve.in</li>
+          <li>+91 12345 67890</li>
+        </ul>
       </div>
     </div>
-
-    <div class="grid-card" data-category="iot">
-      <div class="card-visual" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
-        <span class="domain-icon">📡</span>
-      </div>
-      <div class="card-info">
-        <h3>Smart Irrigation System</h3>
-        <p>IoT-based automated watering using soil moisture sensors.</p>
-        <span class="card-badge">IoT</span>
-      </div>
+    
+    <div class="footer-bottom">
+      <p>© 2024-26 PCCOE Pune. All rights reserved.</p>
+      <p>Made for CSE AI&ML</p>
     </div>
+  </footer>
 
-    <div class="grid-card" data-category="aiml">
-      <div class="card-visual" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
-        <span class="domain-icon">👁️</span>
-      </div>
-      <div class="card-info">
-        <h3>Face Mask Detection</h3>
-        <p>Real-time face mask detection using MobileNet and OpenCV.</p>
-        <span class="card-badge">AI/ML</span>
-      </div>
-    </div>
-
-    <div class="grid-card" data-category="data">
-      <div class="card-visual" style="background: linear-gradient(135deg, #43e97b, #38f9d7);">
-        <span class="domain-icon">📊</span>
-      </div>
-      <div class="card-info">
-        <h3>Student Performance Predictor</h3>
-        <p>ML model predicting exam performance based on study habits.</p>
-        <span class="card-badge">Data Science</span>
-      </div>
-    </div>
-
-    <div class="grid-card" data-category="cyber">
-      <div class="card-visual" style="background: linear-gradient(135deg, #fa709a, #fee140);">
-        <span class="domain-icon">🔐</span>
-      </div>
-      <div class="card-info">
-        <h3>Phishing URL Detector</h3>
-        <p>Classifying malicious URLs using NLP and Random Forest.</p>
-        <span class="card-badge">Cybersecurity</span>
-      </div>
-    </div>
-
-    <div class="grid-card" data-category="webdev">
-      <div class="card-visual" style="background: linear-gradient(135deg, #a18cd1, #fbc2eb);">
-        <span class="domain-icon">🛒</span>
-      </div>
-      <div class="card-info">
-        <h3>Campus Marketplace</h3>
-        <p>Buy & sell platform for college students using MERN stack.</p>
-        <span class="card-badge">Web Dev</span>
-      </div>
-    </div>
-
-    <div class="grid-card" data-category="iot">
-      <div class="card-visual" style="background: linear-gradient(135deg, #fccb90, #d57eeb);">
-        <span class="domain-icon">🚗</span>
-      </div>
-      <div class="card-info">
-        <h3>Smart Parking System</h3>
-        <p>Ultrasonic sensor-based parking slot availability detection.</p>
-        <span class="card-badge">IoT</span>
-      </div>
-    </div>
-
-    <div class="grid-card" data-category="aiml">
-      <div class="card-visual" style="background: linear-gradient(135deg, #fd7043, #ff8a65);">
-        <span class="domain-icon">🎙️</span>
-      </div>
-      <div class="card-info">
-        <h3>Speech Emotion Recognition</h3>
-        <p>Detecting emotions from speech audio using LSTM networks.</p>
-        <span class="card-badge">AI/ML</span>
-      </div>
-    </div>
-
-    <div class="grid-card" data-category="data">
-      <div class="card-visual" style="background: linear-gradient(135deg, #30cfd0, #330867);">
-        <span class="domain-icon">📈</span>
-      </div>
-      <div class="card-info">
-        <h3>Stock Trend Analyzer</h3>
-        <p>Time-series forecasting for NSE stocks using LSTM.</p>
-        <span class="card-badge">Data Science</span>
-      </div>
-    </div>
-
-    <div class="grid-card" data-category="cyber">
-      <div class="card-visual" style="background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);">
-        <span class="domain-icon">🛡️</span>
-      </div>
-      <div class="card-info">
-        <h3>Network Intrusion Detector</h3>
-        <p>Anomaly-based IDS using XGBoost on the NSL-KDD dataset.</p>
-        <span class="card-badge">Cybersecurity</span>
-      </div>
-    </div>
-
-    <div class="grid-card" data-category="webdev">
-      <div class="card-visual" style="background: linear-gradient(135deg, #E8500A, #ff9a3c);">
-        <span class="domain-icon">📱</span>
-      </div>
-      <div class="card-info">
-        <h3>College Event Manager</h3>
-        <p>Progressive web app for managing and RSVPing college events.</p>
-        <span class="card-badge">Web Dev</span>
-      </div>
-    </div>
-
-  </div>
-
+  <script src="common.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
   <script>
+    lucide.createIcons();
+
+    // Filtering Logic
     const filterBtns = document.querySelectorAll('.filter-btn');
-    const cards = document.querySelectorAll('.grid-card');
+    const cards = document.querySelectorAll('.project-card');
 
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -219,9 +536,9 @@
 
         cards.forEach(card => {
           if (filter === 'all' || card.dataset.category === filter) {
-            card.classList.remove('hidden');
+            card.style.display = 'flex';
           } else {
-            card.classList.add('hidden');
+            card.style.display = 'none';
           }
         });
       });

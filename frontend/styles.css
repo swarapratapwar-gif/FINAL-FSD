@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap');
 
 :root {
   --primary: #E8500A;
@@ -31,10 +31,10 @@
 /* --- BASE --- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-size: 15px; scroll-behavior: smooth; }
-body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; transition: background 0.3s ease, color 0.3s ease; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; transition: background 0.3s ease, color 0.3s ease; }
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
-h1, h2, h3 { font-family: 'Syne', sans-serif; }
+h1, h2, h3, h4, h5, h6, .brand-title, .stat-number { font-family: 'Outfit', sans-serif; letter-spacing: -0.02em; font-weight: 700; }
 
 /* --- NAVBAR --- */
 .site-topbar {

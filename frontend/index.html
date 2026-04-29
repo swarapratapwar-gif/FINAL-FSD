@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EduAchieve | Academic Repository Portal</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <style>
     :root {
@@ -12,7 +12,7 @@
       --navy: #1A1A2E;
       --cream: #FDF6EC;
     }
-    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: #1A1A2E; margin: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; }
     
     .site-topbar {
       background: var(--navy);
@@ -24,14 +24,14 @@
     }
 
     .hero-navy {
-      background: var(--navy);
-      color: white;
+      background: var(--bg-darker);
+      color: var(--text-on-dark);
       padding: 100px 0;
       text-align: center;
     }
 
     .hero-navy h1 {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Outfit', sans-serif;
       font-size: 3.5rem;
       font-weight: 800;
       margin-bottom: 20px;
@@ -47,56 +47,93 @@
       margin: 0 auto 40px;
     }
 
-    .hub-grid {
+    .hub-grid-saas {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
-      margin-top: 40px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+      margin-top: 50px;
     }
 
-    .hub-card {
-      background: #FFFFFF;
-      border: 1px solid #E5E7EB;
-      border-radius: 12px;
+    .hub-card-saas {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
       padding: 32px;
-      transition: all 0.3s ease;
-      text-align: left;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+      z-index: 1;
     }
 
-    .hub-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 24px rgba(0,0,0,0.05);
-      border-color: var(--primary);
+    .hub-card-saas::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--card-color-start), var(--card-color-end));
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.4s ease;
     }
 
-    .hub-icon {
-      font-size: 1.8rem;
-      margin-bottom: 20px;
-      color: var(--primary);
+    .hub-card-saas:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+      border-color: transparent;
     }
 
-    .hub-card h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin-bottom: 10px;
+    .hub-card-saas:hover::before {
+      opacity: 1;
     }
 
-    .hub-card p {
-      font-size: 0.9rem;
-      color: #6B7280;
-      line-height: 1.6;
+    .hub-icon-container {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--card-color-start), var(--card-color-end));
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
       margin-bottom: 24px;
+      box-shadow: inset 0 2px 4px rgba(255,255,255,0.4), 0 4px 12px rgba(0,0,0,0.05);
     }
 
-    .btn-minimal {
-      font-size: 0.85rem;
+    .hub-card-saas h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.3rem;
       font-weight: 700;
-      color: var(--primary);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      color: var(--text);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .hub-card-saas p {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 32px;
+      flex-grow: 1;
+    }
+
+    .hub-cta {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
       text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: auto;
+      transition: color 0.2s;
+    }
+    
+    .hub-card-saas:hover .hub-cta {
+      color: var(--card-color-end);
     }
 
     .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
@@ -104,23 +141,21 @@
 </head>
 <body>
 
-  <header class="site-topbar">
-    <div style="display: flex; align-items: center; gap: 12px;">
-      <div class="brand-mark">🎓</div>
-      <div class="brand-title" style="color: white; font-weight: 800; font-size: 1.2rem;">EduAchieve</div>
+  <header class="site-topbar" style="background: var(--bg-darker); border-bottom: 1px solid var(--border); height: 64px; display: flex; align-items: center; padding: 0 40px; justify-content: space-between;">
+    <div style="display: flex; align-items: center; gap: 12px; width: 300px;">
+      <div class="brand-mark" style="background: var(--primary); width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 6px; color: white; font-size: 0.8rem;">🎓</div>
+      <div class="brand-title" style="color: white; font-weight: 800; font-size: 1.2rem; font-family: 'Outfit', sans-serif;">EduAchieve</div>
     </div>
-    
-    <nav class="top-nav" style="margin-left: auto;">
-      <a href="index.html" class="active" style="color: white; text-decoration: none; font-size: 0.9rem; margin-left: 20px;">Home</a>
-      <a href="explore.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem; margin-left: 20px;">Projects</a>
-      <a href="submit.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem; margin-left: 20px;">Submit</a>
-      <a href="about.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem; margin-left: 20px;">About</a>
+    <nav class="top-nav" style="display: flex; gap: 32px; justify-content: center; flex: 1;">
+      <a href="index.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; font-family: 'Inter', sans-serif; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='#FFF'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Home</a>
+      <a href="explore.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; font-family: 'Inter', sans-serif; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='#FFF'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Projects</a>
+      <a href="submit.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; font-family: 'Inter', sans-serif; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='#FFF'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Submit</a>
+      <a href="about.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; font-family: 'Inter', sans-serif; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='#FFF'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">About</a>
     </nav>
-    
-    <div class="nav-actions" style="margin-left: 30px;">
-      <a href="login.html" class="btn-primary" style="background: var(--primary); color: white; padding: 8px 20px; border-radius: 8px; font-weight: 700; text-decoration: none;" id="navLogin">Login</a>
-      <span class="nav-username" id="navUser" style="color: white; font-size: 0.85rem;"></span>
-      <button id="navLogout" style="display: none; background: none; border: none; color: #F87171; cursor: pointer; font-size: 0.82rem; font-weight: 700; margin-left: 10px;" onclick="logout()">Logout</button>
+    <div class="nav-actions" style="display: flex; align-items: center; gap: 16px; width: 300px; justify-content: flex-end;">
+      <a href="login.html" class="btn-primary" id="navLogin" style="background: var(--primary); color: white; padding: 8px 20px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; font-family: 'Inter', sans-serif;">Login</a>
+      <span class="nav-username" id="navUser" style="color: white; font-size: 0.85rem; font-family: 'Inter', sans-serif;"></span>
+      <button id="navLogout" style="display: none; background: none; border: none; color: #F87171; cursor: pointer; font-size: 0.85rem; font-weight: 600; font-family: 'Inter', sans-serif;" onclick="logout()">Logout</button>
     </div>
   </header>
 
@@ -136,64 +171,74 @@
     </div>
   </section>
 
-  <div class="container" style="padding: 80px 20px;">
-    <h2 style="font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800; text-align: center; margin-bottom: 50px;">Institutional Hub</h2>
+  <div class="container" style="padding: 100px 20px;">
+    <div style="text-align: center; max-width: 650px; margin: 0 auto 60px;">
+      <h2 style="font-family: 'Outfit', sans-serif; font-size: 2.5rem; font-weight: 800; color: var(--text); margin-bottom: 16px; letter-spacing: -0.02em;">Platform Modules</h2>
+      <p style="font-size: 1.1rem; color: var(--text-muted); line-height: 1.6;">Explore the underlying technical infrastructure and interactive components powering the EduAchieve ecosystem.</p>
+    </div>
     
-    <div class="hub-grid">
-      <div class="hub-card">
-        <div class="hub-icon">🚀</div>
-        <h3>Landing Framework</h3>
-        <p>Institutional showcase layout for departmental visibility and excellence.</p>
-        <a href="assignment1.html" class="btn-minimal">View Module →</a>
+    <div class="hub-grid-saas">
+      <div class="hub-card-saas" style="--card-color-start: #E0E7FF; --card-color-end: #818CF8;">
+        <div class="hub-icon-container">🏗️</div>
+        <h3>Platform Architecture</h3>
+        <p>A scalable, responsive foundation designed to showcase departmental achievements and elevate visibility.</p>
+        <a href="assignment1.html" class="hub-cta">Learn More &rarr;</a>
       </div>
 
-      <div class="hub-card">
-        <div class="hub-icon">👨‍💻</div>
-        <h3>Admin Ecosystem</h3>
-        <p>Biographies and core mission of the project system architects.</p>
-        <a href="assignment2.html" class="btn-minimal">View Team →</a>
+      <div class="hub-card-saas" style="--card-color-start: #F3E8FF; --card-color-end: #C084FC;">
+        <div class="hub-icon-container">🔐</div>
+        <h3>Administration Panel</h3>
+        <p>Comprehensive identity and access management for system architects, faculty, and administrators.</p>
+        <a href="assignment2.html" class="hub-cta">Learn More &rarr;</a>
       </div>
 
-      <div class="hub-card">
-        <div class="hub-icon">📝</div>
-        <h3>Article Engine</h3>
-        <p>Clean typography optimized for long-form research publications.</p>
-        <a href="assignment3.html" class="btn-minimal">Read More →</a>
+      <div class="hub-card-saas" style="--card-color-start: #FFEDD5; --card-color-end: #FB923C;">
+        <div class="hub-icon-container">📰</div>
+        <h3>Publication System</h3>
+        <p>A pristine reading environment engineered with perfect typography for long-form academic research.</p>
+        <a href="assignment3.html" class="hub-cta">Learn More &rarr;</a>
       </div>
 
-      <div class="hub-card">
-        <div class="hub-icon">❓</div>
+      <div class="hub-card-saas" style="--card-color-start: #CCFBF1; --card-color-end: #2DD4BF;">
+        <div class="hub-icon-container">📚</div>
         <h3>Knowledge Base</h3>
-        <p>Interactive accordion system for academic and project guidelines.</p>
-        <a href="assignment4.html" class="btn-minimal">Explore →</a>
+        <p>An interactive, state-driven accordion component for housing extensive academic guidelines and FAQs.</p>
+        <a href="assignment4.html" class="hub-cta">Learn More &rarr;</a>
       </div>
 
-      <div class="hub-card">
-        <div class="hub-icon">🔢</div>
-        <h3>Abstract Validator</h3>
-        <p>Real-time validation engine for project research submissions.</p>
-        <a href="assignment5.html" class="btn-minimal">Launch →</a>
+      <div class="hub-card-saas" style="--card-color-start: #FFE4E6; --card-color-end: #FB7185;">
+        <div class="hub-icon-container">🛡️</div>
+        <h3>Validation Engine</h3>
+        <p>Real-time data integrity and form validation engine to ensure accurate research metadata submissions.</p>
+        <a href="assignment5.html" class="hub-cta">Learn More &rarr;</a>
       </div>
 
-      <div class="hub-card">
-        <div class="hub-icon">🗔</div>
-        <h3>Interactive Modals</h3>
-        <p>Dynamic overlay system for detailed project metadata viewing.</p>
-        <a href="assignment6.html" class="btn-minimal">View Demo →</a>
+      <div class="hub-card-saas" style="--card-color-start: #E0E7FF; --card-color-end: #6366F1;">
+        <div class="hub-icon-container">✨</div>
+        <h3>Dynamic Interface System</h3>
+        <p>Contextual overlay systems and non-blocking modals designed for rapid metadata previewing.</p>
+        <a href="assignment6.html" class="hub-cta">Learn More &rarr;</a>
       </div>
 
-      <div class="hub-card">
-        <div class="hub-icon">🖼️</div>
+      <div class="hub-card-saas" style="--card-color-start: #D1FAE5; --card-color-end: #34D399;">
+        <div class="hub-icon-container">🗂️</div>
         <h3>Resource Explorer</h3>
-        <p>Categorized grid system for academic asset management.</p>
-        <a href="assignment8.html" class="btn-minimal">Explore →</a>
+        <p>Categorized, filterable grid architecture tailored for large-scale academic asset management.</p>
+        <a href="assignment8.html" class="hub-cta">Learn More &rarr;</a>
       </div>
 
-      <div class="hub-card">
-        <div class="hub-icon">🌓</div>
+      <div class="hub-card-saas" style="--card-color-start: #FEF3C7; --card-color-end: #FBBF24;">
+        <div class="hub-icon-container">🌓</div>
         <h3>Theme Engine</h3>
-        <p>System-wide dark and light mode persistence infrastructure.</p>
-        <a href="assignment9.html" class="btn-minimal">Configure →</a>
+        <p>System-wide persistent theming infrastructure supporting dark and light mode color spaces.</p>
+        <a href="assignment9.html" class="hub-cta">Learn More &rarr;</a>
+      </div>
+
+      <div class="hub-card-saas" style="--card-color-start: #E0F2FE; --card-color-end: #38BDF8;">
+        <div class="hub-icon-container">⚡</div>
+        <h3>Real-time Analytics</h3>
+        <p>Advanced metrics tracking system for monitoring platform engagement and research downloads.</p>
+        <a href="dashboard.html" class="hub-cta">Learn More &rarr;</a>
       </div>
     </div>
   </div>
@@ -214,5 +259,9 @@
   </footer>
 
   <script src="common.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
 </body>
 </html>

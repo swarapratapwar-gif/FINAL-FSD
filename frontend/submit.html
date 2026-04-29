@@ -8,24 +8,23 @@
 </head>
 <body>
 
-  <header class="site-topbar">
-    <div class="brand-mark">🎓</div>
-    <div>
-      <div class="brand-title">EduAchieve</div>
-      <div class="brand-sub">CSE AI&ML | PCCOE</div>
-    </div>
-    <nav class="top-nav">
-      <a href="index.html">Home</a>
-      <a href="explore.html">Projects</a>
-      <a href="submit.html" class="active">Submit</a>
-      <a href="about.html">About</a>
-    </nav>
-    <div class="nav-actions">
-      <a href="login.html" class="btn-primary" id="navLogin">Login</a>
-      <span class="nav-username" id="navUser"></span>
-      <button id="navLogout" style="display: none; background: none; border: none; color: #DC2626; cursor: pointer; font-size: 0.82rem; font-weight: 600;" onclick="logout()">Logout</button>
-    </div>
-  </header>
+  <header class="site-topbar" style="background: #0B0F19; border-bottom: 1px solid rgba(255,255,255,0.05); height: 64px; display: flex; align-items: center; padding: 0 40px; justify-content: space-between;">
+  <div style="display: flex; align-items: center; gap: 12px; width: 300px;">
+    <div class="brand-mark" style="background: #E8500A; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 6px; color: white; font-size: 0.8rem;">🎓</div>
+    <div class="brand-title" style="color: white; font-weight: 800; font-size: 1.2rem; font-family: 'Outfit', sans-serif;">EduAchieve</div>
+  </div>
+  <nav class="top-nav" style="display: flex; gap: 32px; justify-content: center; flex: 1;">
+    <a href="index.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; font-family: 'Inter', sans-serif; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='#FFF'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Home</a>
+    <a href="explore.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; font-family: 'Inter', sans-serif; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='#FFF'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Projects</a>
+    <a href="submit.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; font-family: 'Inter', sans-serif; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='#FFF'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Submit</a>
+    <a href="about.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; font-family: 'Inter', sans-serif; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='#FFF'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">About</a>
+  </nav>
+  <div class="nav-actions" style="display: flex; align-items: center; gap: 16px; width: 300px; justify-content: flex-end;">
+    <a href="login.html" class="btn-primary" id="navLogin" style="background: #E8500A; color: white; padding: 8px 20px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; font-family: 'Inter', sans-serif;">Login</a>
+    <span class="nav-username" id="navUser" style="color: white; font-size: 0.85rem; font-family: 'Inter', sans-serif;"></span>
+    <button id="navLogout" style="display: none; background: none; border: none; color: #F87171; cursor: pointer; font-size: 0.85rem; font-weight: 600; font-family: 'Inter', sans-serif;" onclick="logout()">Logout</button>
+  </div>
+</header>
 
   <section class="hero-banner" style="min-height: 250px;">
     <h1>Publish Your Research</h1>
@@ -57,14 +56,7 @@
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
           <div class="form-group">
             <label>Batch</label>
-            <select id="batch" required>
-              <option value="">Select Batch</option>
-              <option value="2020-21">2020-21</option>
-              <option value="2021-22">2021-22</option>
-              <option value="2022-23">2022-23</option>
-              <option value="2023-24">2023-24</option>
-              <option value="2024-25">2024-25</option>
-            </select>
+            <input type="text" id="batch" placeholder="e.g. 2025-26" required>
           </div>
           <div class="form-group">
             <label>Current Year</label>
@@ -78,6 +70,28 @@
           </div>
         </div>
 
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+          <div class="form-group">
+            <label>Researchers (Comma separated)</label>
+            <input type="text" id="teamMembers" placeholder="e.g. John Doe, Jane Smith" required>
+          </div>
+          <div class="form-group">
+            <label>Guide Name (Optional)</label>
+            <input type="text" id="guideName" placeholder="e.g. Prof. Smith">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+          <div class="form-group">
+            <label>GitHub Link (Optional)</label>
+            <input type="url" id="githubLink" placeholder="https://github.com/...">
+          </div>
+          <div class="form-group">
+            <label>LinkedIn Link (Optional)</label>
+            <input type="url" id="linkedinLink" placeholder="https://linkedin.com/in/...">
+          </div>
+        </div>
+
         <div class="form-group">
           <label>Research Abstract / Description</label>
           <textarea id="description" rows="6" placeholder="Provide a brief summary of your work..." required></textarea>
@@ -85,9 +99,9 @@
         </div>
 
         <div class="form-group">
-          <label>Project Files (PDF/PPT)</label>
-          <input type="file" id="fileUpload" accept=".pdf,.ppt,.pptx">
-          <p style="font-size: 0.8rem; color: #6B7280; margin-top: 4px;">Upload your research paper or presentation (Max 50MB).</p>
+          <label>Project Files (PDF)</label>
+          <input type="file" id="fileUpload" accept=".pdf" required>
+          <p style="font-size: 0.8rem; color: #6B7280; margin-top: 4px;">Upload your research paper (Max 50MB).</p>
         </div>
 
         <button type="submit" class="btn-primary" style="width: 100%; padding: 14px; margin-top: 20px;">Publish Project</button>
@@ -121,6 +135,12 @@
         window.location.href = 'login.html';
         return;
       }
+      
+      // Pre-fill the researchers field with the uploader's name by default
+      // They can overwrite it if they are submitting for someone else.
+      if (document.getElementById('teamMembers')) {
+        document.getElementById('teamMembers').value = user.name || '';
+      }
 
       const form = document.getElementById('submitProjectForm');
       const desc = document.getElementById('description');
@@ -133,21 +153,41 @@
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        const formData = {
-          title: document.getElementById('title').value,
-          domain: document.getElementById('domain').value,
-          batch: document.getElementById('batch').value,
-          year: document.getElementById('year').value,
-          description: desc.value
-        };
+        const fileInput = document.getElementById('fileUpload');
+        if (!fileInput.files[0]) {
+          alert('Please select a research paper file to upload.');
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append('title', document.getElementById('title').value);
+        formData.append('domain', document.getElementById('domain').value);
+        formData.append('batch', document.getElementById('batch').value);
+        formData.append('year', document.getElementById('year').value);
+        formData.append('description', desc.value);
+        formData.append('researchPaper', fileInput.files[0]);
+
+        // Optional fields
+        const teamMembers = document.getElementById('teamMembers')?.value.trim();
+        if (teamMembers) formData.append('teamMembers', teamMembers);
+
+        const guideName = document.getElementById('guideName')?.value.trim();
+        if (guideName) formData.append('guideName', guideName);
+
+        const githubLink = document.getElementById('githubLink')?.value.trim();
+        if (githubLink) formData.append('githubLink', githubLink);
+
+        const linkedinLink = document.getElementById('linkedinLink')?.value.trim();
+        if (linkedinLink) formData.append('linkedinLink', linkedinLink);
 
         try {
           const res = await apiCall('/api/projects', {
             method: 'POST',
-            body: formData
+            body: formData,
+            isFormData: true
           });
           alert('Project submitted successfully!');
-          window.location.href = 'my-profile.html';
+          window.location.href = 'explore.html';
         } catch (err) {
           alert('Error: ' + err.message);
         }

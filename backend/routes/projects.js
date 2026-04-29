@@ -107,12 +107,14 @@ const cpUpload = upload.fields([
 
 router.post('/', requireAuth, cpUpload, async (req, res) => {
   try {
+    console.log('req.body:', req.body);
+    console.log('req.files:', req.files);
     const {
       title, description, techStack, domain, teamName, teamMembers,
       guideName, year, batch, githubLink, linkedinLink
     } = req.body;
 
-    if (!title || !description || !year || !batch || !domain || !teamName || !guideName) {
+    if (!title || !description || !year || !batch || !domain) {
       return res.status(400).json({ message: 'Please fill all mandatory fields' });
     }
 
@@ -125,9 +127,9 @@ router.post('/', requireAuth, cpUpload, async (req, res) => {
       description,
       techStack: techStack || '',
       domain,
-      teamName,
+      teamName: teamName || req.user.name,
       teamMembers: teamMembers || '',
-      guideName,
+      guideName: guideName || 'Not Specified',
       year,
       batch,
       githubLink: githubLink || null,
@@ -150,8 +152,16 @@ router.post('/', requireAuth, cpUpload, async (req, res) => {
 // DELETE /api/projects/:id — admin only
 router.delete('/:id', requireAuth, async (req, res) => {
   try {
-    if (req.user.role !== 'admin') {
-      return res.status(403).json({ message: 'Admin access required' });
+    const userEmail = (req.user.email || '').toLowerCase().trim();
+    const allowedEmails = [
+      'swara.pratapwar24@pccoepune.org',
+      'samrudhi.divekar24@pccoepune.org',
+      'samrudhi.dhumal24@pccoepune.org',
+      'admin@pccoepune.org',
+      'admin@pccoe.org'
+    ];
+    if (!allowedEmails.includes(userEmail)) {
+      return res.status(403).json({ message: 'You do not have permission to delete projects.' });
     }
 
     const project = await store.findProjectById(req.params.id);

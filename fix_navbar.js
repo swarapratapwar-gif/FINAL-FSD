@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Records - EduAchieve</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <header class="site-topbar" style="background: #0B0F19; border-bottom: 1px solid rgba(255,255,255,0.05); height: 64px; display: flex; align-items: center; padding: 0 40px; justify-content: space-between;">
+const fs = require('fs');
+const path = require('path');
+const dir = './frontend';
+
+const unifiedHeader = `<header class="site-topbar" style="background: #0B0F19; border-bottom: 1px solid rgba(255,255,255,0.05); height: 64px; display: flex; align-items: center; padding: 0 40px; justify-content: space-between;">
   <div style="display: flex; align-items: center; gap: 12px; width: 300px;">
     <div class="brand-mark" style="background: #E8500A; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 6px; color: white; font-size: 0.8rem;">🎓</div>
     <div class="brand-title" style="color: white; font-weight: 800; font-size: 1.2rem; font-family: 'Outfit', sans-serif;">EduAchieve</div>
@@ -23,48 +18,19 @@
     <span class="nav-username" id="navUser" style="color: white; font-size: 0.85rem; font-family: 'Inter', sans-serif;"></span>
     <button id="navLogout" style="display: none; background: none; border: none; color: #F87171; cursor: pointer; font-size: 0.85rem; font-weight: 600; font-family: 'Inter', sans-serif;" onclick="logout()">Logout</button>
   </div>
-</header>
+</header>`;
 
-  <div class="shell-layout">
-    <aside class="shell-sidebar">
-      <div>
-        <div class="workspace-label">Workspace</div>
-        <h1 class="workspace-title">Student Records</h1>
-        <p class="section-muted">Derived from submitted projects and grouped by student.</p>
-      </div>
-
-      <nav class="sidebar-menu">
-        <a href="index.html" class="sidebar-link">Home</a>
-        <a href="explore.html" class="sidebar-link">Projects</a>
-        <a href="student-records.html" class="sidebar-link active-link">Student Records</a>
-        <a href="settings.html" class="sidebar-link">Settings</a>
-      </nav>
-    </aside>
-
-    <main class="workspace-main">
-      <section class="hero-banner">
-        <div class="hero-rows">
-          <div>
-            <span class="hero-kicker">Academic records</span>
-            <h1>Student Records</h1>
-            <p>Monitor submission counts and batch history in a clean, easy-to-scan dashboard.</p>
-          </div>
-          <div class="hero-image-card">
-            <div class="hero-image-badge">Live record summary</div>
-          </div>
-        </div>
-      </section>
-
-      <section class="detail-card" style="margin-top: 24px;">
-        <h2>Records Overview</h2>
-        <p class="section-muted">Derived from submitted projects.</p>
-        <div id="records"></div>
-        <p id="status" class="status muted"></p>
-      </section>
-    </main>
-  </div>
-
-  <script src="common.js"></script>
-  <script src="students.js"></script>
-</body>
-</html>
+const files = fs.readdirSync(dir).filter(f => f.endsWith('.html'));
+files.forEach(f => {
+  const filePath = path.join(dir, f);
+  let content = fs.readFileSync(filePath, 'utf8');
+  
+  // Note: some files might have search boxes inside the header, so we need a broader regex
+  // to grab everything from <header class="site-topbar"> to </header>
+  const newContent = content.replace(/<header class="site-topbar"[\s\S]*?<\/header>/, unifiedHeader);
+  
+  if (content !== newContent) {
+    fs.writeFileSync(filePath, newContent);
+    console.log('Updated ' + f);
+  }
+});

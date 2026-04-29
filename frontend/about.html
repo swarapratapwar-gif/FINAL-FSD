@@ -4,85 +4,276 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About | EduAchieve</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <style>
     :root {
-      --primary: #E8500A;
-      --navy: #1A1A2E;
-      --cream: #FDF6EC;
+    body { 
+      font-family: 'Inter', sans-serif; 
+      background: var(--bg); 
+      color: var(--text); 
+      margin: 0; 
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
-    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: #1A1A2E; margin: 0; }
     
-    .about-container { max-width: 900px; margin: 80px auto; padding: 0 20px; }
+    /* Topbar active state */
+    .top-nav a.active {
+      color: var(--primary) !important;
+      position: relative;
+    }
+    .top-nav a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--primary);
+    }
+    
+    /* Hero Section */
+    .hero-section {
+      text-align: center;
+      padding: 100px 20px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-label {
+      color: var(--primary);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+      display: inline-block;
+    }
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: var(--text);
+      margin: 0 0 20px 0;
+      letter-spacing: -0.03em;
+    }
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    /* Decorative Background blobs */
+    .bg-blob-1 { position: absolute; top: -100px; left: -100px; width: 400px; height: 400px; background: rgba(232, 80, 10, 0.03); border-radius: 50%; filter: blur(60px); z-index: -1; }
+    .bg-blob-2 { position: absolute; bottom: 0; right: -50px; width: 300px; height: 300px; background: rgba(232, 80, 10, 0.04); border-radius: 50%; filter: blur(50px); z-index: -1; }
+
+    /* Content Cards */
+    .content-wrapper {
+      max-width: 900px;
+      margin: 0 auto 80px;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
 
     .info-card {
-      background: white;
-      padding: 40px;
-      border-radius: 12px;
-      margin-bottom: 24px;
-      border: 1px solid #E5E7EB;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--primary);
+      border-radius: 16px;
+      padding: 32px;
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+      transition: all 0.3s ease;
+    }
+    .info-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.04);
+    }
+    
+    .icon-container {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(232, 80, 10, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .icon-container i { color: var(--primary); }
+    
+    .card-content h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 12px 0;
+    }
+    .card-content p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin: 0;
     }
 
-    .info-card h2 {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.75rem;
-      font-weight: 800;
-      margin-bottom: 20px;
-      color: var(--navy);
+    /* Bottom Features */
+    .bottom-features {
+      max-width: 1100px;
+      margin: 0 auto 100px;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
     }
-
-    .info-card p {
+    .feature-item {
+      text-align: center;
+      padding: 24px;
+    }
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(232, 80, 10, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .feature-icon i { color: var(--primary); }
+    .feature-item h3 {
+      font-family: 'Outfit', sans-serif;
       font-size: 1.1rem;
-      line-height: 1.8;
-      color: #6B7280;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 8px 0;
+    }
+    .feature-item p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.5;
     }
 
-    .site-topbar { background: var(--navy); height: 64px; display: flex; align-items: center; padding: 0 40px; }
+    @media (max-width: 900px) {
+      .bottom-features { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .info-card { flex-direction: column; gap: 16px; align-items: center; text-align: center; }
+    }
+    @media (max-width: 600px) {
+      .bottom-features { grid-template-columns: 1fr; }
+      .hero-title { font-size: 2.5rem; }
+    }
   </style>
 </head>
 <body>
 
-  <header class="site-topbar">
-    <div style="display: flex; align-items: center; gap: 12px;">
-      <div class="brand-mark">🎓</div>
-      <div class="brand-title" style="color: white; font-weight: 800; font-size: 1.2rem;">EduAchieve</div>
+  <!-- Structurally identical header, but light theme inline colors -->
+  <header class="site-topbar" style="background: var(--bg-darker); border-bottom: 1px solid var(--border); height: 64px; display: flex; align-items: center; padding: 0 40px; justify-content: space-between;">
+    <div style="display: flex; align-items: center; gap: 12px; width: 300px;">
+      <div class="brand-mark" style="background: #E8500A; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 6px; color: white; font-size: 0.8rem;">🎓</div>
+      <div class="brand-title" style="color: white; font-weight: 800; font-size: 1.2rem; font-family: 'Outfit', sans-serif;">EduAchieve</div>
     </div>
-    <nav class="top-nav" style="margin-left: auto;">
-      <a href="index.html" style="color: white; text-decoration: none; margin-left: 20px;">Home</a>
-      <a href="explore.html" style="color: white; text-decoration: none; margin-left: 20px;">Projects</a>
-      <a href="submit.html" style="color: white; text-decoration: none; margin-left: 20px;">Submit</a>
-      <a href="about.html" class="active" style="color: white; text-decoration: none; margin-left: 20px;">About</a>
+    
+    <nav class="top-nav" style="display: flex; gap: 32px; justify-content: center; flex: 1;">
+      <a href="index.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; font-family: 'Inter', sans-serif; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='#FFF'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Home</a>
+      <a href="explore.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; font-family: 'Inter', sans-serif; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='#FFF'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Projects</a>
+      <a href="submit.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; font-family: 'Inter', sans-serif; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='#FFF'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Submit</a>
+      <a href="about.html" class="active" style="color: var(--primary); text-decoration: none; font-size: 0.95rem; font-family: 'Inter', sans-serif; font-weight: 600; transition: color 0.2s;">About</a>
     </nav>
+    
+    <div class="nav-actions" style="display: flex; align-items: center; gap: 16px; width: 300px; justify-content: flex-end;">
+      <div style="display: flex; align-items: center; background: rgba(255,255,255,0.1); border-radius: 100px; padding: 6px 12px; border: 1px solid rgba(255,255,255,0.15);">
+        <i data-lucide="search" style="width: 14px; height: 14px; color: rgba(255,255,255,0.5); margin-right: 6px;"></i>
+        <input type="text" placeholder="Search..." style="border: none; background: transparent; outline: none; font-size: 0.85rem; width: 120px; color: white;">
+      </div>
+      <a href="login.html" class="btn-primary" id="navLogin" style="background: var(--primary); color: white; padding: 8px 20px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; font-family: 'Inter', sans-serif;">Login</a>
+      <span class="nav-username" id="navUser" style="color: white; font-size: 0.85rem; font-family: 'Inter', sans-serif;"></span>
+      <button id="navLogout" style="display: none; background: none; border: none; color: #F87171; cursor: pointer; font-size: 0.85rem; font-weight: 600; font-family: 'Inter', sans-serif;" onclick="logout()">Logout</button>
+    </div>
   </header>
 
-  <main class="about-container">
-    <h1 style="font-family: 'Syne', sans-serif; font-size: 3rem; text-align: center; margin-bottom: 60px;">About the <span>Portal</span></h1>
-
-    <div class="info-card">
-      <h2>Institutional Vision</h2>
-      <p>EduAchieve was founded with a single mission: to provide the PCCOE CSE AI&ML department with a world-class institutional repository. We believe that student research is the backbone of academic progress, and it deserves a professional stage.</p>
+  <main style="flex: 1;">
+    <div class="hero-section">
+      <div class="bg-blob-1"></div>
+      <div class="bg-blob-2"></div>
+      <span class="hero-label">ABOUT US</span>
+      <h1 class="hero-title">About the Portal</h1>
+      <p class="hero-subtitle">Empowering research. Enabling innovation. A digital home for the technical achievements of PCCOE.</p>
     </div>
 
-    <div class="info-card">
-      <h2>Platform Capabilities</h2>
-      <p>Our platform is engineered to handle the complexities of modern academic research, ensuring data integrity and accessibility.</p>
+    <div class="content-wrapper">
+      <!-- Card 1 -->
+      <div class="info-card">
+        <div class="icon-container">
+          <i data-lucide="target" style="width: 24px; height: 24px;"></i>
+        </div>
+        <div class="card-content">
+          <h2>Institutional Vision</h2>
+          <p>EduAchieve was founded with a single mission: to provide the PCCOE CSE AI&ML department with a world-class institutional repository. We believe that student research is the backbone of academic progress, and it deserves a professional stage.</p>
+        </div>
+      </div>
+      
+      <!-- Card 2 -->
+      <div class="info-card">
+        <div class="icon-container">
+          <i data-lucide="server" style="width: 24px; height: 24px;"></i>
+        </div>
+        <div class="card-content">
+          <h2>Platform Capabilities</h2>
+          <p>Our platform is engineered to handle the complexities of modern academic research, ensuring data integrity and accessibility. From secure file management to advanced discovery tools, it powers seamless academic exploration.</p>
+        </div>
+      </div>
+      
+      <!-- Card 3 -->
+      <div class="info-card">
+        <div class="icon-container">
+          <i data-lucide="shield-check" style="width: 24px; height: 24px;"></i>
+        </div>
+        <div class="card-content">
+          <h2>Core Methodology</h2>
+          <p>We utilize a multi-layered verification system to ensure that every project published on EduAchieve meets rigorous institutional standards. Our goal is to create a living library of verified technical achievements.</p>
+        </div>
+      </div>
     </div>
 
-    <div class="info-card">
-      <h2>Core Methodology</h2>
-      <p>We utilize a multi-layered verification system to ensure that every project published on EduAchieve meets institutional standards. Our goal is to create a living library of technical achievements.</p>
+    <div class="bottom-features">
+      <div class="feature-item">
+        <div class="feature-icon"><i data-lucide="lock" style="width: 20px; height: 20px;"></i></div>
+        <h3>Trusted & Secure</h3>
+        <p>Enterprise-grade security protecting sensitive academic data.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon"><i data-lucide="users" style="width: 20px; height: 20px;"></i></div>
+        <h3>Collaborative</h3>
+        <p>Built to connect teams, mentors, and academic administrators seamlessly.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon"><i data-lucide="zap" style="width: 20px; height: 20px;"></i></div>
+        <h3>Impact Driven</h3>
+        <p>Highlighting real-world applications of student research.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon"><i data-lucide="globe" style="width: 20px; height: 20px;"></i></div>
+        <h3>Accessible</h3>
+        <p>Clean interfaces designed for readability across all modern devices.</p>
+      </div>
     </div>
   </main>
 
-  <footer class="site-footer" style="background: var(--navy); padding: 40px 0; color: rgba(255,255,255,0.6);">
+  <footer class="site-footer" style="background: #111827; padding: 40px 0; color: rgba(255,255,255,0.6);">
     <div class="container" style="display: flex; justify-content: space-between; align-items: center; max-width: 1140px; margin: 0 auto; padding: 0 20px;">
-      <p style="color: white; font-weight: 700;">EduAchieve</p>
-      <p>© 2024-26 PCCOE Pune</p>
+      <p style="color: white; font-weight: 700; font-family: 'Outfit', sans-serif;">EduAchieve</p>
+      <p style="font-size: 0.85rem;">© 2024-26 PCCOE Pune</p>
     </div>
   </footer>
 
   <script src="common.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
 </body>
 </html>

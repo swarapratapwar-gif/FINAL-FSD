@@ -4,77 +4,401 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Research Insights | EduAchieve</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <style>
-    .blog-article {
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 0 20px;
+    :root {
+      --primary: #E8500A;
+      --text-main: #111827;
+      --text-muted: #6B7280;
+      --bg-light: #F9FAFB;
+      --border-color: #E5E7EB;
     }
+    
+    body {
+      background: #FFFFFF;
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+    }
+
+    /* Topbar Override for Dark Theme */
+    .site-topbar {
+      background: #0B0F19;
+      color: #FFFFFF;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .top-nav a { color: rgba(255,255,255,0.7); }
+    .top-nav a:hover, .top-nav a.active { color: #FFFFFF; background: rgba(255,255,255,0.1); }
+    .brand-title { color: #FFFFFF; }
+    
+    /* Layout */
+    .article-container {
+      max-width: 1100px;
+      margin: 60px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    
+    .article-content {
+      max-width: 700px;
+    }
+
+    /* Sidebar */
+    .sidebar-left {
+      position: sticky;
+      top: 100px;
+    }
+
+    .toc h4 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .toc ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      border-left: 2px solid var(--border-color);
+    }
+
+    .toc li a {
+      display: block;
+      padding: 8px 0 8px 16px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      position: relative;
+      left: -2px;
+      border-left: 2px solid transparent;
+    }
+
+    .toc li a:hover {
+      color: var(--text-main);
+    }
+
+    .toc li a.active {
+      color: var(--primary);
+      font-weight: 600;
+      border-left-color: var(--primary);
+    }
+
+    .key-insight {
+      margin-top: 40px;
+      background: var(--bg-light);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .key-insight .icon {
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .key-insight p {
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .key-insight strong {
+      display: block;
+      color: var(--text-main);
+      margin-bottom: 4px;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    /* Article Content */
+    .metadata {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .category-tag {
+      color: var(--primary);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .metadata-dot {
+      width: 4px; height: 4px;
+      background: #D1D5DB;
+      border-radius: 50%;
+    }
+
+    .article-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--text-main);
+      margin: 0 0 40px 0;
+      letter-spacing: -0.02em;
+    }
+
     .article-img {
       width: 100%;
       height: auto;
       border-radius: 12px;
-      margin: 20px 0;
+      margin: 32px 0;
+      border: 1px solid var(--border-color);
     }
-    .blog-content p {
+
+    section {
+      margin-bottom: 40px;
+    }
+
+    .article-content p {
       font-size: 1.1rem;
-      line-height: 1.7;
+      line-height: 1.8;
       color: #374151;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
-    .blog-content h2 {
-      margin: 30px 0 15px;
-      color: #111827;
+
+    .article-content h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.8rem;
+      color: var(--text-main);
+      margin: 48px 0 24px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .article-content h2 .icon {
+      color: var(--primary);
+    }
+
+    .section-divider {
+      height: 1px;
+      background: var(--border-color);
+      margin: 48px 0;
+    }
+
+    .accent-quote {
+      border-left: 3px solid var(--primary);
+      margin: 40px 0;
+      padding: 10px 0 10px 24px;
+      background: transparent;
+    }
+
+    .accent-quote p {
+      font-size: 1.25rem;
+      font-style: italic;
+      color: var(--text-main);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Bottom Actions */
+    .bottom-actions {
+      display: flex;
+      gap: 16px;
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .action-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .action-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--bg-light);
+    }
+
+    @media (max-width: 900px) {
+      .article-container {
+        grid-template-columns: 1fr;
+      }
+      .sidebar-left {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
 
-  <header class="site-topbar">
-    <div class="brand-mark">🎓</div>
-    <div>
-      <div class="brand-title">EduAchieve</div>
-      <div class="brand-sub">CSE AI&ML | PCCOE</div>
+  <header class="site-topbar" style="background: #0B0F19; border-bottom: 1px solid rgba(255,255,255,0.05); height: 64px; display: flex; align-items: center; padding: 0 40px; justify-content: space-between;">
+  <div style="display: flex; align-items: center; gap: 12px; width: 300px;">
+    <div class="brand-mark" style="background: #E8500A; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 6px; color: white; font-size: 0.8rem;">🎓</div>
+    <div class="brand-title" style="color: white; font-weight: 800; font-size: 1.2rem; font-family: 'Outfit', sans-serif;">EduAchieve</div>
+  </div>
+  <nav class="top-nav" style="display: flex; gap: 32px; justify-content: center; flex: 1;">
+    <a href="index.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; font-family: 'Inter', sans-serif; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='#FFF'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Home</a>
+    <a href="explore.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; font-family: 'Inter', sans-serif; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='#FFF'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Projects</a>
+    <a href="submit.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; font-family: 'Inter', sans-serif; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='#FFF'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Submit</a>
+    <a href="about.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; font-family: 'Inter', sans-serif; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='#FFF'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">About</a>
+  </nav>
+  <div class="nav-actions" style="display: flex; align-items: center; gap: 16px; width: 300px; justify-content: flex-end;">
+    <a href="login.html" class="btn-primary" id="navLogin" style="background: #E8500A; color: white; padding: 8px 20px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; font-family: 'Inter', sans-serif;">Login</a>
+    <span class="nav-username" id="navUser" style="color: white; font-size: 0.85rem; font-family: 'Inter', sans-serif;"></span>
+    <button id="navLogout" style="display: none; background: none; border: none; color: #F87171; cursor: pointer; font-size: 0.85rem; font-weight: 600; font-family: 'Inter', sans-serif;" onclick="logout()">Logout</button>
+  </div>
+</header>
+
+  <div class="article-container">
+    <!-- Left Sidebar -->
+    <aside class="sidebar-left">
+      <div class="toc">
+        <h4>On This Page</h4>
+        <ul>
+          <li><a href="#introduction" class="toc-link active">Introduction</a></li>
+          <li><a href="#breaking-silos" class="toc-link">Breaking the Data Silos</a></li>
+          <li><a href="#future-trends" class="toc-link">Visualizing Future Trends</a></li>
+        </ul>
+      </div>
+
+      <div class="key-insight">
+        <i data-lucide="lightbulb" class="icon" style="width: 24px; height: 24px;"></i>
+        <p><strong>Key Insight</strong><br>Neural networks are no longer an isolated discipline, but a foundational requirement for modern engineering problem-solving.</p>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="article-content">
+      <div class="metadata">
+        <span class="category-tag">Artificial Intelligence</span>
+        <span class="metadata-dot"></span>
+        <span>5 min read</span>
+        <span class="metadata-dot"></span>
+        <span>EduAchieve Editorial</span>
+        <span class="metadata-dot"></span>
+        <span>April 26, 2026</span>
+      </div>
+
+      <h1 class="article-title">The Evolution of Neural Networks in 2024</h1>
+
+      <section id="introduction" class="content-section">
+        <img src="ai_research_abstract_1777215089359.png" class="article-img" alt="Neural Network Abstract" onerror="this.src='https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=800&auto=format&fit=crop'">
+        
+        <p>Artificial intelligence has transcended the boundaries of simple automation, evolving into a sophisticated tool that mirrors human cognitive patterns. In the current academic landscape, understanding the underlying structures of neural networks is no longer just for data scientists—it's foundational knowledge for every engineer.</p>
+
+        <blockquote class="accent-quote">
+          <p>"The true potential of neural architectures lies not in their complexity, but in their ability to democratize problem-solving across all engineering disciplines."</p>
+        </blockquote>
+
+        <p>As computational power increases and algorithms become more efficient, we are seeing a shift from centralized AI models to decentralized, edge-computed neural networks. This paradigm shift requires a fundamental rethinking of how we approach institutional research and academic curriculum.</p>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <section id="breaking-silos" class="content-section">
+        <h2><i data-lucide="database" class="icon" style="width: 28px; height: 28px;"></i> Breaking the Data Silos</h2>
+        <p>The biggest challenge in institutional research has historically been the isolation of findings. At PCCOE, we are breaking these silos by centralizing our project repositories through systems like EduAchieve. By structurally organizing metadata, we create an environment conducive to meta-analysis.</p>
+        
+        <img src="robotic_arm_research_1777215129723.png" class="article-img" alt="Robotics Research" onerror="this.src='https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=800&auto=format&fit=crop'">
+
+        <p>When students collaborate across different batches and specializations, the quality of research improves exponentially. A second-year student working on computer vision can build upon the foundational datasets established by their seniors, leading to a compounding effect of institutional knowledge.</p>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <section id="future-trends" class="content-section">
+        <h2><i data-lucide="trending-up" class="icon" style="width: 28px; height: 28px;"></i> Visualizing Future Trends</h2>
+        <p>Looking ahead, the integration of generative adversarial networks (GANs) and transformer models into everyday student projects will become the new standard. The focus will shift from building models from scratch to fine-tuning massive pre-trained models for highly specific, domain-expert tasks.</p>
+        
+        <img src="digital_knowledge_network_1777215240810.png" class="article-img" alt="Digital Knowledge" onerror="this.src='https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop'">
+        
+        <p>In conclusion, the research portal serves as more than just a storage space; it is a living, breathing ecosystem of intellectual achievement that prepares our students for the reality of modern software development and research workflows.</p>
+      </section>
+
+      <!-- Bottom Interaction -->
+      <div class="bottom-actions">
+        <button class="action-btn"><i data-lucide="heart" style="width: 18px; height: 18px;"></i> Like</button>
+        <button class="action-btn"><i data-lucide="share-2" style="width: 18px; height: 18px;"></i> Share</button>
+        <button class="action-btn"><i data-lucide="book-open" style="width: 18px; height: 18px;"></i> Cite</button>
+      </div>
+
+    </main>
+  </div>
+
+  <footer class="site-footer" style="background: #0B0F19; border-top: 1px solid rgba(255,255,255,0.05); padding: 50px 0; color: rgba(255,255,255,0.6); margin-top: 60px;">
+    <div style="max-width: 1100px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center;">
+      <p style="margin: 0; font-size: 0.85rem;">© 2024-26 PCCOE Pune</p>
     </div>
-    <nav class="top-nav">
-      <a href="index.html">Home</a>
-      <a href="explore.html">Projects</a>
-      <a href="submit.html">Submit</a>
-      <a href="about.html">About</a>
-    </nav>
-    <div class="nav-actions">
-      <a href="login.html" class="btn-primary" id="navLogin">Login</a>
-    </div>
-  </header>
-
-  <main class="blog-article">
-    <h1>The Evolution of Neural Networks in 2024</h1>
-    <p style="color: #6B7280; font-size: 0.9rem;">By EduAchieve Editorial • April 26, 2026</p>
-
-    <div class="blog-content">
-      <img src="ai_research_abstract_1777215089359.png" class="article-img" alt="Neural Network Abstract">
-      
-      <p>Artificial intelligence has transcended the boundaries of simple automation, evolving into a sophisticated tool that mirrors human cognitive patterns. In the current academic landscape, understanding the underlying structures of neural networks is no longer just for data scientists—it's foundational knowledge for every engineer.</p>
-
-      <h2>Breaking the Data Silos</h2>
-      <p>The biggest challenge in institutional research has historically been the isolation of findings. At PCCOE, we are breaking these silos by centralizing our project repositories through systems like EduAchieve.</p>
-      
-      <img src="robotic_arm_research_1777215129723.png" class="article-img" alt="Robotics Research">
-
-      <p>When students collaborate across different batches and specializations, the quality of research improves exponentially. A second-year student working on computer vision can build upon the foundational datasets established by their seniors, leading to a compounding effect of institutional knowledge.</p>
-
-      <h2>Visualizing Future Trends</h2>
-      <img src="digital_knowledge_network_1777215240810.png" class="article-img" alt="Digital Knowledge">
-      
-      <p>In conclusion, the research portal serves as more than just a storage space; it is a living, breathing ecosystem of intellectual achievement.</p>
-    </div>
-  </main>
-
-  <footer class="site-footer">
-    <p>© 2024-26 PCCOE Pune</p>
   </footer>
 
   <script src="common.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    // Initialize Icons
+    lucide.createIcons();
+
+    // Intersection Observer for Table of Contents
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -80% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Remove active class from all links
+          document.querySelectorAll('.toc-link').forEach(link => {
+            link.classList.remove('active');
+          });
+          
+          // Add active class to corresponding link
+          const id = entry.target.getAttribute('id');
+          const activeLink = document.querySelector(`.toc-link[href="#${id}"]`);
+          if (activeLink) {
+            activeLink.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    // Observe all sections
+    document.querySelectorAll('.content-section').forEach(section => {
+      observer.observe(section);
+    });
+
+    // Smooth scrolling for TOC links
+    document.querySelectorAll('.toc-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+        
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80, // Offset for potential fixed header
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
 </body>
 </html>

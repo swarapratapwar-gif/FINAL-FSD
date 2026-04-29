@@ -78,12 +78,12 @@ function updateNavbar() {
     const themeWrap = document.createElement('div');
     themeWrap.className = 'theme-switcher';
     themeWrap.innerHTML = `
-      <span style="font-size: 0.8rem; color: #9CA3AF;">🌙</span>
+      <span style="font-size: 0.8rem; color: #9CA3AF;">☀️</span>
       <label class="toggle-switch">
         <input type="checkbox" id="navThemeToggle" ${getTheme() === 'dark' ? 'checked' : ''}>
         <span class="slider"></span>
       </label>
-      <span style="font-size: 0.8rem; color: #9CA3AF;">☀️</span>
+      <span style="font-size: 0.8rem; color: #9CA3AF;">🌙</span>
     `;
     navActions.appendChild(themeWrap);
 
@@ -100,6 +100,12 @@ function logout() {
 
 // Call on every page
 document.addEventListener('DOMContentLoaded', updateNavbar);
+
+const API_BASE_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port !== '5055' 
+  ? 'http://localhost:5055' 
+  : window.location.protocol === 'file:' 
+    ? 'http://localhost:5055' 
+    : '';
 
 // Common helper for API calls
 async function apiCall(endpoint, options = {}) {
@@ -124,13 +130,29 @@ async function apiCall(endpoint, options = {}) {
   }
 
   try {
-    const response = await fetch(endpoint, config);
-    const data = await response.json();
+    const fullUrl = endpoint.startsWith('http') ? endpoint : `${API_BASE_URL}${endpoint}`;
+    const response = await fetch(fullUrl, config);
+    
+    let data;
+    const text = await response.text();
+    if (text) {
+      try {
+        data = JSON.parse(text);
+      } catch (e) {
+        throw new Error('Server returned an invalid response (not JSON). Please check if backend is running.');
+      }
+    } else {
+      data = {};
+    }
+
     if (!response.ok) {
       throw new Error(data.message || `Error ${response.status}`);
     }
     return data;
   } catch (error) {
+    if (error.message === 'Failed to fetch' || error.name === 'TypeError') {
+      throw new Error('Could not connect to the server. Please ensure the backend is running on port 5055.');
+    }
     throw error;
   }
 }

@@ -1,209 +1,367 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dark/Light Toggle | EduAchieve</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <title>EduAchieve | Academic Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
   <style>
     :root {
-      --primary: #E8500A;
-      --transition: all 0.3s ease;
-    }
-
-    [data-theme="light"] {
-      --bg: #F9F9F9;
-      --bg-surface: #FFFFFF;
-      --text: #1A1A2E;
-      --text-muted: #6B7280;
-      --border: #E5E7EB;
-      --nav-bg: #1A1A2E;
-      --card-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      --primary: #FF6A00;
+      --primary-gradient: linear-gradient(135deg, #FF6A00, #FF8C42);
+      --landing-bg: #FAF9F6;
+      --landing-bg-nav: rgba(255, 255, 255, 0.85);
+      --landing-bg-card: #FFFFFF;
+      --landing-text-main: #111827;
+      --landing-text-muted: #4B5563;
+      --landing-border: rgba(0, 0, 0, 0.08);
+      --card-shadow: 0 10px 40px rgba(0,0,0,0.06);
+      
+      --glow-blue: rgba(59, 130, 246, 0.15);
+      --glow-purple: rgba(139, 92, 246, 0.15);
+      
+      /* Pastel icon backgrounds */
+      --icon-blue-bg: #E0E7FF;
+      --icon-blue-fg: #4F46E5;
+      --icon-mint-bg: #D1FAE5;
+      --icon-mint-fg: #059669;
+      --icon-peach-bg: #FFEDD5;
+      --icon-peach-fg: #EA580C;
+      --icon-lavender-bg: #F3E8FF;
+      --icon-lavender-fg: #9333EA;
     }
 
     [data-theme="dark"] {
-      --bg: #0F172A;
-      --bg-surface: #1E293B;
-      --text: #F8FAFC;
-      --text-muted: #94A3B8;
-      --border: #334155;
-      --nav-bg: #020617;
-      --card-shadow: 0 2px 12px rgba(0,0,0,0.3);
+      --landing-bg: #0B0F19;
+      --landing-bg-nav: rgba(11, 15, 25, 0.85);
+      --landing-bg-card: rgba(21, 28, 44, 0.65);
+      --landing-text-main: #FFFFFF;
+      --landing-text-muted: #9CA3AF;
+      --landing-border: rgba(255, 255, 255, 0.08);
+      --card-shadow: 0 20px 50px rgba(0,0,0,0.4);
+      
+      --glow-blue: rgba(59, 130, 246, 0.12);
+      --glow-purple: rgba(139, 92, 246, 0.12);
+
+      --icon-blue-bg: rgba(79, 70, 229, 0.15);
+      --icon-blue-fg: #818CF8;
+      --icon-mint-bg: rgba(5, 150, 105, 0.15);
+      --icon-mint-fg: #34D399;
+      --icon-peach-bg: rgba(234, 88, 12, 0.15);
+      --icon-peach-fg: #FB923C;
+      --icon-lavender-bg: rgba(147, 51, 234, 0.15);
+      --icon-lavender-fg: #C084FC;
+    }
+    
+    body { 
+      font-family: 'Inter', sans-serif; 
+      background: var(--landing-bg); 
+      color: var(--landing-text-main); 
+      margin: 0; 
+      overflow-x: hidden;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: 15px; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); transition: var(--transition); min-height: 100vh; }
+    /* Navbar */
+    .site-topbar {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--landing-bg-nav);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      height: 72px; display: flex; align-items: center; padding: 0 40px;
+      justify-content: space-between; border-bottom: 1px solid var(--landing-border);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+    }
+    [data-theme="dark"] .site-topbar { box-shadow: 0 4px 30px rgba(0,0,0,0.2); }
+    
+    .brand-container { display: flex; align-items: center; gap: 12px; width: 250px; }
+    .brand-mark {
+      background: var(--primary-gradient);
+      width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; 
+      border-radius: 8px; color: white; box-shadow: 0 4px 12px rgba(255, 106, 0, 0.3);
+    }
+    .brand-title { color: var(--landing-text-main); font-weight: 800; font-size: 1.25rem; font-family: 'Outfit', sans-serif; letter-spacing: -0.01em; }
+    
+    .top-nav { display: flex; gap: 40px; justify-content: center; flex: 1; }
+    .top-nav a { 
+      color: var(--landing-text-muted); text-decoration: none; font-size: 0.95rem; 
+      font-weight: 500; transition: all 0.3s ease; position: relative; padding-bottom: 4px;
+    }
+    .top-nav a:hover { color: var(--landing-text-main); }
+    .top-nav a.active-link { 
+      color: var(--primary); font-weight: 600; text-shadow: 0 0 12px rgba(255,106,0,0.2);
+    }
+    .top-nav a.active-link::after {
+      content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px;
+      background: var(--primary); border-radius: 2px; box-shadow: 0 0 8px rgba(255,106,0,0.6);
+    }
+    
+    .nav-actions { display: flex; align-items: center; gap: 20px; width: 250px; justify-content: flex-end; }
+    .btn-login { 
+      background: var(--primary-gradient); color: white; padding: 10px 24px; border-radius: 100px; 
+      text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: all 0.3s ease; 
+      box-shadow: 0 4px 15px rgba(255, 106, 0, 0.25); border: 1px solid rgba(255,255,255,0.1);
+    }
+    .btn-login:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255, 106, 0, 0.4); }
 
-    /* Topbar */
-    .topbar { background: var(--nav-bg); height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 0 28px; position: sticky; top: 0; z-index: 100; transition: var(--transition); }
-    .topbar-left { display: flex; align-items: center; gap: 12px; }
-    .brand-mark { background: var(--primary); border-radius: 8px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.9rem; }
-    .brand-title { color: white; font-weight: 700; font-size: 1.05rem; }
-    .topbar-links { display: flex; gap: 12px; }
-    .topbar-links a { color: rgba(255,255,255,0.65); font-size: 0.85rem; text-decoration: none; padding: 5px 10px; border-radius: 6px; transition: all 0.15s; }
-    .topbar-links a:hover { color: white; background: rgba(255,255,255,0.1); }
+    /* Hero Section with Glowing Background */
+    .hero-container {
+      position: relative; padding: 100px 20px 80px; text-align: center;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .glow-blob-1 {
+      position: absolute; top: -50px; left: 10%; width: 500px; height: 500px;
+      background: var(--glow-blue); filter: blur(120px); border-radius: 50%; z-index: -1;
+      animation: float 10s ease-in-out infinite alternate;
+    }
+    .glow-blob-2 {
+      position: absolute; top: 50px; right: 10%; width: 600px; height: 600px;
+      background: var(--glow-purple); filter: blur(140px); border-radius: 50%; z-index: -1;
+      animation: float 12s ease-in-out infinite alternate-reverse;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); }
+      100% { transform: translateY(30px) scale(1.05); }
+    }
 
-    /* Toggle Switch */
-    .theme-toggle { display: flex; align-items: center; gap: 10px; }
-    .toggle-label { font-size: 0.8rem; font-weight: 600; color: rgba(255,255,255,0.7); }
-    .toggle-switch { position: relative; width: 52px; height: 28px; }
-    .toggle-switch input { opacity: 0; width: 0; height: 0; }
-    .slider { position: absolute; inset: 0; background: #374151; border-radius: 28px; cursor: pointer; transition: background 0.3s; display: flex; align-items: center; padding: 3px; }
-    .slider:before { content: ''; width: 22px; height: 22px; border-radius: 50%; background: white; transition: transform 0.3s; display: block; }
-    .toggle-switch input:checked + .slider { background: var(--primary); }
-    .toggle-switch input:checked + .slider:before { transform: translateX(24px); }
-    .toggle-icon { font-size: 0.9rem; color: rgba(255,255,255,0.7); }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 16px; background: rgba(255, 255, 255, 0.05); color: var(--landing-text-main);
+      border: 1px solid var(--landing-border); border-radius: 100px;
+      font-size: 0.85rem; font-weight: 600; margin-bottom: 30px;
+      backdrop-filter: blur(10px);
+    }
+    
+    .hero-title {
+      font-family: 'Outfit', sans-serif; font-size: 4rem; font-weight: 800;
+      color: var(--landing-text-main); margin-bottom: 24px; letter-spacing: -0.03em;
+      line-height: 1.1; max-width: 800px;
+    }
+    .hero-title span { 
+      background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-subtitle {
+      color: var(--landing-text-muted); font-size: 1.2rem; max-width: 600px; margin: 0 auto 40px; line-height: 1.6;
+    }
+    
+    .hero-buttons { display: flex; gap: 16px; justify-content: center; }
+    .btn-hero-primary {
+      background: var(--primary-gradient); color: white; padding: 14px 32px; border-radius: 100px;
+      font-weight: 600; text-decoration: none; font-size: 1rem; display: flex; align-items: center; gap: 8px;
+      transition: all 0.3s; box-shadow: 0 8px 25px rgba(255, 106, 0, 0.3); border: 1px solid rgba(255,255,255,0.1);
+    }
+    .btn-hero-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(255, 106, 0, 0.4); }
+    
+    .btn-hero-outline {
+      background: transparent; color: var(--landing-text-main); padding: 14px 32px; border-radius: 100px;
+      font-weight: 600; text-decoration: none; font-size: 1rem; border: 1px solid var(--landing-border);
+      transition: all 0.3s; backdrop-filter: blur(10px); display: flex; align-items: center; gap: 8px;
+    }
+    .btn-hero-outline:hover { 
+      background: rgba(255,255,255,0.05); border-color: var(--landing-text-muted);
+      box-shadow: 0 0 20px rgba(255,255,255,0.05); transform: translateY(-2px);
+    }
 
-    /* Container */
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    /* Platform Features Section */
+    .section-container { max-width: 1200px; margin: 0 auto 100px; padding: 0 20px; }
+    .section-header { margin-bottom: 40px; text-align: left; }
+    .section-title { font-family: 'Outfit', sans-serif; font-size: 2rem; font-weight: 700; color: var(--landing-text-main); }
+    
+    .features-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+    }
+    .feature-card {
+      background: var(--landing-bg-card); border: 1px solid var(--landing-border);
+      border-radius: 20px; padding: 32px 24px; transition: all 0.3s ease;
+      box-shadow: var(--card-shadow); backdrop-filter: blur(20px);
+    }
+    .feature-card:hover {
+      transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); border-color: rgba(255,255,255,0.2);
+    }
+    [data-theme="dark"] .feature-card:hover { box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+    
+    .feature-icon {
+      width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px; transition: transform 0.3s ease;
+    }
+    .feature-card:hover .feature-icon { transform: scale(1.1); }
+    
+    .ic-blue { background: var(--icon-blue-bg); color: var(--icon-blue-fg); }
+    .ic-mint { background: var(--icon-mint-bg); color: var(--icon-mint-fg); }
+    .ic-peach { background: var(--icon-peach-bg); color: var(--icon-peach-fg); }
+    .ic-lavender { background: var(--icon-lavender-bg); color: var(--icon-lavender-fg); }
 
-    /* Hero Card */
-    .hero-card { background: linear-gradient(135deg, var(--nav-bg), #2D2D44); color: white; padding: 60px 20px; text-align: center; transition: var(--transition); }
-    [data-theme="dark"] .hero-card { background: linear-gradient(135deg, #020617, #0F172A); }
-    .hero-card h1 { font-size: 2rem; margin-bottom: 10px; }
-    .hero-card h1 span { color: var(--primary); }
-    .hero-card p { color: rgba(255,255,255,0.75); max-width: 500px; margin: 0 auto 24px; }
-    .btn { display: inline-block; padding: 10px 22px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; border: none; font-family: inherit; }
-    .btn-primary { background: var(--primary); color: white; }
-    .btn-outline-white { background: transparent; border: 1.5px solid rgba(255,255,255,0.6); color: white; }
-
-    /* Section */
-    .section { padding: 48px 0; }
-    .section-title { font-size: 1.5rem; font-weight: 700; color: var(--text); margin-bottom: 24px; transition: var(--transition); }
-
-    /* Feature Cards */
-    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-    .feature-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 10px; padding: 24px; box-shadow: var(--card-shadow); transition: var(--transition); }
-    .feature-card .icon { font-size: 1.8rem; margin-bottom: 12px; }
-    .feature-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; color: var(--text); transition: var(--transition); }
-    .feature-card p { font-size: 0.88rem; color: var(--text-muted); transition: var(--transition); }
+    .feature-title { font-size: 1.15rem; font-weight: 700; color: var(--landing-text-main); margin-bottom: 12px; font-family: 'Outfit', sans-serif; }
+    .feature-desc { color: var(--landing-text-muted); font-size: 0.9rem; line-height: 1.6; }
 
     /* Sample Project Card */
-    .project-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 10px; padding: 24px; box-shadow: var(--card-shadow); transition: var(--transition); margin-bottom: 20px; }
-    .domain-tag { display: inline-block; background: rgba(232,80,10,0.1); color: var(--primary); border-radius: 20px; padding: 2px 10px; font-size: 0.75rem; font-weight: 600; }
-    .batch-tag { display: inline-block; background: var(--border); color: var(--text-muted); border-radius: 20px; padding: 2px 10px; font-size: 0.75rem; transition: var(--transition); }
-    .project-title { font-size: 1.15rem; font-weight: 700; margin: 12px 0 8px; color: var(--text); transition: var(--transition); }
-    .project-meta { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px; transition: var(--transition); }
-    .project-card-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid var(--border); transition: var(--transition); }
-    .date-label { font-size: 0.75rem; color: var(--text-muted); transition: var(--transition); }
+    .premium-project-card {
+      background: var(--landing-bg-card); border: 1px solid var(--landing-border);
+      border-radius: 24px; padding: 40px; position: relative; overflow: hidden;
+      box-shadow: var(--card-shadow); transition: all 0.3s ease;
+      display: flex; flex-direction: column; gap: 24px;
+      border-left: 4px solid var(--primary); backdrop-filter: blur(20px);
+    }
+    .premium-project-card:hover { transform: translateY(-4px); box-shadow: 0 24px 50px rgba(0,0,0,0.1); border-color: rgba(255,106,0,0.3); }
+    [data-theme="dark"] .premium-project-card:hover { box-shadow: 0 24px 60px rgba(0,0,0,0.6); }
 
-    /* Footer */
-    .site-footer { background: var(--nav-bg); color: rgba(255,255,255,0.55); padding: 36px 20px; margin-top: 60px; text-align: center; transition: var(--transition); }
+    .card-top-row { display: flex; justify-content: space-between; align-items: flex-start; }
+    .tags-container { display: flex; gap: 10px; }
+    .soft-pill {
+      background: rgba(128,128,128,0.08); color: var(--landing-text-muted);
+      padding: 6px 14px; border-radius: 100px; font-size: 0.8rem; font-weight: 600;
+      border: 1px solid var(--landing-border);
+    }
+    .soft-pill.highlight { background: rgba(255, 106, 0, 0.1); color: var(--primary); border-color: rgba(255, 106, 0, 0.2); }
+    
+    .btn-bookmark {
+      background: transparent; border: none; color: var(--landing-text-muted); cursor: pointer;
+      transition: color 0.2s; width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .btn-bookmark:hover { color: var(--primary); background: rgba(255,106,0,0.1); }
+
+    .project-header h3 { font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--landing-text-main); margin-bottom: 12px; }
+    .project-meta-row { display: flex; flex-wrap: wrap; gap: 24px; color: var(--landing-text-muted); font-size: 0.95rem; }
+    .meta-item { display: flex; align-items: center; gap: 8px; }
+    
+    .project-abstract { font-size: 1.05rem; line-height: 1.7; color: var(--landing-text-main); max-width: 900px; }
+    
+    .card-bottom-row { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid var(--landing-border); }
+    .submit-date { display: flex; align-items: center; gap: 8px; color: var(--landing-text-muted); font-size: 0.9rem; }
+    
+    .btn-cta-card {
+      background: var(--primary-gradient); color: white; padding: 12px 28px; border-radius: 100px;
+      font-weight: 600; text-decoration: none; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;
+      transition: all 0.3s; border: none; cursor: pointer;
+    }
+    .btn-cta-card .arrow-icon { transition: transform 0.3s; }
+    .btn-cta-card:hover { box-shadow: 0 8px 20px rgba(255, 106, 0, 0.3); }
+    .btn-cta-card:hover .arrow-icon { transform: translateX(4px); }
+
+    @media (max-width: 1000px) { .features-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 768px) {
+      .top-nav { display: none; }
+      .hero-title { font-size: 3rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .project-meta-row { flex-direction: column; gap: 12px; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- Topbar -->
-  <header class="topbar">
-    <div class="topbar-left">
-      <div class="brand-mark">🎓</div>
-      <span class="brand-title">EduAchieve</span>
-      <div class="topbar-links">
-        <a href="index.html">Home</a>
-        <a href="explore.html">Projects</a>
-        <a href="about.html">About</a>
-      </div>
+  <!-- Navbar -->
+  <header class="site-topbar">
+    <div class="brand-container">
+      <div class="brand-mark"><i data-lucide="layers" style="width: 18px; height: 18px;"></i></div>
+      <div class="brand-title">EduAchieve</div>
     </div>
-
-    <div class="theme-toggle">
-      <span class="toggle-icon" id="sunIcon">☀️</span>
-      <label class="toggle-switch">
-        <input type="checkbox" id="themeToggle">
-        <span class="slider"></span>
-      </label>
-      <span class="toggle-icon" id="moonIcon">🌙</span>
-      <span class="toggle-label" id="themeLabel">Light Mode</span>
+    <nav class="top-nav">
+      <a href="index.html" class="active-link">Home</a>
+      <a href="explore.html">Projects</a>
+      <a href="submit.html">Submit</a>
+      <a href="about.html">About</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="login.html" class="btn-login">Login</a>
+      <!-- common.js will dynamically inject the theme toggle here -->
     </div>
   </header>
 
-  <!-- Hero -->
-  <div class="hero-card">
-    <div class="container">
-      <div style="display: inline-block; background: rgba(232,80,10,0.2); color: var(--primary); border: 1px solid rgba(232,80,10,0.4); border-radius: 20px; padding: 3px 12px; font-size: 0.78rem; font-weight: 600; margin-bottom: 14px;">Dynamic Theme Control</div>
-      <h1>Dark / <span>Light</span> Theme Toggle</h1>
-      <p>This entire page switches seamlessly between dark and light modes using CSS custom properties. Your preference is saved to localStorage.</p>
-      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 24px;">
-        <a href="register.html" class="btn btn-primary" style="text-decoration: none;">Get Started</a>
-        <a href="about.html" class="btn btn-outline-white" style="text-decoration: none;">Learn More</a>
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-container">
+      <div class="glow-blob-1"></div>
+      <div class="glow-blob-2"></div>
+      
+      <div class="hero-badge">
+        <i data-lucide="sparkles" style="width: 14px; height: 14px; color: var(--primary);"></i>
+        Theme Engine Active
       </div>
-    </div>
-  </div>
+      <h1 class="hero-title">Academic Research, <span>Reimagined</span></h1>
+      <p class="hero-subtitle">
+        A premium, intelligent repository for modern university ecosystems. Toggle the theme to experience seamless dark and light modes via CSS custom properties.
+      </p>
+      <div class="hero-buttons">
+        <a href="#" class="btn-hero-primary">Get Started <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i></a>
+        <a href="#" class="btn-hero-outline">View Documentation</a>
+      </div>
+    </section>
 
-  <!-- Features -->
-  <div class="container">
-    <section class="section">
-      <h2 class="section-title">Platform Features</h2>
+    <!-- Platform Features -->
+    <section class="section-container">
+      <div class="section-header">
+        <h2 class="section-title">Platform Features</h2>
+      </div>
       <div class="features-grid">
+        <!-- Card 1 -->
         <div class="feature-card">
-          <div class="icon">🔐</div>
-          <h3>Secure Authentication</h3>
-          <p>JWT-based auth with PCCOE email validation ensures only verified students access the platform.</p>
+          <div class="feature-icon ic-blue"><i data-lucide="shield-check"></i></div>
+          <h3 class="feature-title">Secure Authentication</h3>
+          <p class="feature-desc">JWT-based auth with PCCOE email validation ensures only verified students access the platform.</p>
         </div>
+        <!-- Card 2 -->
         <div class="feature-card">
-          <div class="icon">📂</div>
-          <h3>Project Repository</h3>
-          <p>Upload and archive academic projects with full metadata — batch, year, domain, guide and team info.</p>
+          <div class="feature-icon ic-peach"><i data-lucide="folder-archive"></i></div>
+          <h3 class="feature-title">Project Repository</h3>
+          <p class="feature-desc">Upload and archive academic projects with full metadata — batch, year, domain, guide and team info.</p>
         </div>
+        <!-- Card 3 -->
         <div class="feature-card">
-          <div class="icon">🔍</div>
-          <h3>Smart Search</h3>
-          <p>Full-text search across all projects with live autocomplete suggestions and multi-filter support.</p>
+          <div class="feature-icon ic-mint"><i data-lucide="search"></i></div>
+          <h3 class="feature-title">Smart Search</h3>
+          <p class="feature-desc">Full-text search across all projects with live autocomplete suggestions and multi-filter support.</p>
         </div>
+        <!-- Card 4 -->
         <div class="feature-card">
-          <div class="icon">📊</div>
-          <h3>Admin Dashboard</h3>
-          <p>Comprehensive admin panel with stats, project management tables, and CSV export functionality.</p>
+          <div class="feature-icon ic-lavender"><i data-lucide="layout-dashboard"></i></div>
+          <h3 class="feature-title">Admin Dashboard</h3>
+          <p class="feature-desc">Comprehensive admin panel with stats, project management tables, and CSV export functionality.</p>
         </div>
       </div>
     </section>
 
-    <section class="section">
-      <h2 class="section-title">Sample Project Card</h2>
-      <div class="project-card">
-        <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
-          <span class="domain-tag">AI/ML</span>
-          <span class="batch-tag">2024-25</span>
-          <span class="batch-tag">4th Year</span>
+    <!-- Sample Project Card Section -->
+    <section class="section-container">
+      <div class="section-header">
+        <h2 class="section-title">Sample Project Card</h2>
+      </div>
+      
+      <div class="premium-project-card">
+        <div class="card-top-row">
+          <div class="tags-container">
+            <span class="soft-pill highlight">AI/ML</span>
+            <span class="soft-pill">2024-25</span>
+            <span class="soft-pill">4th Year</span>
+          </div>
+          <button class="btn-bookmark"><i data-lucide="bookmark"></i></button>
         </div>
-        <div class="project-title">Smart Traffic Management using Deep Reinforcement Learning</div>
-        <div class="project-meta">Team: Raj Kumar, Priya Sharma, Ankit Patel &nbsp;•&nbsp; Guide: Prof. Vikram Joshi</div>
-        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 0; transition: var(--transition);">
+        
+        <div class="project-header">
+          <h3>Smart Traffic Management using Deep Reinforcement Learning</h3>
+          <div class="project-meta-row">
+            <div class="meta-item"><i data-lucide="users" style="width: 16px; height: 16px;"></i> Raj Kumar, Priya Sharma, Ankit Patel</div>
+            <div class="meta-item"><i data-lucide="user-check" style="width: 16px; height: 16px;"></i> Prof. Vikram Joshi</div>
+          </div>
+        </div>
+        
+        <p class="project-abstract">
           A deep reinforcement learning approach to optimize traffic signal timing at multi-intersection urban environments, reducing average wait time by 40% compared to traditional fixed-cycle systems.
         </p>
-        <div class="project-card-footer">
-          <span class="date-label">Submitted: Apr 15, 2025</span>
-          <button class="btn btn-primary" style="padding: 7px 16px; font-size: 0.82rem;">View Details →</button>
+        
+        <div class="card-bottom-row">
+          <div class="submit-date"><i data-lucide="calendar" style="width: 16px; height: 16px;"></i> Submitted: Apr 15, 2025</div>
+          <button class="btn-cta-card">View Details <i data-lucide="arrow-right" class="arrow-icon" style="width: 16px; height: 16px;"></i></button>
         </div>
       </div>
     </section>
-  </div>
+  </main>
 
-  <footer class="site-footer">
-    <p>© 2024-26 EduAchieve – CSE AI&ML Dept., PCCOE Pune</p>
-    <p style="margin-top: 8px; font-size: 0.8rem;">Personalized Visual Preferences</p>
-  </footer>
-
+  <script src="common.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
   <script>
-    const toggle = document.getElementById('themeToggle');
-    const label = document.getElementById('themeLabel');
-    const html = document.documentElement;
-
-    // Restore preference
-    const savedTheme = localStorage.getItem('eduachieve_theme') || 'light';
-    applyTheme(savedTheme);
-
-    toggle.addEventListener('change', () => {
-      const theme = toggle.checked ? 'dark' : 'light';
-      applyTheme(theme);
-      localStorage.setItem('eduachieve_theme', theme);
-    });
-
-    function applyTheme(theme) {
-      html.setAttribute('data-theme', theme);
-      toggle.checked = theme === 'dark';
-      label.textContent = theme === 'dark' ? 'Dark Mode' : 'Light Mode';
-    }
+    lucide.createIcons();
   </script>
 </body>
 </html>

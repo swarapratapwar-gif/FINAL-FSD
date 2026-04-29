@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const store = require('../store');
 
 const router = express.Router();
-const pccoEmailRegex = /^[a-z]+\.[a-z]+\d*@pccoepune\.org$/i;
+const pccoEmailRegex = /^[a-zA-Z0-9._%+-]+@pccoepune\.org$/i;
 
 router.post('/register', async (req, res) => {
   try {

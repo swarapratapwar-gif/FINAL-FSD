@@ -9,31 +9,23 @@
 <body>
 
   <!-- Navbar -->
-  <header class="site-topbar">
-    <div class="brand-mark">🎓</div>
-    <div>
-      <div class="brand-title">EduAchieve</div>
-      <div class="brand-sub">CSE AI&ML | PCCOE</div>
-    </div>
-    
-    <nav class="top-nav">
-      <a href="index.html">Home</a>
-      <a href="explore.html">Projects</a>
-      <a href="submit.html">Submit Research</a>
-      <a href="about.html">About</a>
-      <a href="dashboard.html" id="navAdmin" style="display: none;">Admin Dashboard</a>
-    </nav>
-    
-    <div class="search-wrap">
-      <input type="text" class="search-input-global" placeholder="Search projects...">
-    </div>
-    
-    <div class="nav-actions">
-      <a href="login.html" class="btn-primary" id="navLogin">Login</a>
-      <span class="nav-username" id="navUser"></span>
-      <button id="navLogout" style="display: none; background: none; border: none; color: #DC2626; cursor: pointer; font-size: 0.82rem; font-weight: 600;" onclick="logout()">Logout</button>
-    </div>
-  </header>
+  <header class="site-topbar" style="background: #0B0F19; border-bottom: 1px solid rgba(255,255,255,0.05); height: 64px; display: flex; align-items: center; padding: 0 40px; justify-content: space-between;">
+  <div style="display: flex; align-items: center; gap: 12px; width: 300px;">
+    <div class="brand-mark" style="background: #E8500A; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 6px; color: white; font-size: 0.8rem;">🎓</div>
+    <div class="brand-title" style="color: white; font-weight: 800; font-size: 1.2rem; font-family: 'Outfit', sans-serif;">EduAchieve</div>
+  </div>
+  <nav class="top-nav" style="display: flex; gap: 32px; justify-content: center; flex: 1;">
+    <a href="index.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; font-family: 'Inter', sans-serif; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='#FFF'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Home</a>
+    <a href="explore.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; font-family: 'Inter', sans-serif; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='#FFF'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Projects</a>
+    <a href="submit.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; font-family: 'Inter', sans-serif; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='#FFF'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Submit</a>
+    <a href="about.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; font-family: 'Inter', sans-serif; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='#FFF'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">About</a>
+  </nav>
+  <div class="nav-actions" style="display: flex; align-items: center; gap: 16px; width: 300px; justify-content: flex-end;">
+    <a href="login.html" class="btn-primary" id="navLogin" style="background: #E8500A; color: white; padding: 8px 20px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; font-family: 'Inter', sans-serif;">Login</a>
+    <span class="nav-username" id="navUser" style="color: white; font-size: 0.85rem; font-family: 'Inter', sans-serif;"></span>
+    <button id="navLogout" style="display: none; background: none; border: none; color: #F87171; cursor: pointer; font-size: 0.85rem; font-weight: 600; font-family: 'Inter', sans-serif;" onclick="logout()">Logout</button>
+  </div>
+</header>
 
   <div class="container">
     <div class="detail-layout">
@@ -75,6 +67,30 @@
 
   <script src="common.js"></script>
   <script>
+    function isSuperAdmin(u) {
+      if (!u || !u.email) return false;
+      const email = u.email.toLowerCase().trim();
+      const allowedEmails = [
+        'swara.pratapwar24@pccoepune.org',
+        'samrudhi.divekar24@pccoepune.org',
+        'samrudhi.dhumal24@pccoepune.org',
+        'admin@pccoepune.org',
+        'admin@pccoe.org'
+      ];
+      return allowedEmails.includes(email);
+    }
+
+    async function deleteProject(id) {
+      if (!confirm('Are you sure you want to delete this project? This action cannot be undone.')) return;
+      try {
+        await apiCall(`/api/projects/${id}`, { method: 'DELETE' });
+        alert('Project deleted successfully.');
+        window.location.href = 'explore.html';
+      } catch(err) {
+        alert('Failed to delete: ' + err.message);
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', async () => {
       const urlParams = new URLSearchParams(window.location.search);
       const projectId = urlParams.get('id');
@@ -85,10 +101,10 @@
       }
 
       try {
-        const project = await apiCall(\`/api/projects/\${projectId}\`);
+        const project = await apiCall(`/api/projects/${projectId}`);
         renderProject(project);
       } catch (err) {
-        document.getElementById('mainContent').innerHTML = \`<div style="padding: 60px; text-align: center; color: #DC2626;">Error: \${escapeHtml(err.message)}</div>\`;
+        document.getElementById('mainContent').innerHTML = `<div style="padding: 60px; text-align: center; color: #DC2626;">Error: ${escapeHtml(err.message)}</div>`;
       }
     });
 
@@ -99,40 +115,36 @@
       // Main Content
       let techStackHtml = '';
       if (p.techStack) {
-        techStackHtml = p.techStack.split(',').map(t => \`<span class="domain-tag" style="background:#FFF3EE;">\${escapeHtml(t.trim())}</span>\`).join('');
+        techStackHtml = p.techStack.split(',').map(t => `<span class="domain-tag" style="background:#FFF3EE;">${escapeHtml(t.trim())}</span>`).join('');
       }
 
-      main.innerHTML = \`
+      main.innerHTML = `
         <div class="breadcrumb">
           <a href="index.html">Home</a> <span class="breadcrumb-sep">›</span>
           <a href="explore.html">Projects</a> <span class="breadcrumb-sep">›</span>
-          <span style="color:#1A1A2E; font-weight:600;">\${escapeHtml(p.title)}</span>
+          <span style="color:#1A1A2E; font-weight:600;">${escapeHtml(p.title)}</span>
         </div>
 
-        <div style="margin-bottom: 16px;">
-          <span class="badge badge-orange">RESEARCH PROJECT</span>
-          <span class="badge badge-green">ACTIVE</span>
+        <div style="margin-bottom: 16px; display: flex; justify-content: space-between; align-items: flex-start;">
+          <div>
+            <span class="badge badge-orange">RESEARCH PROJECT</span>
+            <span class="badge badge-green">ACTIVE</span>
+          </div>
+          ${isSuperAdmin(checkAuth()) ? `<button onclick="deleteProject('${p.id}')" class="btn-primary" style="background: #DC2626; border-color: #DC2626; padding: 6px 12px; font-size: 0.85rem;">Delete Project</button>` : ''}
         </div>
 
-        <h1 style="font-size: 2rem; margin-bottom: 8px;">\${escapeHtml(p.title)}</h1>
-        <p style="color: #6B7280; margin-bottom: 24px;">CSE AI&ML Department, PCCOE • Guide: \${escapeHtml(p.guideName)}</p>
-
-        <div class="card" style="margin-bottom: 32px;">
-          <h3 style="font-size: 1.1rem; margin-bottom: 12px; border-bottom: 1px solid #F3F4F6; padding-bottom: 12px;">Team Information</h3>
-          <p><strong>Lead Researcher:</strong> \${escapeHtml(p.submittedByName)}</p>
-          <p><strong>Team Members:</strong> \${escapeHtml(p.teamMembers)}</p>
-          <p><strong>Batch / Year:</strong> \${escapeHtml(p.batch)} / \${escapeHtml(p.year)}</p>
-        </div>
+        <h1 style="font-size: 2rem; margin-bottom: 8px;">${escapeHtml(p.title)}</h1>
+        <p style="color: #6B7280; margin-bottom: 24px;">CSE AI&ML Department, PCCOE • Guide: ${escapeHtml(p.guideName || 'Not Specified')}</p>
 
         <div style="margin-bottom: 32px;">
           <h3 style="font-size: 1.25rem; margin-bottom: 12px;">Abstract / Overview</h3>
-          <div style="line-height: 1.8; color: #374151;">\${escapeHtml(p.description).replace(/\\n/g, '<br>')}</div>
+          <div style="line-height: 1.8; color: #374151;">${escapeHtml(p.description).replace(/\\n/g, '<br>')}</div>
         </div>
 
-        \${techStackHtml ? \`<div style="margin-bottom: 32px;">
+        ${techStackHtml ? `<div style="margin-bottom: 32px;">
           <h3 style="font-size: 1.1rem; margin-bottom: 12px;">Tech Stack</h3>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap;">\${techStackHtml}</div>
-        </div>\` : ''}
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">${techStackHtml}</div>
+        </div>` : ''}
 
         <div style="margin-bottom: 32px;">
           <h3 style="font-size: 1.25rem; margin-bottom: 16px;">Project Files & Links</h3>
@@ -145,10 +157,10 @@
                 <div class="file-meta">PDF Document</div>
               </div>
             </div>
-            <a href="/uploads/\${escapeHtml(p.researchPaperFile)}" target="_blank" class="btn-primary" style="padding: 6px 14px; font-size: 0.8rem;">Download PDF</a>
+            <a href="/uploads/${escapeHtml(p.researchPaperFile)}" target="_blank" class="btn-primary" style="padding: 6px 14px; font-size: 0.8rem;">Download PDF</a>
           </div>
 
-          \${p.presentationFile ? \`
+          ${p.presentationFile ? `
           <div class="file-row">
             <div class="file-info">
               <div class="file-icon-box">📊</div>
@@ -157,67 +169,67 @@
                 <div class="file-meta">PPT/PPTX</div>
               </div>
             </div>
-            <a href="/uploads/\${escapeHtml(p.presentationFile)}" target="_blank" class="btn-primary" style="padding: 6px 14px; font-size: 0.8rem;">Download PPT</a>
-          </div>\` : ''}
+            <a href="/uploads/${escapeHtml(p.presentationFile)}" target="_blank" class="btn-primary" style="padding: 6px 14px; font-size: 0.8rem;">Download PPT</a>
+          </div>` : ''}
 
           <div style="display: flex; gap: 12px; margin-top: 16px;">
-            \${p.githubLink ? \`<a href="\${escapeHtml(p.githubLink)}" target="_blank" class="btn-outline">View on GitHub</a>\` : ''}
-            \${p.linkedinLink ? \`<a href="\${escapeHtml(p.linkedinLink)}" target="_blank" class="btn-outline" style="border-color: #0077B5; color: #0077B5;">View on LinkedIn</a>\` : ''}
+            ${p.githubLink ? `<a href="${escapeHtml(p.githubLink)}" target="_blank" class="btn-outline">View on GitHub</a>` : ''}
+            ${p.linkedinLink ? `<a href="${escapeHtml(p.linkedinLink)}" target="_blank" class="btn-outline" style="border-color: #0077B5; color: #0077B5;">View on LinkedIn</a>` : ''}
           </div>
         </div>
-      \`;
+      `;
 
       // Sidebar
       let membersHtml = '';
-      const allMembers = [p.submittedByName, ...p.teamMembers.split(',')].map(s => s.trim()).filter(Boolean);
+      const allMembers = (p.teamMembers ? p.teamMembers : p.submittedByName).split(',').map(s => s.trim()).filter(Boolean);
       
       membersHtml = allMembers.map(m => {
         const initials = m.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-        return \`
+        return `
           <div class="member-pill">
-            <div class="member-avatar">\${initials}</div>
-            <div style="font-size: 0.85rem; font-weight: 600; color: #374151;">\${escapeHtml(m)}</div>
+            <div class="member-avatar">${initials}</div>
+            <div style="font-size: 0.85rem; font-weight: 600; color: #374151;">${escapeHtml(m)}</div>
           </div>
-        \`;
+        `;
       }).join('');
 
-      side.innerHTML = \`
+      side.innerHTML = `
         <div class="info-card-orange" style="margin-bottom: 24px;">
           <h3 style="font-size: 1.1rem; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 12px;">Project Info</h3>
           
           <div class="info-row">
             <div class="info-label">Domain</div>
-            <div class="info-value">\${escapeHtml(p.domain)}</div>
+            <div class="info-value">${escapeHtml(p.domain)}</div>
           </div>
           
           <div class="info-row">
             <div class="info-label">Batch</div>
-            <div class="info-value">\${escapeHtml(p.batch)}</div>
+            <div class="info-value">${escapeHtml(p.batch)}</div>
           </div>
           
           <div class="info-row">
             <div class="info-label">Year</div>
-            <div class="info-value">\${escapeHtml(p.year)}</div>
+            <div class="info-value">${escapeHtml(p.year)}</div>
           </div>
           
           <div class="info-row">
             <div class="info-label">Guide Name</div>
-            <div class="info-value">\${escapeHtml(p.guideName)}</div>
+            <div class="info-value">${escapeHtml(p.guideName)}</div>
           </div>
           
           <div class="info-row" style="margin-bottom: 0;">
             <div class="info-label">Submitted On</div>
-            <div class="info-value">\${formatDate(p.createdAt)}</div>
+            <div class="info-value">${formatDate(p.createdAt)}</div>
           </div>
         </div>
 
         <div class="card">
-          <h3 style="font-size: 1rem; margin-bottom: 12px; color: #111827;">Team Members</h3>
+          <h3 style="font-size: 1rem; margin-bottom: 12px; color: #111827;">Researchers</h3>
           <div style="display: flex; flex-direction: column;">
-            \${membersHtml}
+            ${membersHtml}
           </div>
         </div>
-      \`;
+      `;
     }
   </script>
 </body>

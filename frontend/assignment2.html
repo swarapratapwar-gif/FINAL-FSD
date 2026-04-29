@@ -3,122 +3,290 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Our Team | EduAchieve</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <title>Website Admins | EduAchieve</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <style>
     :root {
-      --primary: #E8500A;
-      --navy: #1A1A2E;
-      --cream: #FDF6EC;
+      /* New elegant soft color system */
+      --primary: #E76F2E;
+      --primary-secondary: #F4A261;
+      --primary-hover: #D65A1F;
+      --primary-light: #FDF1E6;
+      --primary-gradient: linear-gradient(135deg, #E76F2E, #F4A261);
+      --primary-gradient-rev: linear-gradient(135deg, #F4A261, #E76F2E);
+      
+      --landing-bg: #FFFFFF;
+      --landing-bg-nav: rgba(15, 23, 42, 0.95); /* Dark navy */
+      --landing-bg-card: #FFFFFF;
+      --landing-bg-footer: #F8FAFC;
+      --landing-text-main: #1E293B;
+      --landing-text-muted: #64748B;
+      --landing-border: rgba(0, 0, 0, 0.06);
+      
+      --card-shadow: 0 10px 30px rgba(0,0,0,0.04);
+      --card-hover-shadow: 0 20px 40px rgba(0,0,0,0.08);
+      --glow-orange: 0 6px 18px rgba(231, 111, 46, 0.2);
     }
-    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: #1A1A2E; margin: 0; }
+
+    [data-theme="dark"] {
+      --primary: #E76F2E;
+      --primary-secondary: #F4A261;
+      --primary-hover: #D65A1F;
+      --primary-light: rgba(231, 111, 46, 0.1);
+      
+      --landing-bg: #0F172A;
+      --landing-bg-nav: rgba(15, 23, 42, 0.95);
+      --landing-bg-card: rgba(30, 41, 59, 0.7);
+      --landing-bg-footer: #0B0F19;
+      --landing-text-main: #F8FAFC;
+      --landing-text-muted: #94A3B8;
+      --landing-border: rgba(255, 255, 255, 0.08);
+      
+      --card-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      --card-hover-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
     
-    .site-topbar { background: var(--navy); height: 64px; display: flex; align-items: center; padding: 0 40px; }
+    body { 
+      font-family: 'Inter', sans-serif; 
+      background: var(--landing-bg); 
+      color: var(--landing-text-main); 
+      margin: 0; 
+      overflow-x: hidden;
+      transition: background 0.3s ease, color 0.3s ease;
+      position: relative;
+    }
+
+    /* Abstract background shapes */
+    .bg-shape {
+      position: absolute; border-radius: 50%; filter: blur(100px); z-index: -1; opacity: 0.5;
+    }
+    [data-theme="dark"] .bg-shape { opacity: 0.15; }
     
-    .team-section { padding: 80px 0; text-align: center; }
-    
-    .team-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 32px;
-      margin-top: 60px;
+    .shape-1 { top: -100px; left: -100px; width: 600px; height: 600px; background: var(--primary-light); }
+    .shape-2 { top: 20%; right: -50px; width: 500px; height: 500px; background: #E0F2FE; }
+
+    .hero-bg-gradient {
+      position: absolute; top: 0; left: 0; right: 0; height: 600px;
+      background: linear-gradient(180deg, var(--primary-light) 0%, #E0F2FE 50%, var(--landing-bg) 100%);
+      z-index: -2; opacity: 0.6;
+    }
+    [data-theme="dark"] .hero-bg-gradient {
+      background: linear-gradient(180deg, rgba(231,111,46,0.05) 0%, rgba(56,189,248,0.05) 50%, var(--landing-bg) 100%);
     }
 
-    .team-card {
-      padding: 40px;
-      background: #FFFFFF;
-      border: 1px solid #E5E7EB;
-      border-radius: 20px;
-      transition: all 0.3s ease;
-      text-align: center;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    /* Navbar styling */
+    .site-topbar {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--landing-bg-nav);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      height: 72px; display: flex; align-items: center; padding: 0 40px;
+      justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05);
     }
 
-    .team-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 24px rgba(0,0,0,0.05);
-      border-color: var(--primary);
+    .brand-mark {
+      background: var(--primary-gradient);
+      width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; 
+      border-radius: 8px; color: white; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(231, 111, 46, 0.3);
     }
 
-    .team-avatar {
-      width: 80px;
-      height: 80px;
-      background: var(--primary);
-      color: white;
-      border-radius: 50%;
-      margin: 0 auto 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      font-weight: 800;
+    .brand-title {
+      color: white; font-weight: 700; font-size: 1.25rem; font-family: 'Inter', sans-serif;
+      letter-spacing: -0.01em;
     }
 
-    .team-name { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 8px; }
-    .team-role {
-      color: var(--primary);
-      font-weight: 700;
-      font-size: 0.85rem;
-      margin-bottom: 16px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+    .top-nav { display: flex; gap: 40px; justify-content: center; flex: 1; }
+    .top-nav a {
+      color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; font-weight: 500; 
+      transition: all 0.3s ease; position: relative; padding-bottom: 4px;
     }
-    .team-bio { color: #6B7280; font-size: 0.95rem; line-height: 1.6; }
+    .top-nav a:hover { color: white; }
+    .top-nav a.active-link { color: white; font-weight: 600; }
+    .top-nav a.active-link::after {
+      content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px;
+      background: var(--primary); border-radius: 2px;
+    }
+
+    .btn-login {
+      background: var(--primary-gradient); color: white; padding: 10px 24px; border-radius: 100px; 
+      text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: all 0.3s ease;
+      border: none; box-shadow: var(--glow-orange);
+    }
+    .btn-login:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(231, 111, 46, 0.3); }
+
+    /* Header Section */
+    .admins-header { text-align: center; padding: 100px 20px 60px; position: relative; }
+
+    .premium-badge {
+      display: inline-block; padding: 6px 16px; background: rgba(231, 111, 46, 0.1);
+      color: var(--primary); border: 1px solid rgba(231, 111, 46, 0.2); border-radius: 100px;
+      font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+      margin-bottom: 24px; box-shadow: 0 4px 12px rgba(231, 111, 46, 0.05);
+    }
+
+    .admins-header h1 {
+      font-family: 'Outfit', sans-serif; font-size: 4rem; font-weight: 800;
+      color: var(--landing-text-main); margin-bottom: 24px; letter-spacing: -0.02em; line-height: 1.1;
+    }
+    .admins-header h1 span { color: var(--primary); }
+    .admins-header p {
+      font-size: 1.15rem; color: var(--landing-text-muted); max-width: 680px; margin: 0 auto; line-height: 1.7;
+    }
+
+    /* Cards Section */
+    .cards-container {
+      max-width: 1200px; margin: 0 auto 120px; padding: 0 20px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+    }
+
+    .admin-card {
+      background: var(--landing-bg-card); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--landing-border); border-radius: 20px; padding: 40px; text-align: center;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: var(--card-shadow);
+    }
+    .admin-card:hover { transform: translateY(-6px); box-shadow: var(--card-hover-shadow); }
+
+    .avatar-wrap { position: relative; width: 100px; height: 100px; margin: 0 auto 28px; }
+    .avatar {
+      width: 100%; height: 100%; background: var(--primary-gradient-rev); color: white;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-family: 'Outfit', sans-serif; font-size: 2.2rem; font-weight: 800;
+      position: relative; z-index: 2;
+    }
+    .avatar-glow {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 120%; height: 120%; background: var(--primary); filter: blur(20px);
+      opacity: 0.2; z-index: 1; border-radius: 50%; transition: opacity 0.3s;
+    }
+    .admin-card:hover .avatar-glow { opacity: 0.4; }
+
+    .admin-name {
+      font-family: 'Inter', sans-serif; font-size: 1.5rem; font-weight: 700;
+      color: var(--landing-text-main); margin-bottom: 16px;
+    }
+
+    .roles-wrap { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 24px; }
+    .role-badge {
+      display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px;
+      background: #F1F5F9; border: 1px solid var(--landing-border); border-radius: 100px;
+      font-size: 0.75rem; font-weight: 600; color: var(--landing-text-muted); transition: all 0.2s;
+    }
+    [data-theme="dark"] .role-badge { background: rgba(255,255,255,0.05); }
+
+    .admin-desc {
+      color: var(--landing-text-muted); font-size: 0.95rem; line-height: 1.6;
+      border-top: 1px solid var(--landing-border); padding-top: 24px; margin-top: 8px;
+    }
+
+    @media (max-width: 1024px) {
+      .cards-container { grid-template-columns: repeat(2, 1fr); max-width: 800px; }
+    }
+    @media (max-width: 800px) {
+      .admins-header h1 { font-size: 3rem; }
+      .cards-container { grid-template-columns: 1fr; max-width: 500px; }
+      .top-nav { display: none !important; }
+    }
   </style>
 </head>
 <body>
 
+  <div class="hero-bg-gradient"></div>
+  <div class="bg-shape shape-1"></div>
+  <div class="bg-shape shape-2"></div>
+
+  <!-- Navbar -->
   <header class="site-topbar">
-    <div style="display: flex; align-items: center; gap: 12px;">
-      <div class="brand-mark">🎓</div>
-      <div class="brand-title" style="color: white; font-weight: 800; font-size: 1.2rem;">EduAchieve</div>
+    <div style="display: flex; align-items: center; gap: 12px; width: 250px;">
+      <div class="brand-mark"><i data-lucide="graduation-cap" style="width: 18px; height: 18px;"></i></div>
+      <div class="brand-title">EduAchieve</div>
     </div>
-    <nav class="top-nav" style="margin-left: auto;">
-      <a href="index.html" style="color: white; text-decoration: none; margin-left: 20px;">Home</a>
-      <a href="explore.html" style="color: white; text-decoration: none; margin-left: 20px;">Projects</a>
-      <a href="submit.html" style="color: white; text-decoration: none; margin-left: 20px;">Submit</a>
-      <a href="about.html" style="color: white; text-decoration: none; margin-left: 20px;">About</a>
+    <nav class="top-nav">
+      <a href="index.html" class="active-link">Home</a>
+      <a href="explore.html">Projects</a>
+      <a href="submit.html">Submit</a>
+      <a href="about.html">About</a>
     </nav>
+    <div class="nav-actions">
+      <a href="login.html" class="btn-login" id="navLogin">Login</a>
+      <span class="nav-username" id="navUser" style="color: white; font-size: 0.9rem; display: none;"></span>
+      <button id="navLogout" style="display: none; background: none; border: none; color: #F87171; cursor: pointer; font-size: 0.9rem; font-weight: 600;">Logout</button>
+      <!-- common.js will dynamically inject the theme toggle here -->
+    </div>
   </header>
 
-  <main class="container" style="max-width: 1140px; margin: 0 auto; padding: 0 20px;">
-    <section class="team-section">
-      <h1 style="font-family: 'Syne', sans-serif; font-size: 3rem; font-weight: 800;">Our Website <span>Admins</span></h1>
-      <p style="color: #6B7280; max-width: 600px; margin: 0 auto;">The visionary leadership driving the EduAchieve portal at PCCOE.</p>
+  <main>
+    <section class="admins-header">
+      <div class="premium-badge">Meet the Leadership</div>
+      <h1>Our Website <span>Admins</span></h1>
+      <p>The visionary leadership driving the EduAchieve portal at PCCOE. Dedicated to research integrity and platform excellence.</p>
+    </section>
+
+    <section class="cards-container">
+      <!-- Card 1 -->
+      <div class="admin-card">
+        <div class="avatar-wrap">
+          <div class="avatar-glow"></div>
+          <div class="avatar">SD</div>
+        </div>
+        <h3 class="admin-name">Samrudhi Divekar</h3>
+        <div class="roles-wrap">
+          <span class="role-badge"><i data-lucide="code" style="width: 14px; height: 14px;"></i> Principal Developer</span>
+          <span class="role-badge"><i data-lucide="box" style="width: 14px; height: 14px;"></i> Technical Lead</span>
+          <span class="role-badge"><i data-lucide="server" style="width: 14px; height: 14px;"></i> Admin</span>
+        </div>
+        <p class="admin-desc">“Driving the architecture and development of EduAchieve with innovation, scalability, and performance at its core.”</p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="admin-card">
+        <div class="avatar-wrap">
+          <div class="avatar-glow"></div>
+          <div class="avatar">SP</div>
+        </div>
+        <h3 class="admin-name">Swara Pratapwar</h3>
+        <div class="roles-wrap">
+          <span class="role-badge"><i data-lucide="flask-conical" style="width: 14px; height: 14px;"></i> Research Lead</span>
+          <span class="role-badge"><i data-lucide="git-branch" style="width: 14px; height: 14px;"></i> Resource Lead</span>
+          <span class="role-badge"><i data-lucide="briefcase" style="width: 14px; height: 14px;"></i> Operations Lead</span>
+          <span class="role-badge"><i data-lucide="users" style="width: 14px; height: 14px;"></i> Admin</span>
+        </div>
+        <p class="admin-desc">“Driving research excellence, managing resources efficiently, and overseeing operations to empower impactful academia.”</p>
+      </div>
       
-      <div class="team-grid">
-        <div class="team-card">
-          <div class="team-avatar">SD</div>
-          <h3 class="team-name">Samrudhi Divekar</h3>
-          <p class="team-role">Lead Architect • Admin • Senior Developer</p>
-          <p class="team-bio">Spearheading the technical roadmap and full-stack architecture of the EduAchieve ecosystem.</p>
+      <!-- Card 3 -->
+      <div class="admin-card">
+        <div class="avatar-wrap">
+          <div class="avatar-glow"></div>
+          <div class="avatar">SD</div>
         </div>
-
-        <div class="team-card">
-          <div class="team-avatar">SP</div>
-          <h3 class="team-name">Swara Pratapawar</h3>
-          <p class="team-role">Research Coordinator • Admin • Ethics Lead</p>
-          <p class="team-bio">Ensuring research integrity and institutional standards across all submissions.</p>
+        <h3 class="admin-name">Samruddhi Dhumal</h3>
+        <div class="roles-wrap">
+          <span class="role-badge"><i data-lucide="scale" style="width: 14px; height: 14px;"></i> Ethics Lead</span>
+          <span class="role-badge"><i data-lucide="shield-check" style="width: 14px; height: 14px;"></i> Admin</span>
         </div>
-
-        <div class="team-card">
-          <div class="team-avatar">SD</div>
-          <h3 class="team-name">Samruddhi Dhumal</h3>
-          <p class="team-role">Admin • Operations Coordinator • Resource Manager</p>
-          <p class="team-bio">Managing site operations and resource allocation to streamline the student experience.</p>
-        </div>
+        <p class="admin-desc">“Upholding ethics and compliance across the platform to promote integrity and trust in every research submission.”</p>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer" style="background: var(--navy); padding: 40px 0; color: rgba(255,255,255,0.6); margin-top: 80px;">
-    <div class="container" style="display: flex; justify-content: space-between; align-items: center; max-width: 1140px; margin: 0 auto; padding: 0 20px;">
-      <p style="color: white; font-weight: 800; font-size: 1.5rem;">EduAchieve Team</p>
-      <p>© 2024-26 PCCOE Pune</p>
+  <footer class="site-footer" style="background: var(--landing-bg-footer); border-top: 1px solid var(--landing-border); padding: 50px 0; color: var(--landing-text-muted);">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <p style="color: var(--landing-text-main); font-weight: 700; font-size: 1.1rem; margin-bottom: 5px;">EduAchieve Team</p>
+        <p style="font-size: 0.85rem;">PCCOE CSE AI&ML Research Repository</p>
+      </div>
+      <div style="display: flex; gap: 20px; font-size: 0.9rem;">
+        <a href="index.html" style="color: inherit; text-decoration: none; transition: color 0.2s;">Home</a>
+        <a href="explore.html" style="color: inherit; text-decoration: none; transition: color 0.2s;">Explore</a>
+        <a href="about.html" style="color: inherit; text-decoration: none; transition: color 0.2s;">About</a>
+      </div>
     </div>
   </footer>
 
   <script src="common.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
 </body>
 </html>

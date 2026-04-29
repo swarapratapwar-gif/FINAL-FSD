@@ -94,7 +94,7 @@
       const errorBanner = document.getElementById('errorBanner');
       const togglePassword = document.getElementById('togglePassword');
 
-      const pccoEmailRegex = /^[a-z]+\.[a-z]+\d*@pccoepune\.org$/i;
+      const pccoEmailRegex = /^[a-zA-Z0-9._%+-]+@pccoepune\.org$/i;
 
       togglePassword.addEventListener('click', () => {
         const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';

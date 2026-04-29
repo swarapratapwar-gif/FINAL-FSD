@@ -4,44 +4,292 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EduAchieve | Academic Research Ecosystem</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <meta name="description" content="A specialized ecosystem for PCCOE students to archive, discover, and showcase groundbreaking research in AI & Machine Learning.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <style>
     :root {
-      --primary: #E8500A;
-      --navy: #1A1A2E;
-      --cream: #FDF6EC;
-    }
-    body { font-family: 'DM Sans', sans-serif; background: #fff; color: #1A1A2E; }
-    
-    .site-topbar { background: var(--navy); height: 64px; display: flex; align-items: center; padding: 0 40px; }
-    
-    .hero-v2 {
-      padding: 120px 0 80px;
-      text-align: center;
-      background: var(--cream);
+      --primary: #FF6A00;
+      --primary-hover: #E65C00;
+      --landing-bg: #FAFAFA;
+      --landing-bg-nav: rgba(250, 250, 250, 0.8);
+      --landing-bg-card: rgba(255, 255, 255, 0.9);
+      --landing-bg-footer: #F3F4F6;
+      --landing-text-main: #111827;
+      --landing-text-muted: #4B5563;
+      --landing-border: rgba(0, 0, 0, 0.1);
+      --landing-hero-gradient: radial-gradient(circle at 80% 20%, rgba(255, 106, 0, 0.08) 0%, transparent 40%),
+                               radial-gradient(circle at 20% 80%, rgba(250, 250, 250, 1) 0%, transparent 50%);
     }
 
-    .hero-v2 h1 {
-      font-family: 'Syne', sans-serif;
-      font-size: 3.5rem;
+    [data-theme="dark"] {
+      --primary: #FF6A00;
+      --primary-hover: #E65C00;
+      --landing-bg: #0B0F19;
+      --landing-bg-nav: rgba(11, 15, 25, 0.8);
+      --landing-bg-card: rgba(21, 28, 44, 0.7);
+      --landing-bg-footer: rgba(11, 15, 25, 0.95);
+      --landing-text-main: #FFFFFF;
+      --landing-text-muted: #9CA3AF;
+      --landing-border: rgba(255, 255, 255, 0.08);
+      --landing-hero-gradient: radial-gradient(circle at 80% 20%, rgba(255, 106, 0, 0.05) 0%, transparent 40%),
+                               radial-gradient(circle at 20% 80%, rgba(11, 15, 25, 1) 0%, transparent 50%);
+    }
+    
+    body { 
+      font-family: 'Inter', sans-serif; 
+      background: var(--landing-bg); 
+      color: var(--landing-text-main); 
+      margin: 0; 
+      overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* Navbar styling */
+    .site-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--landing-bg-nav);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      height: 72px;
+      display: flex;
+      align-items: center;
+      padding: 0 40px;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--landing-border);
+      transition: all 0.3s ease;
+    }
+
+    .brand-mark {
+      background: linear-gradient(135deg, var(--primary), #FF8C33);
+      width: 32px; height: 32px; 
+      display: flex; align-items: center; justify-content: center; 
+      border-radius: 8px; color: white; font-size: 0.9rem;
+      box-shadow: 0 4px 12px rgba(255, 106, 0, 0.3);
+    }
+
+    .brand-title {
+      color: var(--landing-text-main); font-weight: 800; font-size: 1.25rem; font-family: 'Outfit', sans-serif;
+      letter-spacing: -0.01em;
+    }
+
+    .top-nav a {
+      color: var(--landing-text-muted); text-decoration: none; font-size: 0.95rem; font-weight: 500; 
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+    .top-nav a:hover, .top-nav a.active-link {
+      color: var(--landing-text-main);
+    }
+    [data-theme="dark"] .top-nav a:hover, [data-theme="dark"] .top-nav a.active-link {
+      text-shadow: 0 0 8px rgba(255,255,255,0.3);
+    }
+
+    .btn-login {
+      background: var(--primary); color: white; padding: 10px 24px; border-radius: 8px; 
+      text-decoration: none; font-size: 0.9rem; font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 106, 0, 0.25);
+      border: none;
+    }
+    .btn-login:hover {
+      background: var(--primary-hover);
+      box-shadow: 0 6px 20px rgba(255, 106, 0, 0.4);
+      transform: translateY(-1px);
+    }
+
+    /* Hero styling */
+    .hero-section {
+      position: relative;
+      padding: 120px 40px;
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      background: var(--landing-hero-gradient);
+      overflow: hidden;
+    }
+    
+    .hero-section::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMTI4LDEyOCwxMjgsMC4wNSkiLz48L3N2Zz4=');
+      z-index: -1;
+    }
+
+    .hero-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 60px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-content h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 4rem;
       font-weight: 800;
       line-height: 1.1;
       margin-bottom: 24px;
       letter-spacing: -0.02em;
+      color: var(--landing-text-main);
     }
 
-    .hero-v2 h1 span {
+    .hero-content h1 span.highlight { 
       color: var(--primary);
     }
-
-    .hero-v2 p {
-      font-size: 1.25rem;
-      color: #6B7280;
-      max-width: 650px;
-      margin: 0 auto 40px;
+    
+    [data-theme="dark"] .hero-content h1 span.highlight {
+      text-shadow: 0 0 30px rgba(255, 106, 0, 0.3);
     }
 
+    .hero-content p.subtitle {
+      font-size: 1.25rem;
+      color: var(--landing-text-muted);
+      line-height: 1.7;
+      margin-bottom: 40px;
+      max-width: 560px;
+    }
+
+    .hero-ctas {
+      display: flex; gap: 20px; align-items: center;
+    }
+
+    .btn-solid {
+      background: var(--primary); color: white; padding: 16px 36px; border-radius: 12px;
+      font-weight: 600; text-decoration: none; font-size: 1.05rem;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(255, 106, 0, 0.25);
+    }
+    .btn-solid:hover {
+      background: var(--primary-hover); transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(255, 106, 0, 0.35);
+    }
+
+    .btn-outline {
+      background: transparent; color: var(--landing-text-main); padding: 16px 36px; border-radius: 12px;
+      font-weight: 600; text-decoration: none; font-size: 1.05rem;
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid var(--landing-border);
+      transition: all 0.3s ease;
+    }
+    .btn-outline:hover {
+      background: rgba(128,128,128,0.05); border-color: var(--landing-text-main);
+      transform: translateY(-2px);
+    }
+
+    .hero-visual {
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .hero-visual img {
+      width: 100%;
+      max-width: 550px;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+      animation: float 6s ease-in-out infinite;
+      position: relative;
+      z-index: 2;
+    }
+    
+    [data-theme="dark"] .hero-visual img {
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 60px rgba(255, 106, 0, 0.15);
+    }
+
+    .hero-visual::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%; height: 80%;
+      background: var(--primary);
+      filter: blur(120px);
+      opacity: 0.05;
+      z-index: 1;
+      border-radius: 50%;
+    }
+    
+    [data-theme="dark"] .hero-visual::after {
+      opacity: 0.15;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); }
+    }
+
+    /* Stats Section */
+    .stats-section {
+      position: relative;
+      margin-top: -80px;
+      z-index: 10;
+      padding: 0 40px;
+    }
+
+    .stats-card {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: var(--landing-bg-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--landing-border);
+      border-radius: 24px;
+      padding: 40px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+    }
+    
+    [data-theme="dark"] .stats-card {
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+    }
+
+    .stat-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      background: rgba(255, 106, 0, 0.1);
+      color: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .stat-number {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--landing-text-main);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.95rem;
+      color: var(--landing-text-muted);
+      font-weight: 500;
+    }
+
+    .stat-divider {
+      width: 1px;
+      height: 60px;
+      background: var(--landing-border);
+    }
+
+    /* Legacy sections overrides for theme (Feature Grid v2) */
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+    
     .feature-grid-v2 {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -51,22 +299,31 @@
 
     .feature-card-v2 {
       padding: 40px;
-      background: #fff;
-      border: 1px solid #E5E7EB;
+      background: var(--landing-bg-card);
+      border: 1px solid var(--landing-border);
       border-radius: 20px;
       transition: all 0.3s ease;
       text-align: left;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
     }
 
     .feature-card-v2:hover {
       border-color: var(--primary);
       box-shadow: 0 20px 40px rgba(0,0,0,0.05);
     }
+    
+    [data-theme="dark"] .feature-card-v2 {
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    [data-theme="dark"] .feature-card-v2:hover {
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
 
     .feature-icon-v2 {
       width: 50px;
       height: 50px;
-      background: rgba(232, 80, 10, 0.1);
+      background: rgba(255, 106, 0, 0.1);
       color: var(--primary);
       border-radius: 12px;
       display: flex;
@@ -76,119 +333,130 @@
       margin-bottom: 24px;
     }
 
-    .section-label {
-      display: inline-block;
-      padding: 6px 16px;
-      background: rgba(232, 80, 10, 0.1);
-      color: var(--primary);
-      border-radius: 100px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 20px;
-    }
-
-    .stats-row {
-      display: flex;
-      justify-content: center;
-      gap: 80px;
-      margin-top: 80px;
-      padding-top: 60px;
-      border-top: 1px solid #E5E7EB;
-    }
-
-    .stat-box-v2 h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: #1A1A2E;
-      margin-bottom: 4px;
-    }
-
-    .stat-box-v2 p {
-      color: #6B7280;
-      font-size: 0.9rem;
-      font-weight: 500;
+    @media (max-width: 968px) {
+      .hero-container { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+      .hero-content p.subtitle { margin: 0 auto 40px; }
+      .hero-ctas { justify-content: center; }
+      .hero-content h1 { font-size: 3rem; }
+      .stats-card { flex-direction: column; gap: 30px; padding: 30px; }
+      .stat-divider { width: 100%; height: 1px; }
+      .top-nav { display: none !important; }
     }
   </style>
 </head>
 <body>
 
+  <!-- Navbar -->
   <header class="site-topbar">
-    <div style="display: flex; align-items: center; gap: 12px;">
+    <div style="display: flex; align-items: center; gap: 12px; width: 250px;">
       <div class="brand-mark">🎓</div>
-      <div class="brand-title" style="color: white; font-weight: 800; font-size: 1.2rem;">EduAchieve</div>
+      <div class="brand-title">EduAchieve</div>
     </div>
-    <nav class="top-nav" style="margin-left: auto;">
-      <a href="index.html" style="color: white; text-decoration: none; margin-left: 20px;">Home</a>
-      <a href="explore.html" style="color: white; text-decoration: none; margin-left: 20px;">Projects</a>
-      <a href="submit.html" style="color: white; text-decoration: none; margin-left: 20px;">Submit</a>
-      <a href="about.html" style="color: white; text-decoration: none; margin-left: 20px;">About</a>
+    <nav class="top-nav" style="display: flex; gap: 40px; justify-content: center; flex: 1;">
+      <a href="index.html">Home</a>
+      <a href="explore.html">Projects</a>
+      <a href="submit.html">Submit</a>
+      <a href="about.html">About</a>
     </nav>
+    <div class="nav-actions" style="display: flex; align-items: center; gap: 20px; width: 250px; justify-content: flex-end;">
+      <a href="login.html" class="btn-login" id="navLogin">Login</a>
+      <span class="nav-username" id="navUser" style="color: var(--landing-text-main); font-size: 0.9rem; display: none;"></span>
+      <button id="navLogout" style="display: none; background: none; border: none; color: #F87171; cursor: pointer; font-size: 0.9rem; font-weight: 600;">Logout</button>
+      <!-- common.js will dynamically inject the theme toggle here -->
+    </div>
   </header>
 
-  <main>
-    <section class="hero-v2">
-      <div class="container" style="max-width: 1140px; margin: 0 auto; padding: 0 20px;">
-        <div class="section-label">Institutional Repository</div>
-        <h1>The Future of Academic <span>Research Management</span></h1>
-        <p>A specialized ecosystem for PCCOE students to archive, discover, and showcase groundbreaking research in AI & Machine Learning.</p>
-        <div style="display: flex; gap: 12px; justify-content: center;">
-          <a href="explore.html" class="btn-primary" style="background: var(--primary); color: white; padding: 14px 32px; border-radius: 8px; font-weight: 700; text-decoration: none;">Browse Repository</a>
-          <a href="submit.html" class="btn-outline" style="border: 2px solid var(--primary); color: var(--primary); padding: 14px 32px; border-radius: 8px; font-weight: 700; text-decoration: none;">Submit Your Work</a>
-        </div>
-
-        <div class="stats-row">
-          <div class="stat-box-v2">
-            <h3 id="heroStatProj">0</h3>
-            <p>Verified Projects</p>
-          </div>
-          <div class="stat-box-v2">
-            <h3 id="heroStatStud">0</h3>
-            <p>Research Students</p>
-          </div>
-          <div class="stat-box-v2">
-            <h3 id="heroStatDept">1</h3>
-            <p>AI&ML Department</p>
-          </div>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-container">
+      <div class="hero-content">
+        <h1>The Future of <br><span class="highlight">Academic Research Management</span></h1>
+        <p class="subtitle">A specialized ecosystem for PCCOE students to archive, discover, and showcase groundbreaking research in AI & Machine Learning.</p>
+        <div class="hero-ctas">
+          <a href="explore.html" class="btn-solid">
+            Browse Repository <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+          </a>
+          <a href="submit.html" class="btn-outline">
+            Submit Your Work <i data-lucide="upload" style="width: 18px; height: 18px;"></i>
+          </a>
         </div>
       </div>
-    </section>
+      <div class="hero-visual">
+        <img src="assets/hero-visual.png" alt="Futuristic Academic Research 3D Visual">
+      </div>
+    </div>
+  </section>
 
-    <section class="section container" style="max-width: 1140px; margin: 0 auto; padding: 80px 20px;">
+  <!-- Stats Section -->
+  <section class="stats-section">
+    <div class="stats-card">
+      <div class="stat-item">
+        <div class="stat-icon"><i data-lucide="folder-check"></i></div>
+        <div class="stat-number" id="heroStatProj">0</div>
+        <div class="stat-label">Verified Projects</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-icon"><i data-lucide="users"></i></div>
+        <div class="stat-number" id="heroStatStud">0</div>
+        <div class="stat-label">Research Students</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-icon"><i data-lucide="cpu"></i></div>
+        <div class="stat-number" id="heroStatDept">1</div>
+        <div class="stat-label">AI&ML Department</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Engineered for Excellence Section -->
+  <main>
+    <section class="section container" style="max-width: 1140px; margin: 0 auto; padding: 100px 20px 80px;">
       <div style="text-align: center; max-width: 600px; margin: 0 auto 60px;">
-        <h2 style="font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800; margin-bottom: 16px;">Engineered for Excellence</h2>
-        <p style="color: #6B7280;">EduAchieve provides the infrastructure needed to maintain a high-quality academic record of student innovations.</p>
+        <h2 style="font-family: 'Outfit', sans-serif; font-size: 2.2rem; font-weight: 800; margin-bottom: 16px; color: var(--landing-text-main);">Engineered for Excellence</h2>
+        <p style="color: var(--landing-text-muted);">EduAchieve provides the infrastructure needed to maintain a high-quality academic record of student innovations.</p>
       </div>
 
       <div class="feature-grid-v2">
         <div class="feature-card-v2">
-          <div class="feature-icon-v2">🛡️</div>
-          <h3 style="font-weight: 700; margin-bottom: 12px;">Secure Verification</h3>
-          <p style="color: #6B7280;">Every submission undergoes rigorous checks and is archived with persistent metadata for long-term accessibility.</p>
+          <div class="feature-icon-v2"><i data-lucide="shield-check" style="width: 28px; height: 28px;"></i></div>
+          <h3 style="font-weight: 700; margin-bottom: 12px; color: var(--landing-text-main);">Secure Verification</h3>
+          <p style="color: var(--landing-text-muted);">Every submission undergoes rigorous checks and is archived with persistent metadata for long-term accessibility.</p>
         </div>
         <div class="feature-card-v2">
-          <div class="feature-icon-v2">🔍</div>
-          <h3>Intelligent Search</h3>
-          <p style="color: #6B7280;">Discover relevant work using our filtered search system, categorized by Batch, Year, and Research Domain.</p>
+          <div class="feature-icon-v2"><i data-lucide="search" style="width: 28px; height: 28px;"></i></div>
+          <h3 style="font-weight: 700; margin-bottom: 12px; color: var(--landing-text-main);">Intelligent Search</h3>
+          <p style="color: var(--landing-text-muted);">Discover relevant work using our filtered search system, categorized by Batch, Year, and Research Domain.</p>
         </div>
         <div class="feature-card-v2">
-          <div class="feature-icon-v2">📄</div>
-          <h3>Paper Repository</h3>
-          <p style="color: #6B7280;">Direct access to research PDFs and presentation slides, fostering a culture of knowledge sharing.</p>
+          <div class="feature-icon-v2"><i data-lucide="file-text" style="width: 28px; height: 28px;"></i></div>
+          <h3 style="font-weight: 700; margin-bottom: 12px; color: var(--landing-text-main);">Paper Repository</h3>
+          <p style="color: var(--landing-text-muted);">Direct access to research PDFs and presentation slides, fostering a culture of knowledge sharing.</p>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer" style="background: var(--navy); padding: 40px 0; color: rgba(255,255,255,0.6);">
-    <div class="container" style="display: flex; justify-content: space-between; align-items: center; max-width: 1140px; margin: 0 auto; padding: 0 20px;">
-      <p style="color: white; font-weight: 700;">EduAchieve</p>
-      <p>© 2024-26 PCCOE Pune</p>
+  <footer class="site-footer" style="background: var(--landing-bg-footer); border-top: 1px solid var(--landing-border); padding: 50px 0; color: var(--landing-text-muted);">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <p style="color: var(--landing-text-main); font-weight: 700; font-size: 1.2rem; margin-bottom: 5px;">EduAchieve</p>
+        <p style="font-size: 0.85rem;">PCCOE CSE AI&ML Research Repository</p>
+      </div>
+      <div style="display: flex; gap: 20px; font-size: 0.9rem;">
+        <a href="index.html" style="color: inherit; text-decoration: none; transition: color 0.2s;">Home</a>
+        <a href="explore.html" style="color: inherit; text-decoration: none; transition: color 0.2s;">Explore</a>
+        <a href="about.html" style="color: inherit; text-decoration: none; transition: color 0.2s;">About</a>
+      </div>
+      <p style="font-size: 0.85rem;">© 2024-26 PCCOE Pune</p>
     </div>
   </footer>
 
   <script src="common.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
 </body>
 </html>
