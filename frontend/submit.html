@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Research | EduAchieve</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="site-topbar">
+    <div class="brand-mark">🎓</div>
+    <div>
+      <div class="brand-title">EduAchieve</div>
+      <div class="brand-sub">CSE AI&ML | PCCOE</div>
+    </div>
+    <nav class="top-nav">
+      <a href="index.html">Home</a>
+      <a href="explore.html">Projects</a>
+      <a href="submit.html" class="active">Submit</a>
+      <a href="about.html">About</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="login.html" class="btn-primary" id="navLogin">Login</a>
+      <span class="nav-username" id="navUser"></span>
+      <button id="navLogout" style="display: none; background: none; border: none; color: #DC2626; cursor: pointer; font-size: 0.82rem; font-weight: 600;" onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <section class="hero-banner" style="min-height: 250px;">
+    <h1>Publish Your Research</h1>
+    <p>Upload your academic projects and join the institutional repository of PCCOE excellence.</p>
+  </section>
+
+  <div class="container section">
+    <div class="card" style="max-width: 800px; margin: 0 auto; padding: 40px;">
+      <form id="submitProjectForm">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+          <div class="form-group">
+            <label>Project Title</label>
+            <input type="text" id="title" placeholder="e.g. Smart Traffic Management" required>
+          </div>
+          <div class="form-group">
+            <label>Domain</label>
+            <select id="domain" required>
+              <option value="">Select Domain</option>
+              <option value="AI/ML">AI/ML</option>
+              <option value="Web Development">Web Development</option>
+              <option value="IoT">IoT</option>
+              <option value="Cybersecurity">Cybersecurity</option>
+              <option value="Data Science">Data Science</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+          <div class="form-group">
+            <label>Batch</label>
+            <select id="batch" required>
+              <option value="">Select Batch</option>
+              <option value="2020-21">2020-21</option>
+              <option value="2021-22">2021-22</option>
+              <option value="2022-23">2022-23</option>
+              <option value="2023-24">2023-24</option>
+              <option value="2024-25">2024-25</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Current Year</label>
+            <select id="year" required>
+              <option value="">Select Year</option>
+              <option value="1st Year">1st Year</option>
+              <option value="2nd Year">2nd Year</option>
+              <option value="3rd Year">3rd Year</option>
+              <option value="4th Year">4th Year</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Research Abstract / Description</label>
+          <textarea id="description" rows="6" placeholder="Provide a brief summary of your work..." required></textarea>
+          <div id="charCounter" style="text-align: right; font-size: 0.8rem; color: #6B7280; margin-top: 4px;">0 characters</div>
+        </div>
+
+        <div class="form-group">
+          <label>Project Files (PDF/PPT)</label>
+          <input type="file" id="fileUpload" accept=".pdf,.ppt,.pptx">
+          <p style="font-size: 0.8rem; color: #6B7280; margin-top: 4px;">Upload your research paper or presentation (Max 50MB).</p>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; padding: 14px; margin-top: 20px;">Publish Project</button>
+      </form>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div style="text-align: left;">
+        <p style="font-weight: 700; color: #fff; margin-bottom: 10px;">EduAchieve</p>
+        <p>Institutional Knowledge Portal</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="explore.html">Projects</a>
+        <a href="about.html">About</a>
+      </div>
+      <div style="text-align: right;">
+        <p>© 2024-26 PCCOE Pune</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = checkAuth();
+      if (!user) {
+        alert('Please login to submit a project.');
+        window.location.href = 'login.html';
+        return;
+      }
+
+      const form = document.getElementById('submitProjectForm');
+      const desc = document.getElementById('description');
+      const counter = document.getElementById('charCounter');
+
+      desc.addEventListener('input', () => {
+        counter.textContent = desc.value.length + ' characters';
+      });
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const formData = {
+          title: document.getElementById('title').value,
+          domain: document.getElementById('domain').value,
+          batch: document.getElementById('batch').value,
+          year: document.getElementById('year').value,
+          description: desc.value
+        };
+
+        try {
+          const res = await apiCall('/api/projects', {
+            method: 'POST',
+            body: formData
+          });
+          alert('Project submitted successfully!');
+          window.location.href = 'my-profile.html';
+        } catch (err) {
+          alert('Error: ' + err.message);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

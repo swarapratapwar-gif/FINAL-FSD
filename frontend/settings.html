@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - EduAchieve</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-topbar">
+    <div class="brand-wrap">
+      <div class="brand-mark">E</div>
+      <div class="brand-copy">
+        <div class="brand-title">EduAchieve</div>
+        <div class="brand-subtitle">Academic Portal</div>
+      </div>
+    </div>
+
+    <nav class="top-nav">
+      <a href="index.html">Home</a>
+      <a href="explore.html">Projects</a>
+      <a href="my-profile.html">Profile</a>
+      <a href="settings.html" class="active-link">Settings</a>
+    </nav>
+
+    <div class="top-actions">
+      <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode"></button>
+      <a href="login.html" class="btn btn-outline" id="navLoginBtn">Portal Access</a>
+      <div class="user-dropdown" id="navUserDropdown" style="display: none;">
+        <span id="navUserName" class="user-name"></span>
+        <button id="navLogout" class="btn btn-danger btn-sm">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="shell-layout">
+    <aside class="shell-sidebar">
+      <div>
+        <div class="workspace-label">Workspace</div>
+        <h1 class="workspace-title">Settings</h1>
+        <p class="section-muted">Manage preferences, theme, and local session options.</p>
+      </div>
+
+      <nav class="sidebar-menu">
+        <a href="index.html" class="sidebar-link">Home</a>
+        <a href="explore.html" class="sidebar-link">Projects</a>
+        <a href="my-profile.html" class="sidebar-link">My Profile</a>
+        <a href="settings.html" class="sidebar-link active-link">Settings</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="button-link sidebar-cta" id="clearSessionBtn">Clear Session</button>
+      </div>
+    </aside>
+
+    <main class="workspace-main">
+      <section class="hero-banner">
+        <div class="hero-rows">
+          <div>
+            <span class="hero-kicker">Preferences</span>
+            <h1>Settings</h1>
+            <p>Manage your profile, system preferences, and security options from one place.</p>
+          </div>
+          <div class="hero-image-card">
+            <div class="hero-image-badge">Theme + session controls</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="settings-layout" style="margin-top: 24px;">
+        <section class="detail-card">
+          <div class="setting-row">
+            <div class="setting-copy">
+              <h3 style="margin: 0;">Dark Mode</h3>
+              <p class="section-muted">Switch between light and dark themes.</p>
+            </div>
+            <button class="toggle-switch" id="themeSwitch" type="button" aria-label="Toggle theme"></button>
+          </div>
+
+          <div class="setting-row">
+            <div class="setting-copy">
+              <h3 style="margin: 0;">Local Session</h3>
+              <p class="section-muted">Clear saved login data from this browser.</p>
+            </div>
+            <button class="button-link alt" id="clearSessionBtn">Clear Session</button>
+          </div>
+
+          <div class="setting-row">
+            <div class="setting-copy">
+              <h3 style="margin: 0;">Academic Portal</h3>
+              <p class="section-muted">Keep your workspace clean and consistent for project reviews.</p>
+            </div>
+            <span class="project-badge">EduAchieve</span>
+          </div>
+
+          <p id="status" class="status muted"></p>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script src="common.js"></script>
+  <script src="settings.js"></script>
+</body>
+</html>

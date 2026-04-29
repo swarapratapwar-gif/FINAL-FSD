@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Grid Filter | EduAchieve</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #E8590C;
+      --bg: #F9FAFB;
+      --text: #1F2937;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 40px 5%; }
+    
+    .header { text-align: center; margin-bottom: 30px; }
+    .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+    
+    .filters { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 40px; }
+    .filter-btn { padding: 8px 16px; border: 2px solid var(--primary); background: transparent; color: var(--primary); border-radius: 30px; cursor: pointer; font-weight: 500; transition: all 0.3s; }
+    .filter-btn.active, .filter-btn:hover { background: var(--primary); color: white; }
+
+    .grid { 
+      display: grid; 
+      grid-template-columns: repeat(4, 1fr); 
+      gap: 20px; 
+    }
+    
+    .grid-item {
+      aspect-ratio: 1;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s, opacity 0.4s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    
+    .grid-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+      z-index: 10;
+    }
+    
+    .grid-item.hide {
+      display: none;
+      opacity: 0;
+    }
+
+    .item-category { position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.5); padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 1px; }
+    .item-title { font-size: 1.25rem; font-weight: 600; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+
+    /* Category Colors */
+    .nature { background: linear-gradient(135deg, #10B981, #047857); }
+    .technology { background: linear-gradient(135deg, #3B82F6, #1D4ED8); }
+    .architecture { background: linear-gradient(135deg, #6B7280, #374151); }
+    .people { background: linear-gradient(135deg, #F59E0B, #B45309); }
+    .abstract { background: linear-gradient(135deg, #8B5CF6, #4C1D95); }
+
+    .back-link { display: block; text-align: center; margin-top: 40px; color: var(--primary); text-decoration: none; font-weight: 500; }
+
+    /* Responsive */
+    @media (max-width: 1024px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 768px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Image Gallery Filter</h1>
+    <p>A responsive CSS grid gallery with JavaScript category filtering.</p>
+  </div>
+
+  <div class="filters" id="filters">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="nature">Nature</button>
+    <button class="filter-btn" data-filter="technology">Technology</button>
+    <button class="filter-btn" data-filter="architecture">Architecture</button>
+    <button class="filter-btn" data-filter="people">People</button>
+    <button class="filter-btn" data-filter="abstract">Abstract</button>
+  </div>
+
+  <div class="grid" id="gallery">
+    <div class="grid-item nature" data-category="nature"><span class="item-category">Nature</span><span class="item-title">Mountain Peak</span></div>
+    <div class="grid-item technology" data-category="technology"><span class="item-category">Technology</span><span class="item-title">Circuit Board</span></div>
+    <div class="grid-item architecture" data-category="architecture"><span class="item-category">Architecture</span><span class="item-title">Modern City</span></div>
+    <div class="grid-item people" data-category="people"><span class="item-category">People</span><span class="item-title">Street Portrait</span></div>
+    
+    <div class="grid-item abstract" data-category="abstract"><span class="item-category">Abstract</span><span class="item-title">Fluid Shapes</span></div>
+    <div class="grid-item nature" data-category="nature"><span class="item-category">Nature</span><span class="item-title">Deep Forest</span></div>
+    <div class="grid-item technology" data-category="technology"><span class="item-category">Technology</span><span class="item-title">Server Room</span></div>
+    <div class="grid-item architecture" data-category="architecture"><span class="item-category">Architecture</span><span class="item-title">Gothic Church</span></div>
+    
+    <div class="grid-item people" data-category="people"><span class="item-category">People</span><span class="item-title">Crowded Market</span></div>
+    <div class="grid-item abstract" data-category="abstract"><span class="item-category">Abstract</span><span class="item-title">Neon Lights</span></div>
+    <div class="grid-item nature" data-category="nature"><span class="item-category">Nature</span><span class="item-title">Ocean Waves</span></div>
+    <div class="grid-item technology" data-category="technology"><span class="item-category">Technology</span><span class="item-title">Virtual Reality</span></div>
+    
+    <div class="grid-item architecture" data-category="architecture"><span class="item-category">Architecture</span><span class="item-title">Bridge Structure</span></div>
+    <div class="grid-item people" data-category="people"><span class="item-category">People</span><span class="item-title">Concert Crowd</span></div>
+    <div class="grid-item abstract" data-category="abstract"><span class="item-category">Abstract</span><span class="item-title">Geometric</span></div>
+    <div class="grid-item nature" data-category="nature"><span class="item-category">Nature</span><span class="item-title">Desert Dunes</span></div>
+  </div>
+
+  <a href="index.html" class="back-link">← Back to Assignments</a>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const gridItems = document.querySelectorAll('.grid-item');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Remove active class from all buttons
+          filterBtns.forEach(b => b.classList.remove('active'));
+          // Add active class to clicked button
+          btn.classList.add('active');
+
+          const filterValue = btn.getAttribute('data-filter');
+
+          gridItems.forEach(item => {
+            if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+              item.classList.remove('hide');
+              // Small delay to allow display:block to apply before opacity transition
+              setTimeout(() => item.style.opacity = '1', 10);
+            } else {
+              item.style.opacity = '0';
+              // Wait for opacity transition before hiding completely
+              setTimeout(() => item.classList.add('hide'), 300);
+            }
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>

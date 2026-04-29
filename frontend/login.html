@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | EduAchieve</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="auth-page">
+    <div class="auth-logo-wrap">
+      <div class="brand-mark" style="margin: 0 auto 10px; width: 40px; height: 40px; font-size: 1.2rem;">🎓</div>
+      <h1 style="font-size: 1.6rem; color: #1A1A2E; margin-bottom: 4px;">EduAchieve</h1>
+      <p style="color: #6B7280; font-style: italic; font-size: 0.9rem;">Elevate your learning journey</p>
+    </div>
+
+    <div class="auth-card">
+      <h2 style="text-align: left; text-transform: uppercase; font-size: 1.3rem; margin-bottom: 6px;">Welcome Back</h2>
+      <p style="text-align: left; font-size: 0.85rem; color: #6B7280; margin-bottom: 24px;">Please enter your credentials to access your dashboard.</p>
+
+      <form id="loginForm">
+        <div id="errorBanner" class="alert alert-error" style="display: none; text-align: left;"></div>
+
+        <div class="form-group" style="text-align: left;">
+          <label>College Email</label>
+          <div class="input-wrap">
+            <span class="input-icon">👤</span>
+            <input type="email" id="email" placeholder="samrudhi.divekar24@pccoepune.org" required>
+          </div>
+          <div id="emailError" class="error-text">Only valid PCCOE college emails are accepted. Format: firstname.lastname24@pccoepune.org</div>
+        </div>
+
+        <div class="form-group" style="text-align: left; margin-bottom: 12px;">
+          <label>Password</label>
+          <div class="input-wrap">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="password" placeholder="••••••••••••" required>
+            <button type="button" class="eye-btn" id="togglePassword">👁️</button>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; font-size: 0.85rem;">
+          <label style="display: flex; align-items: center; gap: 8px; color: #4B5563; cursor: pointer;">
+            <input type="checkbox" style="accent-color: #E8500A; width: 16px; height: 16px;"> Remember Me
+          </label>
+          <a href="#" style="color: #E8500A; text-decoration: none; font-weight: 600;">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; font-size: 1.1rem; font-weight: 800; padding: 14px; margin-bottom: 24px; border-radius: 12px;">Log In →</button>
+      </form>
+
+      <div style="text-align: center; border-top: 1px solid #E5E7EB; padding-top: 16px; margin-bottom: 16px; position: relative;">
+        <span style="background: #fff; padding: 0 10px; color: #9CA3AF; font-size: 0.75rem; position: absolute; top: -10px; left: 50%; transform: translateX(-50%);">Security Verified</span>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 6px; color: #16A34A; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em;">
+          <span>🛡️</span> ENCRYPTED CONNECTION
+        </div>
+      </div>
+
+      <div style="text-align: center; font-size: 0.85rem; color: #4B5563;">
+        Don't have an account? <a href="register.html" style="color: #E8500A; font-weight: 700; text-decoration: none;">Create Account</a> <span style="margin: 0 6px; color: #D1D5DB;">|</span> <a href="#" style="color: #E8500A; font-weight: 700; text-decoration: none;">Request Access</a>
+      </div>
+    </div>
+    
+    <div style="margin-top: 30px; display: flex; gap: 20px; font-size: 0.75rem; color: #9CA3AF;">
+      <a href="#" style="text-decoration: none; color: inherit;">Privacy Policy</a>
+      <a href="#" style="text-decoration: none; color: inherit;">Terms of Service</a>
+      <span>© 2024 EduAchieve Inc.</span>
+    </div>
+  </div>
+
+  <script src="common.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Show success banner if redirected from registration
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('registered') === 'true') {
+        const banner = document.createElement('div');
+        banner.className = 'alert alert-success';
+        banner.innerHTML = '✅ Account created successfully! Please log in.';
+        banner.style.marginBottom = '16px';
+        document.querySelector('.auth-card h2').insertAdjacentElement('beforebegin', banner);
+      }
+
+      // Redirect if logged in
+      if (getToken()) {
+        window.location.href = 'submit.html';
+      }
+
+      const form = document.getElementById('loginForm');
+      const emailInput = document.getElementById('email');
+      const passwordInput = document.getElementById('password');
+      const emailError = document.getElementById('emailError');
+      const errorBanner = document.getElementById('errorBanner');
+      const togglePassword = document.getElementById('togglePassword');
+
+      const pccoEmailRegex = /^[a-z]+\.[a-z]+\d*@pccoepune\.org$/i;
+
+      togglePassword.addEventListener('click', () => {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+      });
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        emailError.classList.remove('show');
+        errorBanner.style.display = 'none';
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        if (!pccoEmailRegex.test(email)) {
+          emailError.classList.add('show');
+          return;
+        }
+
+        try {
+          const res = await apiCall('/api/auth/login', {
+            method: 'POST',
+            body: { email, password }
+          });
+
+          if (res.token) {
+            saveToken(res.token);
+            window.location.href = 'submit.html';
+          }
+        } catch (err) {
+          errorBanner.textContent = err.message || 'Invalid email or password';
+          errorBanner.style.display = 'block';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

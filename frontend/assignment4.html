@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ | EduAchieve</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #E8500A;
+      --bg: #F9F9F9;
+      --surface: #FFFFFF;
+      --text: #1A1A2E;
+      --text-muted: #6B7280;
+      --border: #E5E7EB;
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    
+    .container { max-width: 800px; margin: 60px auto; padding: 0 20px; }
+    
+    .header { text-align: center; margin-bottom: 40px; }
+    .header h1 { font-size: 2.2rem; font-weight: 700; margin-bottom: 16px; }
+    .header p { color: var(--text-muted); font-size: 1.05rem; }
+    
+    .search-wrap { position: relative; margin-bottom: 40px; }
+    .search-wrap input { width: 100%; padding: 16px 20px 16px 48px; border-radius: 12px; border: 1px solid var(--border); font-size: 1.05rem; font-family: inherit; box-shadow: 0 4px 6px rgba(0,0,0,0.02); transition: border-color 0.2s; }
+    .search-wrap input:focus { outline: none; border-color: var(--primary); }
+    .search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; color: var(--text-muted); }
+    
+    .faq-list { display: flex; flex-direction: column; gap: 16px; }
+    
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: box-shadow 0.2s; }
+    .faq-item.active { box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-color: rgba(232, 80, 10, 0.3); }
+    
+    .faq-question { width: 100%; text-align: left; padding: 20px 24px; background: none; border: none; font-size: 1.1rem; font-weight: 600; color: var(--text); cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: inherit; }
+    .faq-question:hover { color: var(--primary); }
+    
+    .chevron { color: var(--primary); transition: transform 0.3s ease; font-weight: bold; }
+    .faq-item.active .chevron { transform: rotate(90deg); }
+    
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .faq-answer-inner { padding: 0 24px 24px 24px; color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; }
+    
+    .no-results { text-align: center; padding: 40px; color: var(--text-muted); display: none; }
+    
+    .back-link { display: inline-block; margin-bottom: 24px; color: var(--text-muted); text-decoration: none; font-weight: 500; }
+    .back-link:hover { color: var(--primary); }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <a href="index.html" class="back-link">← Back to Portal</a>
+    
+    <div class="header">
+      <h1>Frequently Asked Questions</h1>
+      <p>Everything you need to know about the EduAchieve platform.</p>
+    </div>
+
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="faqSearch" placeholder="Search for a question...">
+    </div>
+
+    <div class="faq-list" id="faqList">
+      
+      <div class="faq-item">
+        <button class="faq-question">Who can submit a project to EduAchieve? <span class="chevron">▶</span></button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Only registered students and faculty from PCCOE Pune with a valid @pccoepune.org email address can create an account and submit projects. However, viewing projects is open to the public.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">What file formats are accepted for uploads? <span class="chevron">▶</span></button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            For the mandatory Research Paper, only PDF (.pdf) files are accepted. For the optional presentation slides, you can upload PowerPoint files (.ppt, .pptx). The maximum file size limit is 20MB per file.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Can I edit my project after submitting it? <span class="chevron">▶</span></button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Currently, projects cannot be edited by students after submission. If you made a mistake or need to update your files, please contact the department admin or your project guide to request a modification.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Why is my email not being accepted during registration? <span class="chevron">▶</span></button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            EduAchieve strictly enforces the PCCOE email pattern: firstname.lastname##@pccoepune.org. If you are using a personal Gmail account or a differently formatted college email, the system will reject it.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Is the source code stored on the platform? <span class="chevron">▶</span></button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            No, we do not host source code directly to save server storage. Instead, you should provide a link to your public GitHub repository during the submission process.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">How does the search and filter work on the Explore page? <span class="chevron">▶</span></button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            You can filter projects by Batch, Year, and Domain simultaneously. The search bar at the top of the sidebar provides full-text search across project titles and team member names.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">I forgot my password. How do I reset it? <span class="chevron">▶</span></button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Currently, self-service password reset is not automated. Please contact the platform admin (admin@pccoepune.org) from your registered college email address to request a temporary password.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">How do I add team members to my project? <span class="chevron">▶</span></button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            During submission, there is a dedicated "Team Members" text area. Simply type the full names of all your team members, separated by commas (e.g., "John Doe, Jane Smith").
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">What is the "Guide Name" field? <span class="chevron">▶</span></button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            The Guide Name refers to the PCCOE faculty member who supervised or mentored your academic project. This is a mandatory field for all submissions to ensure academic authenticity.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Who reviews the projects before they appear on the site? <span class="chevron">▶</span></button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Projects appear on the portal immediately after submission. However, department admins regularly monitor the feed and will delete any inappropriate, plagiarized, or invalid submissions.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="no-results" id="noResults">
+      <div style="font-size: 2rem; margin-bottom: 10px;">🔍</div>
+      <p>No questions matched your search criteria.</p>
+    </div>
+
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const faqItems = document.querySelectorAll('.faq-item');
+      const searchInput = document.getElementById('faqSearch');
+      const noResults = document.getElementById('noResults');
+
+      // Accordion Logic
+      faqItems.forEach(item => {
+        const btn = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+        const inner = item.querySelector('.faq-answer-inner');
+
+        btn.addEventListener('click', () => {
+          const isActive = item.classList.contains('active');
+
+          // Close all
+          faqItems.forEach(otherItem => {
+            otherItem.classList.remove('active');
+            otherItem.querySelector('.faq-answer').style.maxHeight = null;
+          });
+
+          // Toggle current
+          if (!isActive) {
+            item.classList.add('active');
+            answer.style.maxHeight = inner.scrollHeight + "px";
+          }
+        });
+      });
+
+      // Search Filter Logic
+      searchInput.addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase();
+        let visibleCount = 0;
+
+        faqItems.forEach(item => {
+          const text = item.textContent.toLowerCase();
+          if (text.includes(term)) {
+            item.style.display = 'block';
+            visibleCount++;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>

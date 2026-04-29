@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modules Hub | EduAchieve</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    /* Specific scoped styles for Modules Hub */
+    .assignments-hub { padding: 3rem 1rem; }
+    .hub-header { text-align: center; margin-bottom: 3rem; }
+    .assignments-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .assignment-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .assignment-card:hover {
+      border-color: var(--primary-color);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    .assign-num { color: var(--primary-color); font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem; }
+    .assign-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; color: var(--text-main); }
+    .assign-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; flex-grow: 1; }
+    .assign-btn { width: 100%; text-align: center; }
+  </style>
+</head>
+<body class="shell-layout">
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <a href="../index.html" class="logo">EduAchieve</a>
+    </div>
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../explore.html">Explore</a>
+      <a href="../about.html">About</a>
+      <a href="index.html" class="active">Modules</a>
+      <a href="../admin.html" id="navAdmin" style="display: none;">Admin</a>
+    </nav>
+    <div class="top-actions">
+      <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode"></button>
+      <a href="../login.html" class="btn btn-outline" id="navLoginBtn">Portal Access</a>
+      <div class="user-dropdown" id="navUserDropdown" style="display: none;">
+        <span id="navUserName" class="user-name"></span>
+        <button id="navLogout" class="btn btn-danger btn-sm">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content full-width assignments-hub">
+    <div class="container">
+      <div class="hub-header">
+        <h1 class="page-title">Interactive Modules Showcase</h1>
+        <p class="page-subtitle">S.Y. BTech CSE AI&ML - A professional demonstration of institutional portal features and core web technologies.</p>
+      </div>
+
+      <div class="assignments-grid">
+        <div class="assignment-card">
+          <h3 class="assign-title">Startup Landing Page</h3>
+          <p class="assign-desc">Modern business layout with hero sections, feature grids, and testimonials.</p>
+          <a href="landing-page.html" class="btn btn-outline assign-btn">View Module →</a>
+        </div>
+        
+        <div class="assignment-card">
+          <h3 class="assign-title">Professional Portfolio</h3>
+          <p class="assign-desc">Comprehensive multi-section personal site with skills showcase and project gallery.</p>
+          <a href="portfolio.html" class="btn btn-outline assign-btn">View Module →</a>
+        </div>
+        
+        <div class="assignment-card">
+          <h3 class="assign-title">Academic Blog</h3>
+          <p class="assign-desc">Typography-focused layout optimized for long-form research articles and publications.</p>
+          <a href="blog.html" class="btn btn-outline assign-btn">View Module →</a>
+        </div>
+        
+        <div class="assignment-card">
+          <h3 class="assign-title">Interactive FAQ</h3>
+          <p class="assign-desc">Accessible accordion component for project guidelines and common student queries.</p>
+          <a href="faq.html" class="btn btn-outline assign-btn">View Module →</a>
+        </div>
+        
+        <div class="assignment-card">
+          <h3 class="assign-title">Abstract Analyzer</h3>
+          <p class="assign-desc">Live character counter and validator for research abstracts and summaries.</p>
+          <a href="character-counter.html" class="btn btn-outline assign-btn">View Module →</a>
+        </div>
+        
+        <div class="assignment-card">
+          <h3 class="assign-title">Portal Modals</h3>
+          <p class="assign-desc">Interactive overlay systems for detailed project views and administrative alerts.</p>
+          <a href="modal-demo.html" class="btn btn-outline assign-btn">View Module →</a>
+        </div>
+        
+        <div class="assignment-card">
+          <h3 class="assign-title">Resource Explorer</h3>
+          <p class="assign-desc">Dynamic category-based filtering system for project resources and toolkits.</p>
+          <a href="image-grid.html" class="btn btn-outline assign-btn">View Module →</a>
+        </div>
+        
+        <div class="assignment-card">
+          <h3 class="assign-title">Theme System</h3>
+          <p class="assign-desc">Comprehensive dark/light mode engine using CSS variables and persistence.</p>
+          <a href="theme-toggle.html" class="btn btn-outline assign-btn">View Module →</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2024 EduAchieve | Pimpri Chinchwad College of Engineering. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../common.js"></script>
+</body>
+</html>

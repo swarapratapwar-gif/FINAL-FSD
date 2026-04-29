@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexaAI | Startup Landing Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #E8590C;
+      --primary-hover: #D04F09;
+      --dark: #1E293B;
+      --light: #F8FAFC;
+      --gray: #64748B;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background-color: var(--light); color: var(--dark); line-height: 1.6; }
+    
+    .navbar { position: fixed; top: 0; width: 100%; background: white; padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); z-index: 1000; }
+    .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a { text-decoration: none; color: var(--dark); font-weight: 500; transition: color 0.3s; }
+    .nav-links a:hover { color: var(--primary); }
+    .btn { padding: 0.6rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s; cursor: pointer; border: none; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); }
+    .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+    .btn-outline:hover { background: var(--primary); color: white; }
+
+    .hero { padding: 120px 5% 80px; text-align: center; max-width: 1000px; margin: 0 auto; }
+    .hero h1 { font-size: 3.5rem; line-height: 1.2; margin-bottom: 1.5rem; color: var(--dark); }
+    .hero p { font-size: 1.2rem; color: var(--gray); margin-bottom: 2.5rem; padding: 0 10%; }
+    .hero-buttons { display: flex; gap: 1rem; justify-content: center; margin-bottom: 4rem; }
+    .mockup { background: #E2E8F0; height: 400px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--gray); font-size: 1.2rem; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+
+    .features { padding: 80px 5%; background: white; }
+    .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+    .feature-card { padding: 2rem; border-radius: 12px; background: var(--light); text-align: center; transition: transform 0.3s; }
+    .feature-card:hover { transform: translateY(-10px); }
+    .icon { font-size: 2.5rem; margin-bottom: 1rem; }
+
+    .testimonials { padding: 80px 5%; }
+    .testimonial-card { padding: 2rem; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    .user { display: flex; align-items: center; gap: 1rem; margin-top: 1.5rem; }
+    .avatar { width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; }
+
+    .cta { background: var(--primary); color: white; padding: 80px 5%; text-align: center; }
+    .cta h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
+    .cta .btn { background: white; color: var(--primary); }
+
+    .footer { padding: 40px 5%; background: var(--dark); color: white; text-align: center; }
+    
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero h1 { font-size: 2.5rem; }
+      .hero p { padding: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="#" class="logo">NexaAI</a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#pricing">Pricing</a>
+    </div>
+    <a href="#cta" class="btn btn-primary">Get Started</a>
+  </nav>
+
+  <section class="hero" id="home">
+    <h1>The Future of AI Automation is Here</h1>
+    <p>NexaAI streamlines your workflow, automates repetitive tasks, and empowers your team to focus on what truly matters.</p>
+    <div class="hero-buttons">
+      <a href="#cta" class="btn btn-primary">Start Free Trial</a>
+      <a href="#features" class="btn btn-outline">Learn More</a>
+    </div>
+    <div class="mockup">
+      [ App Interface Mockup Image Placeholder ]
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <h2 class="section-title">Why Choose NexaAI?</h2>
+    <div class="grid">
+      <div class="feature-card">
+        <div class="icon">🚀</div>
+        <h3>Lightning Fast</h3>
+        <p>Experience unparalleled speed with our optimized infrastructure designed for high-performance automation.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🔒</div>
+        <h3>Bank-grade Security</h3>
+        <p>Your data is protected with end-to-end encryption and compliance with global security standards.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🤖</div>
+        <h3>Smart Algorithms</h3>
+        <p>Leverage cutting-edge machine learning models that adapt and improve over time.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📊</div>
+        <h3>Real-time Analytics</h3>
+        <p>Gain actionable insights with comprehensive dashboards and reporting tools.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🔗</div>
+        <h3>Seamless Integration</h3>
+        <p>Connect instantly with your favorite tools including Slack, Jira, and GitHub.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">💡</div>
+        <h3>24/7 Support</h3>
+        <p>Our dedicated team of experts is always ready to assist you whenever you need help.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials" id="testimonials">
+    <h2 class="section-title">Loved by Innovators</h2>
+    <div class="grid">
+      <div class="testimonial-card">
+        <p>"NexaAI has completely transformed how our engineering team operates. We've cut manual tasks by 40% in just two months."</p>
+        <div class="user">
+          <div class="avatar">SJ</div>
+          <div>
+            <strong>Sarah Jenkins</strong><br>
+            <small>CTO at TechFlow</small>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p>"The integration was flawless and the ROI was immediate. Highly recommend to any startup looking to scale."</p>
+        <div class="user">
+          <div class="avatar">MR</div>
+          <div>
+            <strong>Mark Robertson</strong><br>
+            <small>Founder at InnovateCo</small>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p>"Best automation tool on the market. The support team is incredibly responsive and the UI is beautiful."</p>
+        <div class="user">
+          <div class="avatar">AL</div>
+          <div>
+            <strong>Amanda Lee</strong><br>
+            <small>Product Manager</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="cta">
+    <h2>Ready to Supercharge Your Workflow?</h2>
+    <p style="margin-bottom: 2rem;">Join thousands of teams already using NexaAI.</p>
+    <a href="#" class="btn">Start Your 14-Day Free Trial</a>
+  </section>
+
+  <footer class="footer">
+    <p>&copy; 2024 NexaAI. All rights reserved. | <a href="index.html" style="color:white;">Back to Assignments</a></p>
+  </footer>
+
+</body>
+</html>

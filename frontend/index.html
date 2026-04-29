@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduAchieve | Academic Repository Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    :root {
+      --primary: #E8500A;
+      --navy: #1A1A2E;
+      --cream: #FDF6EC;
+    }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: #1A1A2E; margin: 0; }
+    
+    .site-topbar {
+      background: var(--navy);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      padding: 0 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .hero-navy {
+      background: var(--navy);
+      color: white;
+      padding: 100px 0;
+      text-align: center;
+    }
+
+    .hero-navy h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-navy h1 span { color: var(--primary); }
+
+    .hero-navy p {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.7);
+      max-width: 600px;
+      margin: 0 auto 40px;
+    }
+
+    .hub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .hub-card {
+      background: #FFFFFF;
+      border: 1px solid #E5E7EB;
+      border-radius: 12px;
+      padding: 32px;
+      transition: all 0.3s ease;
+      text-align: left;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+
+    .hub-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.05);
+      border-color: var(--primary);
+    }
+
+    .hub-icon {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: var(--primary);
+    }
+
+    .hub-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .hub-card p {
+      font-size: 0.9rem;
+      color: #6B7280;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .btn-minimal {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+  </style>
+</head>
+<body>
+
+  <header class="site-topbar">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div class="brand-mark">🎓</div>
+      <div class="brand-title" style="color: white; font-weight: 800; font-size: 1.2rem;">EduAchieve</div>
+    </div>
+    
+    <nav class="top-nav" style="margin-left: auto;">
+      <a href="index.html" class="active" style="color: white; text-decoration: none; font-size: 0.9rem; margin-left: 20px;">Home</a>
+      <a href="explore.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem; margin-left: 20px;">Projects</a>
+      <a href="submit.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem; margin-left: 20px;">Submit</a>
+      <a href="about.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem; margin-left: 20px;">About</a>
+    </nav>
+    
+    <div class="nav-actions" style="margin-left: 30px;">
+      <a href="login.html" class="btn-primary" style="background: var(--primary); color: white; padding: 8px 20px; border-radius: 8px; font-weight: 700; text-decoration: none;" id="navLogin">Login</a>
+      <span class="nav-username" id="navUser" style="color: white; font-size: 0.85rem;"></span>
+      <button id="navLogout" style="display: none; background: none; border: none; color: #F87171; cursor: pointer; font-size: 0.82rem; font-weight: 700; margin-left: 10px;" onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <section class="hero-navy">
+    <div class="container">
+      <div style="display: inline-block; padding: 4px 12px; background: rgba(232, 80, 10, 0.2); color: white; border: 1px solid var(--primary); border-radius: 100px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 0.05em;">Academic Repository</div>
+      <h1>Empowering Student <span>Innovation</span></h1>
+      <p>The institutional research gateway for PCCOE CSE AI&ML. Archive, discover, and showcase groundbreaking technical projects.</p>
+      <div style="display: flex; gap: 16px; justify-content: center;">
+        <a href="explore.html" class="btn-primary" style="background: var(--primary); color: white; padding: 14px 32px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 1rem;">Browse Gallery</a>
+        <a href="submit.html" style="background: transparent; color: white; padding: 14px 32px; border: 2px solid white; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 1rem;">Submit Research</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container" style="padding: 80px 20px;">
+    <h2 style="font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800; text-align: center; margin-bottom: 50px;">Institutional Hub</h2>
+    
+    <div class="hub-grid">
+      <div class="hub-card">
+        <div class="hub-icon">🚀</div>
+        <h3>Landing Framework</h3>
+        <p>Institutional showcase layout for departmental visibility and excellence.</p>
+        <a href="assignment1.html" class="btn-minimal">View Module →</a>
+      </div>
+
+      <div class="hub-card">
+        <div class="hub-icon">👨‍💻</div>
+        <h3>Admin Ecosystem</h3>
+        <p>Biographies and core mission of the project system architects.</p>
+        <a href="assignment2.html" class="btn-minimal">View Team →</a>
+      </div>
+
+      <div class="hub-card">
+        <div class="hub-icon">📝</div>
+        <h3>Article Engine</h3>
+        <p>Clean typography optimized for long-form research publications.</p>
+        <a href="assignment3.html" class="btn-minimal">Read More →</a>
+      </div>
+
+      <div class="hub-card">
+        <div class="hub-icon">❓</div>
+        <h3>Knowledge Base</h3>
+        <p>Interactive accordion system for academic and project guidelines.</p>
+        <a href="assignment4.html" class="btn-minimal">Explore →</a>
+      </div>
+
+      <div class="hub-card">
+        <div class="hub-icon">🔢</div>
+        <h3>Abstract Validator</h3>
+        <p>Real-time validation engine for project research submissions.</p>
+        <a href="assignment5.html" class="btn-minimal">Launch →</a>
+      </div>
+
+      <div class="hub-card">
+        <div class="hub-icon">🗔</div>
+        <h3>Interactive Modals</h3>
+        <p>Dynamic overlay system for detailed project metadata viewing.</p>
+        <a href="assignment6.html" class="btn-minimal">View Demo →</a>
+      </div>
+
+      <div class="hub-card">
+        <div class="hub-icon">🖼️</div>
+        <h3>Resource Explorer</h3>
+        <p>Categorized grid system for academic asset management.</p>
+        <a href="assignment8.html" class="btn-minimal">Explore →</a>
+      </div>
+
+      <div class="hub-card">
+        <div class="hub-icon">🌓</div>
+        <h3>Theme Engine</h3>
+        <p>System-wide dark and light mode persistence infrastructure.</p>
+        <a href="assignment9.html" class="btn-minimal">Configure →</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer" style="background: var(--navy); padding: 50px 0; color: rgba(255,255,255,0.6); margin-top: 60px;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <p style="color: white; font-weight: 700; font-size: 1.2rem; margin-bottom: 5px;">EduAchieve</p>
+        <p style="font-size: 0.85rem;">PCCOE CSE AI&ML Research Repository</p>
+      </div>
+      <div style="display: flex; gap: 20px; font-size: 0.9rem;">
+        <a href="index.html" style="color: inherit; text-decoration: none;">Home</a>
+        <a href="explore.html" style="color: inherit; text-decoration: none;">Explore</a>
+        <a href="about.html" style="color: inherit; text-decoration: none;">About</a>
+      </div>
+      <p style="font-size: 0.85rem;">© 2024-26 PCCOE Pune</p>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+</body>
+</html>

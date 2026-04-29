@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Character Counter | EduAchieve</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #E8590C;
+      --bg: #F3F4F6;
+      --card-bg: #FFFFFF;
+      --text: #1F2937;
+      --text-muted: #6B7280;
+      --border: #D1D5DB;
+      --success: #10B981;
+      --warning: #F59E0B;
+      --danger: #EF4444;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 40px 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+    
+    .card { background: var(--card-bg); width: 100%; max-width: 500px; padding: 30px; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+    .header { margin-bottom: 20px; text-align: center; }
+    .header h2 { font-size: 1.5rem; margin-bottom: 5px; }
+    .header p { color: var(--text-muted); font-size: 0.9rem; }
+    
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; font-weight: 500; margin-bottom: 8px; font-size: 0.95rem; }
+    
+    textarea { width: 100%; padding: 12px; border: 2px solid var(--border); border-radius: 8px; font-size: 1rem; outline: none; resize: vertical; min-height: 150px; transition: border-color 0.3s; }
+    textarea:focus { border-color: var(--primary); }
+    
+    .stats-row { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 0.9rem; font-weight: 500; }
+    
+    .progress-container { width: 100%; height: 6px; background: #E5E7EB; border-radius: 3px; margin: 15px 0; overflow: hidden; }
+    .progress-bar { height: 100%; width: 0%; background: var(--success); transition: width 0.2s, background-color 0.2s; }
+    
+    .btn { display: block; width: 100%; padding: 12px; border: none; border-radius: 8px; background: var(--primary); color: white; font-weight: 600; font-size: 1rem; cursor: pointer; transition: background 0.3s, opacity 0.3s; }
+    .btn:hover { background: #D04F09; }
+    .btn:disabled { background: var(--border); cursor: not-allowed; color: var(--text-muted); }
+    
+    .back-link { display: block; text-align: center; margin-top: 20px; color: var(--primary); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="header">
+      <h2>Live Character Counter</h2>
+      <p>Demonstration of input tracking and real-time validation.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="tweetInput">Compose your message</label>
+      <textarea id="tweetInput" placeholder="What's happening?" maxlength="300"></textarea>
+    </div>
+
+    <div class="progress-container">
+      <div id="progressBar" class="progress-bar"></div>
+    </div>
+
+    <div class="stats-row">
+      <span id="wordCount">0 words</span>
+      <span id="charCount">0 / 280 characters</span>
+    </div>
+
+    <button id="submitBtn" class="btn" style="margin-top: 20px;">Post Message</button>
+    <a href="index.html" class="back-link">← Back to Assignments</a>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const input = document.getElementById('tweetInput');
+      const charCount = document.getElementById('charCount');
+      const wordCount = document.getElementById('wordCount');
+      const progressBar = document.getElementById('progressBar');
+      const submitBtn = document.getElementById('submitBtn');
+      const MAX_CHARS = 280;
+
+      function updateStats() {
+        const text = input.value;
+        const length = text.length;
+        
+        // Count words (splitting by whitespace and filtering out empty strings)
+        const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+        wordCount.textContent = `${words} word${words !== 1 ? 's' : ''}`;
+
+        // Update character count text
+        charCount.textContent = `${length} / ${MAX_CHARS} characters`;
+
+        // Update progress bar width
+        const percentage = Math.min((length / MAX_CHARS) * 100, 100);
+        progressBar.style.width = `${percentage}%`;
+
+        // Determine color status
+        let statusColor = 'var(--success)';
+        if (length >= 260) {
+          statusColor = 'var(--danger)';
+        } else if (length >= 200) {
+          statusColor = 'var(--warning)';
+        }
+
+        // Apply colors
+        charCount.style.color = statusColor;
+        progressBar.style.backgroundColor = statusColor;
+        
+        // Disable text area if exceeding max limit visually 
+        // Note: maxlength handles hard limit, but this handles state
+        if (length > MAX_CHARS) {
+           charCount.style.color = 'var(--danger)';
+           submitBtn.disabled = true;
+           input.style.borderColor = 'var(--danger)';
+        } else {
+           submitBtn.disabled = length === 0;
+           input.style.borderColor = '';
+        }
+      }
+
+      // Initial state
+      submitBtn.disabled = true;
+
+      // Event listeners
+      input.addEventListener('input', updateStats);
+      
+      submitBtn.addEventListener('click', () => {
+        alert('Message posted successfully!');
+        input.value = '';
+        updateStats();
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Project | EduAchieve</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="shell-layout">
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <a href="index.html" class="logo">EduAchieve</a>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="explore.html">Explore</a>
+      <a href="about.html">About</a>
+      <a href="assignments/index.html">Assignments</a>
+      <a href="admin.html" id="navAdmin" style="display: none;">Admin</a>
+    </nav>
+    <div class="top-actions">
+      <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode"></button>
+      <a href="login.html" class="btn btn-outline" id="navLoginBtn">Portal Access</a>
+      <div class="user-dropdown" id="navUserDropdown" style="display: none;">
+        <span id="navUserName" class="user-name"></span>
+        <button id="navLogout" class="btn btn-danger btn-sm">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="sidebar">
+    <a href="my-profile.html">My Profile</a>
+    <a href="submit.html">Submit Research</a>
+    <a href="settings.html">Settings</a>
+  </div>
+
+  <main class="main-content">
+    <div class="container form-container">
+      <h1 class="page-title">Edit Project</h1>
+      <p class="page-subtitle">Update your research project details</p>
+
+      <form id="editForm" class="grid-form">
+        <div class="form-group full-width">
+          <label>Project Title *</label>
+          <input type="text" id="title" required>
+        </div>
+
+        <div class="form-group">
+          <label>Team Name</label>
+          <input type="text" id="teamName">
+        </div>
+        <div class="form-group">
+          <label>Guide / Mentor Name</label>
+          <input type="text" id="guideName">
+        </div>
+
+        <div class="form-group">
+          <label>Research Category / Domain *</label>
+          <select id="domain" required>
+            <option value="">Select Domain</option>
+            <option value="AI & ML">AI & ML</option>
+            <option value="Web Development">Web Development</option>
+            <option value="IoT">IoT</option>
+            <option value="Cybersecurity">Cybersecurity</option>
+            <option value="Data Science">Data Science</option>
+            <option value="Cloud Computing">Cloud Computing</option>
+            <option value="Embedded Systems">Embedded Systems</option>
+            <option value="Robotics">Robotics</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Department *</label>
+          <select id="department" required>
+            <option value="">Select Department</option>
+            <option value="CSE AI&ML">CSE AI&ML</option>
+            <option value="CSE">CSE</option>
+            <option value="IT">IT</option>
+            <option value="ENTC">ENTC</option>
+            <option value="Mechanical">Mechanical</option>
+            <option value="Civil">Civil</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Year *</label>
+          <select id="year" required>
+            <option value="">Select Year</option>
+            <option value="1st Year">1st Year</option>
+            <option value="2nd Year">2nd Year</option>
+            <option value="3rd Year">3rd Year</option>
+            <option value="4th Year">4th Year</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Batch *</label>
+          <select id="batch" required>
+            <option value="">Select Batch</option>
+            <option value="2020-21">2020-21</option>
+            <option value="2021-22">2021-22</option>
+            <option value="2022-23">2022-23</option>
+            <option value="2023-24">2023-24</option>
+            <option value="2024-25">2024-25</option>
+            <option value="2025-26">2025-26</option>
+          </select>
+        </div>
+
+        <div class="form-group full-width">
+          <label>Team Members (comma separated)</label>
+          <input type="text" id="teamMembers" placeholder="e.g. John Doe, Jane Smith">
+        </div>
+
+        <div class="form-group full-width">
+          <label>Tech Stack (comma separated)</label>
+          <input type="text" id="techStack" placeholder="e.g. React, Node.js, Python" required>
+        </div>
+
+        <div class="form-group full-width">
+          <label>Project Abstract *</label>
+          <textarea id="abstract" rows="6" required minlength="200" placeholder="Minimum 200 characters"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>GitHub Link</label>
+          <input type="url" id="github" placeholder="https://github.com/...">
+        </div>
+        <div class="form-group">
+          <label>LinkedIn Link</label>
+          <input type="url" id="linkedin" placeholder="https://linkedin.com/in/...">
+        </div>
+
+        <div class="form-group full-width upload-zone">
+          <label>Research Paper PDF (leave empty to keep current)</label>
+          <input type="file" id="researchPaper" accept="application/pdf">
+        </div>
+
+        <div class="form-group full-width upload-zone">
+          <label>PPT (leave empty to keep current)</label>
+          <input type="file" id="presentation" accept=".ppt,.pptx,application/pdf">
+        </div>
+        
+        <div class="form-group full-width upload-zone">
+          <label>Cover Image (leave empty to keep current)</label>
+          <input type="file" id="coverImage" accept="image/png,image/jpeg">
+        </div>
+
+        <div class="form-group full-width">
+          <button type="submit" class="btn btn-primary full-width" id="submitBtn">Save Changes →</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script src="common.js"></script>
+  <script src="edit-project.js"></script>
+</body>
+</html>

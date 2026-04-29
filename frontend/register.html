@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | EduAchieve</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="register-page">
+    
+    <!-- LEFT PANEL -->
+    <div class="register-left">
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: auto;">
+        <div class="brand-mark">🎓</div>
+        <div class="brand-title">EduAchieve</div>
+      </div>
+      
+      <div style="margin-top: 40px; margin-bottom: 40px;">
+        <h1 style="font-size: 2.5rem; margin-bottom: 16px; line-height: 1.2;">Join the AI&ML<br>Community</h1>
+        <p style="color: rgba(255,255,255,0.8); font-size: 1.05rem; line-height: 1.6;">Upload your projects, explore peers' work and get recognised by faculty — all in one platform.</p>
+        
+        <ul class="register-feature-list">
+          <li><span>📁</span> Upload & showcase your projects</li>
+          <li><span>🔍</span> Explore 5,000+ student projects</li>
+          <li><span>🎓</span> Get faculty feedback & approval</li>
+          <li><span>🏆</span> Climb the department leaderboard</li>
+          <li><span>📄</span> Download PDFs & source code</li>
+        </ul>
+      </div>
+      
+      <div style="margin-top: auto; font-size: 0.8rem; color: rgba(255,255,255,0.45);">
+        © 2024-26 EduAchieve – CSE AI&ML Dept.
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="register-right">
+      <h1 style="font-size: 1.8rem; margin-bottom: 8px;">Create Your Account</h1>
+      <p style="color: #6B7280; margin-bottom: 24px;">Fill in your details to get started — it takes under a minute.</p>
+      
+      <div class="alert alert-error" style="margin-bottom: 24px;">
+        ⚠ Only <strong>@pccoepune.org</strong> email addresses are allowed to register.
+      </div>
+
+      <form id="registerForm">
+        <div id="errorBanner" class="alert alert-error" style="display: none;"></div>
+
+        <div class="form-group" style="margin-bottom: 24px;">
+          <label style="margin-bottom: 10px; display: block;">I am a</label>
+          <div class="role-toggle">
+            <button type="button" class="role-btn active" data-role="student">🎓 Student</button>
+            <button type="button" class="role-btn" data-role="faculty">🏫 Faculty</button>
+          </div>
+          <input type="hidden" id="role" value="student">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name *</label>
+            <input type="text" id="firstName" required>
+          </div>
+          <div class="form-group">
+            <label>Last Name *</label>
+            <input type="text" id="lastName" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>College Email *</label>
+          <input type="email" id="email" placeholder="e.g. samrudhi.divekar24@pccoepune.org" required>
+          <div id="emailError" class="error-text">Only valid PCCOE college emails are accepted. Format: firstname.lastname24@pccoepune.org</div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Roll Number *</label>
+            <input type="text" id="rollNumber" placeholder="e.g. 124B1C146" required>
+          </div>
+          <div class="form-group">
+            <label>Year *</label>
+            <select id="year" required>
+              <option value="" disabled selected>Select Year</option>
+              <option value="1st Year">1st Year</option>
+              <option value="2nd Year">2nd Year</option>
+              <option value="3rd Year">3rd Year</option>
+              <option value="4th Year">4th Year</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Department *</label>
+          <select id="department" required>
+            <option value="CSE AI&ML" selected>CSE AI&ML</option>
+            <option value="CSE">CSE</option>
+            <option value="IT">IT</option>
+            <option value="ENTC">ENTC</option>
+            <option value="Mechanical">Mechanical</option>
+            <option value="Civil">Civil</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Batch *</label>
+            <select id="batch" required>
+              <option value="" disabled selected>Select Batch</option>
+              <option value="2020-21">2020-21</option>
+              <option value="2021-22">2021-22</option>
+              <option value="2022-23">2022-23</option>
+              <option value="2023-24">2023-24</option>
+              <option value="2024-25">2024-25</option>
+              <option value="2025-26">2025-26</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="text" id="phone" placeholder="Optional">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Password *</label>
+          <div class="input-wrap">
+            <input type="password" id="password" required style="padding-left: 14px;">
+            <button type="button" class="eye-btn" onclick="toggleVis('password')">👁️</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Confirm Password *</label>
+          <div class="input-wrap">
+            <input type="password" id="confirmPassword" required style="padding-left: 14px;">
+            <button type="button" class="eye-btn" onclick="toggleVis('confirmPassword')">👁️</button>
+          </div>
+          <div id="passwordError" class="error-text">Passwords do not match.</div>
+        </div>
+
+        <div style="margin: 24px 0;">
+          <label style="display: flex; align-items: flex-start; gap: 10px; font-size: 0.85rem; color: #4B5563; cursor: pointer;">
+            <input type="checkbox" required style="accent-color: #E8500A; margin-top: 3px;">
+            <span>I agree to the <strong style="color: #E8500A;">Terms & Conditions</strong> and <strong style="color: #E8500A;">Privacy Policy</strong> of EduAchieve.</span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; font-size: 1.05rem; padding: 14px; margin-bottom: 24px;">Create Account →</button>
+      </form>
+
+      <div style="text-align: center; font-size: 0.9rem; color: #4B5563;">
+        Already have an account? <a href="login.html" style="color: #E8500A; font-weight: 700; text-decoration: none;">Sign In</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="common.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Role toggle
+      const roleBtns = document.querySelectorAll('.role-btn');
+      const roleInput = document.getElementById('role');
+      roleBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          roleBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          roleInput.value = btn.dataset.role;
+        });
+      });
+
+      const form = document.getElementById('registerForm');
+      const emailInput = document.getElementById('email');
+      const emailError = document.getElementById('emailError');
+      const passInput = document.getElementById('password');
+      const confInput = document.getElementById('confirmPassword');
+      const passError = document.getElementById('passwordError');
+      const errorBanner = document.getElementById('errorBanner');
+
+      const pccoEmailRegex = /^[a-z]+\.[a-z]+\d*@pccoepune\.org$/i;
+
+      window.toggleVis = function(id) {
+        const input = document.getElementById(id);
+        const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+        input.setAttribute('type', type);
+      };
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        emailError.classList.remove('show');
+        passError.classList.remove('show');
+        errorBanner.style.display = 'none';
+
+        const email = emailInput.value.trim();
+        if (!pccoEmailRegex.test(email)) {
+          emailError.classList.add('show');
+          return;
+        }
+
+        if (passInput.value !== confInput.value) {
+          passError.classList.add('show');
+          return;
+        }
+
+        const data = {
+          firstName: document.getElementById('firstName').value.trim(),
+          lastName: document.getElementById('lastName').value.trim(),
+          email: email,
+          rollNumber: document.getElementById('rollNumber').value.trim(),
+          year: document.getElementById('year').value,
+          department: document.getElementById('department').value,
+          batch: document.getElementById('batch').value,
+          phone: document.getElementById('phone').value.trim(),
+          password: passInput.value,
+          role: roleInput.value
+        };
+
+        try {
+          await apiCall('/api/auth/register', {
+            method: 'POST',
+            body: data
+          });
+          
+          // Successful registration, redirect to login
+          // We can use query param to show banner
+          window.location.href = 'login.html?registered=true';
+        } catch (err) {
+          errorBanner.textContent = err.message || 'Registration failed';
+          errorBanner.style.display = 'block';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

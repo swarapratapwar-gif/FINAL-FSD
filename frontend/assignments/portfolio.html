@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alex Developer | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #E8590C;
+      --bg: #0F172A;
+      --card-bg: #1E293B;
+      --text: #F8FAFC;
+      --text-muted: #94A3B8;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background-color: var(--bg); color: var(--text); }
+    
+    .navbar { position: fixed; top: 0; width: 100%; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); padding: 1.5rem 5%; display: flex; justify-content: space-between; align-items: center; z-index: 100; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .logo { font-size: 1.5rem; font-weight: 700; color: var(--text); text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 500; transition: color 0.3s; }
+    .nav-links a:hover { color: var(--primary); }
+    .btn { padding: 0.6rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 500; cursor: pointer; border: none; display: inline-block; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-outline { background: transparent; border: 1px solid var(--primary); color: var(--primary); }
+
+    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 0 5%; max-width: 800px; }
+    .hero-greet { color: var(--primary); font-family: monospace; font-size: 1.1rem; margin-bottom: 1rem; }
+    .hero h1 { font-size: 4rem; line-height: 1.1; margin-bottom: 1rem; }
+    .hero h2 { font-size: 3rem; color: var(--text-muted); margin-bottom: 2rem; }
+    .hero p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 3rem; max-width: 600px; line-height: 1.6; }
+    .hero-buttons { display: flex; gap: 1rem; }
+
+    .section { padding: 100px 5%; max-width: 1200px; margin: 0 auto; }
+    .section-title { font-size: 2rem; margin-bottom: 3rem; display: flex; align-items: center; gap: 1rem; }
+    .section-title::after { content: ""; height: 1px; background: rgba(255,255,255,0.1); flex-grow: 1; }
+
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+    .project-card { background: var(--card-bg); border-radius: 8px; overflow: hidden; transition: transform 0.3s; display: flex; flex-direction: column; }
+    .project-card:hover { transform: translateY(-5px); }
+    .project-img { height: 180px; background: linear-gradient(45deg, var(--primary), #8B3D08); }
+    .project-content { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
+    .project-title { font-size: 1.2rem; margin-bottom: 0.5rem; }
+    .project-desc { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem; flex-grow: 1; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; font-family: monospace; font-size: 0.8rem; color: var(--primary); }
+    .project-links { display: flex; gap: 1rem; }
+    .project-links a { color: var(--text); text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+    .project-links a:hover { color: var(--primary); }
+
+    .skills-container { display: flex; flex-wrap: wrap; gap: 2rem; }
+    .skill-category { flex: 1; min-width: 250px; }
+    .skill-category h3 { margin-bottom: 1rem; color: var(--primary); }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag { background: rgba(232, 89, 12, 0.1); color: var(--text); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.9rem; border: 1px solid rgba(232, 89, 12, 0.2); }
+
+    .contact-form { max-width: 600px; margin: 0 auto; background: var(--card-bg); padding: 2rem; border-radius: 8px; }
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group label { display: block; margin-bottom: 0.5rem; color: var(--text-muted); }
+    .form-control { width: 100%; padding: 0.8rem; background: var(--bg); border: 1px solid rgba(255,255,255,0.1); color: var(--text); border-radius: 4px; font-family: inherit; }
+    .form-control:focus { outline: none; border-color: var(--primary); }
+    
+    .footer { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.1); }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="#" class="logo">A.</a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+      <a href="#" class="btn btn-outline" onclick="alert('Downloading resume PDF...')">Resume</a>
+    </div>
+  </nav>
+
+  <section class="hero" id="about">
+    <div class="hero-greet">Hi, my name is</div>
+    <h1>Alex Developer.</h1>
+    <h2>I build things for the web.</h2>
+    <p>I'm a software engineer specializing in building exceptional digital experiences. Currently, I'm focused on building accessible, human-centered products.</p>
+    <div class="hero-buttons">
+      <a href="#projects" class="btn btn-primary">Check out my work!</a>
+    </div>
+  </section>
+
+  <section class="section" id="projects">
+    <h2 class="section-title">Some Things I've Built</h2>
+    <div class="projects-grid">
+      <!-- Project 1 -->
+      <div class="project-card">
+        <div class="project-img" style="background: linear-gradient(45deg, #10B981, #065F46);"></div>
+        <div class="project-content">
+          <h3 class="project-title">Finance Dashboard</h3>
+          <p class="project-desc">A complex web app for tracking expenses and investments with interactive charts and real-time data integration.</p>
+          <div class="project-tags"><span>React</span><span>Node.js</span><span>Chart.js</span></div>
+          <div class="project-links">
+            <a href="#">GitHub</a>
+            <a href="#">Live Demo</a>
+          </div>
+        </div>
+      </div>
+      <!-- Project 2 -->
+      <div class="project-card">
+        <div class="project-img" style="background: linear-gradient(45deg, #3B82F6, #1E3A8A);"></div>
+        <div class="project-content">
+          <h3 class="project-title">E-Commerce Platform</h3>
+          <p class="project-desc">A full-stack e-commerce solution with Stripe payment processing, cart management, and admin dashboard.</p>
+          <div class="project-tags"><span>Next.js</span><span>MongoDB</span><span>Stripe</span></div>
+          <div class="project-links">
+            <a href="#">GitHub</a>
+            <a href="#">Live Demo</a>
+          </div>
+        </div>
+      </div>
+      <!-- Project 3 -->
+      <div class="project-card">
+        <div class="project-img"></div>
+        <div class="project-content">
+          <h3 class="project-title">Task Management API</h3>
+          <p class="project-desc">A robust RESTful API for task management featuring JWT authentication, pagination, and role-based access control.</p>
+          <div class="project-tags"><span>Express</span><span>PostgreSQL</span><span>Docker</span></div>
+          <div class="project-links">
+            <a href="#">GitHub</a>
+            <a href="#">Documentation</a>
+          </div>
+        </div>
+      </div>
+      <!-- Project 4 -->
+      <div class="project-card">
+        <div class="project-img" style="background: linear-gradient(45deg, #8B5CF6, #4C1D95);"></div>
+        <div class="project-content">
+          <h3 class="project-title">Weather App</h3>
+          <p class="project-desc">A beautiful weather application utilizing the OpenWeatherMap API to display forecasts with dynamic backgrounds.</p>
+          <div class="project-tags"><span>HTML/CSS</span><span>Vanilla JS</span><span>API</span></div>
+          <div class="project-links">
+            <a href="#">GitHub</a>
+            <a href="#">Live Demo</a>
+          </div>
+        </div>
+      </div>
+      <!-- Project 5 -->
+      <div class="project-card">
+        <div class="project-img" style="background: linear-gradient(45deg, #EC4899, #831843);"></div>
+        <div class="project-content">
+          <h3 class="project-title">Chat Application</h3>
+          <p class="project-desc">Real-time messaging application with private rooms, typing indicators, and message history.</p>
+          <div class="project-tags"><span>Socket.io</span><span>React</span><span>Express</span></div>
+          <div class="project-links">
+            <a href="#">GitHub</a>
+            <a href="#">Live Demo</a>
+          </div>
+        </div>
+      </div>
+      <!-- Project 6 -->
+      <div class="project-card">
+        <div class="project-img" style="background: linear-gradient(45deg, #F59E0B, #78350F);"></div>
+        <div class="project-content">
+          <h3 class="project-title">Markdown Editor</h3>
+          <p class="project-desc">In-browser markdown editor with live preview, syntax highlighting, and local storage autosave.</p>
+          <div class="project-tags"><span>React</span><span>Marked.js</span></div>
+          <div class="project-links">
+            <a href="#">GitHub</a>
+            <a href="#">Live Demo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="skills">
+    <h2 class="section-title">Technical Skills</h2>
+    <div class="skills-container">
+      <div class="skill-category">
+        <h3>Frontend</h3>
+        <div class="tags">
+          <span class="tag">HTML5</span>
+          <span class="tag">CSS3</span>
+          <span class="tag">JavaScript (ES6+)</span>
+          <span class="tag">React</span>
+          <span class="tag">Tailwind CSS</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h3>Backend</h3>
+        <div class="tags">
+          <span class="tag">Node.js</span>
+          <span class="tag">Express</span>
+          <span class="tag">MongoDB</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">REST APIs</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h3>Tools & Others</h3>
+        <div class="tags">
+          <span class="tag">Git & GitHub</span>
+          <span class="tag">Docker</span>
+          <span class="tag">Figma</span>
+          <span class="tag">Postman</span>
+          <span class="tag">Vercel</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <h2 class="section-title">Get In Touch</h2>
+    <p style="text-align: center; margin-bottom: 2rem; color: var(--text-muted);">Have a question or want to work together? Leave your details and I'll get back to you.</p>
+    <form class="contact-form" onsubmit="event.preventDefault(); alert('Message sent successfully!'); this.reset();">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea class="form-control" rows="5" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+    </form>
+  </section>
+
+  <footer class="footer">
+    <p>Designed & Built by Alex Developer &copy; 2024</p>
+    <a href="index.html" style="color: var(--primary); text-decoration: none; margin-top: 10px; display: inline-block;">Return to Assignments Hub</a>
+  </footer>
+
+</body>
+</html>

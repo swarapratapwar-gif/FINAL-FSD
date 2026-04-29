@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduAchieve | Academic Research Ecosystem</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    :root {
+      --primary: #E8500A;
+      --navy: #1A1A2E;
+      --cream: #FDF6EC;
+    }
+    body { font-family: 'DM Sans', sans-serif; background: #fff; color: #1A1A2E; }
+    
+    .site-topbar { background: var(--navy); height: 64px; display: flex; align-items: center; padding: 0 40px; }
+    
+    .hero-v2 {
+      padding: 120px 0 80px;
+      text-align: center;
+      background: var(--cream);
+    }
+
+    .hero-v2 h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-v2 h1 span {
+      color: var(--primary);
+    }
+
+    .hero-v2 p {
+      font-size: 1.25rem;
+      color: #6B7280;
+      max-width: 650px;
+      margin: 0 auto 40px;
+    }
+
+    .feature-grid-v2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+      margin-top: 60px;
+    }
+
+    .feature-card-v2 {
+      padding: 40px;
+      background: #fff;
+      border: 1px solid #E5E7EB;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      text-align: left;
+    }
+
+    .feature-card-v2:hover {
+      border-color: var(--primary);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+    }
+
+    .feature-icon-v2 {
+      width: 50px;
+      height: 50px;
+      background: rgba(232, 80, 10, 0.1);
+      color: var(--primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 24px;
+    }
+
+    .section-label {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(232, 80, 10, 0.1);
+      color: var(--primary);
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 20px;
+    }
+
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 80px;
+      margin-top: 80px;
+      padding-top: 60px;
+      border-top: 1px solid #E5E7EB;
+    }
+
+    .stat-box-v2 h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #1A1A2E;
+      margin-bottom: 4px;
+    }
+
+    .stat-box-v2 p {
+      color: #6B7280;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-topbar">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div class="brand-mark">🎓</div>
+      <div class="brand-title" style="color: white; font-weight: 800; font-size: 1.2rem;">EduAchieve</div>
+    </div>
+    <nav class="top-nav" style="margin-left: auto;">
+      <a href="index.html" style="color: white; text-decoration: none; margin-left: 20px;">Home</a>
+      <a href="explore.html" style="color: white; text-decoration: none; margin-left: 20px;">Projects</a>
+      <a href="submit.html" style="color: white; text-decoration: none; margin-left: 20px;">Submit</a>
+      <a href="about.html" style="color: white; text-decoration: none; margin-left: 20px;">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero-v2">
+      <div class="container" style="max-width: 1140px; margin: 0 auto; padding: 0 20px;">
+        <div class="section-label">Institutional Repository</div>
+        <h1>The Future of Academic <span>Research Management</span></h1>
+        <p>A specialized ecosystem for PCCOE students to archive, discover, and showcase groundbreaking research in AI & Machine Learning.</p>
+        <div style="display: flex; gap: 12px; justify-content: center;">
+          <a href="explore.html" class="btn-primary" style="background: var(--primary); color: white; padding: 14px 32px; border-radius: 8px; font-weight: 700; text-decoration: none;">Browse Repository</a>
+          <a href="submit.html" class="btn-outline" style="border: 2px solid var(--primary); color: var(--primary); padding: 14px 32px; border-radius: 8px; font-weight: 700; text-decoration: none;">Submit Your Work</a>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-box-v2">
+            <h3 id="heroStatProj">0</h3>
+            <p>Verified Projects</p>
+          </div>
+          <div class="stat-box-v2">
+            <h3 id="heroStatStud">0</h3>
+            <p>Research Students</p>
+          </div>
+          <div class="stat-box-v2">
+            <h3 id="heroStatDept">1</h3>
+            <p>AI&ML Department</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" style="max-width: 1140px; margin: 0 auto; padding: 80px 20px;">
+      <div style="text-align: center; max-width: 600px; margin: 0 auto 60px;">
+        <h2 style="font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800; margin-bottom: 16px;">Engineered for Excellence</h2>
+        <p style="color: #6B7280;">EduAchieve provides the infrastructure needed to maintain a high-quality academic record of student innovations.</p>
+      </div>
+
+      <div class="feature-grid-v2">
+        <div class="feature-card-v2">
+          <div class="feature-icon-v2">🛡️</div>
+          <h3 style="font-weight: 700; margin-bottom: 12px;">Secure Verification</h3>
+          <p style="color: #6B7280;">Every submission undergoes rigorous checks and is archived with persistent metadata for long-term accessibility.</p>
+        </div>
+        <div class="feature-card-v2">
+          <div class="feature-icon-v2">🔍</div>
+          <h3>Intelligent Search</h3>
+          <p style="color: #6B7280;">Discover relevant work using our filtered search system, categorized by Batch, Year, and Research Domain.</p>
+        </div>
+        <div class="feature-card-v2">
+          <div class="feature-icon-v2">📄</div>
+          <h3>Paper Repository</h3>
+          <p style="color: #6B7280;">Direct access to research PDFs and presentation slides, fostering a culture of knowledge sharing.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" style="background: var(--navy); padding: 40px 0; color: rgba(255,255,255,0.6);">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; max-width: 1140px; margin: 0 auto; padding: 0 20px;">
+      <p style="color: white; font-weight: 700;">EduAchieve</p>
+      <p>© 2024-26 PCCOE Pune</p>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+</body>
+</html>

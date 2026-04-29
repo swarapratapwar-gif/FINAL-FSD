@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modal Popup Demo | EduAchieve</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #E8500A;
+      --navy: #1A1A2E;
+      --bg: #F9F9F9;
+      --surface: #FFFFFF;
+      --text: #1A1A2E;
+      --text-muted: #6B7280;
+      --border: #E5E7EB;
+      --success: #16A34A;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    .topbar { background: var(--navy); height: 50px; display: flex; align-items: center; padding: 0 24px; }
+    .topbar a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.85rem; }
+    .topbar a:hover { color: white; }
+    .topbar span { color: rgba(255,255,255,0.3); margin: 0 10px; }
+    .topbar b { color: white; font-size: 0.85rem; }
+
+    .page-header { text-align: center; padding: 60px 20px 40px; }
+    .page-header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 12px; }
+    .page-header p { color: var(--text-muted); max-width: 550px; margin: 0 auto; }
+
+    .demos { max-width: 900px; margin: 0 auto; padding: 0 20px 80px; display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 24px; }
+    .demo-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .demo-card .icon { font-size: 2.5rem; margin-bottom: 16px; }
+    .demo-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
+    .demo-card p { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 24px; line-height: 1.6; }
+    .btn { display: inline-block; padding: 10px 22px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; border: none; font-family: inherit; transition: all 0.18s; }
+    .btn-orange { background: var(--primary); color: white; }
+    .btn-orange:hover { background: #C94008; }
+    .btn-outline { background: transparent; color: var(--primary); border: 1.5px solid var(--primary); }
+    .btn-outline:hover { background: var(--primary); color: white; }
+
+    /* Modal Overlay */
+    .overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 999; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
+    .overlay.open { opacity: 1; pointer-events: all; }
+
+    /* Modal Card */
+    .modal { background: var(--surface); border-radius: 16px; width: 100%; max-width: 480px; box-shadow: 0 24px 60px rgba(0,0,0,0.2); transform: scale(0.9); opacity: 0; transition: transform 0.25s, opacity 0.25s; position: relative; }
+    .overlay.open .modal { transform: scale(1); opacity: 1; }
+
+    .modal-close { position: absolute; top: 16px; right: 16px; background: #F3F4F6; border: none; border-radius: 50%; width: 32px; height: 32px; cursor: pointer; font-size: 1rem; color: var(--text-muted); display: flex; align-items: center; justify-content: center; transition: background 0.15s; }
+    .modal-close:hover { background: #E5E7EB; color: var(--text); }
+
+    .modal-header { padding: 28px 28px 0; }
+    .modal-header h2 { font-size: 1.25rem; margin-bottom: 8px; }
+    .modal-header p { color: var(--text-muted); font-size: 0.9rem; }
+
+    .modal-body { padding: 24px 28px; }
+
+    .modal-footer { padding: 0 28px 28px; display: flex; gap: 10px; justify-content: flex-end; }
+
+    /* Info modal content */
+    .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
+    .tag { background: rgba(232,80,10,0.1); color: var(--primary); border-radius: 20px; padding: 3px 10px; font-size: 0.75rem; font-weight: 600; }
+
+    /* Confirm modal */
+    .warning-icon { font-size: 2.5rem; text-align: center; margin-bottom: 16px; }
+
+    /* Share modal */
+    .copy-row { display: flex; gap: 8px; margin-bottom: 20px; }
+    .copy-row input { flex: 1; padding: 10px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.88rem; font-family: inherit; }
+    .social-row { display: flex; gap: 10px; justify-content: center; }
+    .social-btn { padding: 10px 18px; border-radius: 8px; font-size: 0.82rem; font-weight: 700; border: none; cursor: pointer; }
+    .btn-blue { background: #1877F2; color: white; }
+    .btn-sky { background: #1DA1F2; color: white; }
+    .btn-teal { background: #0A66C2; color: white; }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a href="index.html">EduAchieve</a>
+    <span>›</span>
+    <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--primary); margin-bottom: 8px;">Interactive Modals</div>
+  </div>
+
+  <div class="page-header">
+    <h1>Modal Popup Demo</h1>
+    <p>Click any trigger below to see different types of modal dialogs with smooth animations, backdrop blur, and keyboard support.</p>
+  </div>
+
+  <div class="demos">
+    <div class="demo-card">
+      <div class="icon">📋</div>
+      <h3>Project Details</h3>
+      <p>View detailed information about a project in an informational overlay without leaving the page.</p>
+      <button class="btn btn-orange" onclick="openModal('infoModal')">View Project Details</button>
+    </div>
+
+    <div class="demo-card">
+      <div class="icon">⚠️</div>
+      <h3>Confirm Submission</h3>
+      <p>A confirmation dialog to prevent accidental form submissions with clear action buttons.</p>
+      <button class="btn btn-orange" onclick="openModal('confirmModal')">Confirm Submission</button>
+    </div>
+
+    <div class="demo-card">
+      <div class="icon">🔗</div>
+      <h3>Share Project</h3>
+      <p>A social sharing overlay with a copy-link input and social media action buttons.</p>
+      <button class="btn btn-orange" onclick="openModal('shareModal')">Share Project</button>
+    </div>
+  </div>
+
+  <!-- Info Modal -->
+  <div class="overlay" id="infoModal" onclick="handleOverlayClick(event, 'infoModal')">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('infoModal')">✕</button>
+      <div class="modal-header">
+        <h2>Smart Agriculture using IoT & ML</h2>
+        <p>Final Year Research Project — 2024-25</p>
+      </div>
+      <div class="modal-body">
+        <div class="tag-row">
+          <span class="tag">AI/ML</span>
+          <span class="tag">IoT</span>
+          <span class="tag">Python</span>
+          <span class="tag">TensorFlow</span>
+          <span class="tag">Arduino</span>
+        </div>
+        <p style="font-size:0.9rem; color: var(--text-muted); line-height:1.7; margin-top: 12px;">
+          This project implements a smart irrigation system using soil sensors and a machine learning model to predict optimal watering schedules. The system reduced water usage by 35% in field trials while maintaining crop yield.
+        </p>
+        <div style="margin-top: 16px; padding: 14px; background: #F9F9F9; border-radius: 8px; font-size: 0.82rem; color: var(--text-muted);">
+          <strong>Team:</strong> Aarav Mehta, Priya Singh, Rohan Kumar<br>
+          <strong>Guide:</strong> Prof. Anjali Desai<br>
+          <strong>Batch:</strong> 2024-25
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('infoModal')">Close</button>
+        <a href="explore.html" class="btn btn-orange">Explore Projects</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm Modal -->
+  <div class="overlay" id="confirmModal" onclick="handleOverlayClick(event, 'confirmModal')">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('confirmModal')">✕</button>
+      <div class="modal-header">
+        <div class="warning-icon">🚀</div>
+        <h2 style="text-align:center;">Ready to Submit?</h2>
+      </div>
+      <div class="modal-body">
+        <p style="text-align:center; color: var(--text-muted); font-size:0.95rem; line-height: 1.7;">
+          You're about to submit your research project <strong>"Deep Learning for Medical Imaging"</strong> to the EduAchieve portal. Once submitted, it will be publicly visible. This action cannot be undone.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('confirmModal')">Cancel</button>
+        <button class="btn btn-orange" onclick="handleConfirm()">Confirm & Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Share Modal -->
+  <div class="overlay" id="shareModal" onclick="handleOverlayClick(event, 'shareModal')">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('shareModal')">✕</button>
+      <div class="modal-header">
+        <h2>Share This Project</h2>
+        <p>Copy the link or share directly on social media.</p>
+      </div>
+      <div class="modal-body">
+        <div class="copy-row">
+          <input type="text" id="shareLink" value="https://eduachieve.pccoe.edu/project/smart-agriculture-iot-ml" readonly>
+          <button class="btn btn-orange" onclick="copyLink()">Copy</button>
+        </div>
+        <p style="text-align:center; font-size:0.82rem; color: var(--text-muted); margin-bottom: 12px;">Or share on social media</p>
+        <div class="social-row">
+          <button class="social-btn btn-blue">Facebook</button>
+          <button class="social-btn btn-sky">Twitter</button>
+          <button class="social-btn btn-teal">LinkedIn</button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('shareModal')">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openModal(id) {
+      document.getElementById(id).classList.add('open');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+    }
+
+    function handleOverlayClick(e, id) {
+      // Close only if clicking the backdrop itself
+      if (e.target.id === id) closeModal(id);
+    }
+
+    // Close with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.overlay.open').forEach(m => m.classList.remove('open'));
+      }
+    });
+
+    function handleConfirm() {
+      closeModal('confirmModal');
+      setTimeout(() => alert('Project submitted successfully!'), 200);
+    }
+
+    function copyLink() {
+      const input = document.getElementById('shareLink');
+      input.select();
+      document.execCommand('copy');
+      const btn = input.nextElementSibling;
+      const original = btn.textContent;
+      btn.textContent = 'Copied!';
+      btn.style.background = '#16A34A';
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.style.background = '';
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
